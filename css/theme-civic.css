@@ -26,7 +26,8 @@ body.theme-civic .btn-secondary{
 }
 
 body.theme-civic .card{
-  background:white;
+  background: rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.12);
 }
 
 body.theme-civic .panel{
