@@ -555,9 +555,10 @@ async function setUpdatedFromGitHub(){
   if(!el) return;
 
   try{
-    const response = await fetch(
-      `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
-    );
+   const response = await fetch(
+     `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
+   );
+
 
     if(!response.ok) throw new Error("GitHub API error");
 
