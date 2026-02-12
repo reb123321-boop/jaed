@@ -20,8 +20,8 @@ const CONFIG = {
   JERSEY_ZOOM: 12
 };
 
-const GITHUB_USER = "YOUR_USERNAME";
-const GITHUB_REPO = "YOUR_REPO";
+const GITHUB_USER = "reb123321-boop";
+const GITHUB_REPO = "jaed";
 const GITHUB_BRANCH = "main";
 
 function setUpdatedTimestamp(){
