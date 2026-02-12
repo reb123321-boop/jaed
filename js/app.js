@@ -213,7 +213,16 @@ const marker = L.circleMarker([aed.lat, aed.lng], {
     marker.on("click", () => {
       // On marker click, scroll the panel card into view if present
       const card = document.querySelector(`[data-aed-id="${aed.id}"]`);
-      if(card) card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      if(card){
+        const panelBody = document.getElementById("panelBody");
+        if(panelBody){
+          const offsetTop = card.offsetTop;
+          panelBody.scrollTo({
+            top: offsetTop - 10,
+            behavior: "smooth"
+          });
+        }
+      }
     });
 
     markersLayer.addLayer(marker);
