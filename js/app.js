@@ -150,7 +150,11 @@ function renderResults(items){
     card.setAttribute("data-aed-id", aed.id);
 
     card.innerHTML = `
-      <h3>${isNearest ? `Nearest (${distText})` : `${distText ? distText + " – " : ""}${escapeHtml(aed.name || "Defibrillator")}`}</h3>
+     <h3>${
+       isNearest
+         ? `Nearest (${distText}) – ${escapeHtml(aed.name || "Defibrillator")}`
+         : `${distText ? distText + " – " : ""}${escapeHtml(aed.name || "Defibrillator")}`
+     }</h3>
       <div class="meta-row">
         <span class="badge ${badgeClass}">${escapeHtml(status)}</span>
         ${aed.parish ? `<span class="badge">${escapeHtml(aed.parish)}</span>` : ""}
