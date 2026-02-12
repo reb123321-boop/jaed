@@ -54,6 +54,37 @@ function initMap(){
   }).addTo(map);
 
   markersLayer = L.layerGroup().addTo(map);
+   // --- Legend Control ---
+const legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function () {
+  const div = L.DomUtil.create("div", "map-legend");
+
+  div.innerHTML = `
+    <div class="legend-title">Legend</div>
+    <div class="legend-item">
+      <span class="legend-dot" style="background:#2e7d32;"></span>
+      Active
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot" style="background:#888888;"></span>
+      Out of Service
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot" style="background:#0b5cff;"></span>
+      Unknown
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot legend-user"></span>
+      Your location
+    </div>
+  `;
+
+  return div;
+};
+
+legend.addTo(map);
+
 }
 
 function buildGoogleNavLink(lat, lng){
