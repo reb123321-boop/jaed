@@ -104,7 +104,13 @@ legend.onAdd = function () {
       Unknown
     </div>
    <div class="legend-item">
-     <span class="legend-pin"></span>
+     <span class="legend-pin-svg">
+       <svg width="18" height="24" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">
+         <path d="M14 1C7 1 2 6 2 13c0 9 12 23 12 23s12-14 12-23C26 6 21 1 14 1z"
+               fill="#c62828"/>
+         <circle cx="14" cy="13" r="4" fill="#ffffff"/>
+       </svg>
+     </span>
      Your location
    </div>
    <div class="legend-item">
@@ -426,15 +432,15 @@ function addOrUpdateUserMarker(lat, lng){
   const redPinIcon = L.divIcon({
     className: "custom-user-pin",
     html: `
-      <svg width="26" height="36" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 0C6 0 1 5 1 11c0 8 11 25 11 25s11-17 11-25C23 5 18 0 12 0z"
-              fill="#b71c1c"/>
-        <circle cx="12" cy="11" r="4" fill="#ffffff"/>
+      <svg width="28" height="38" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 1C7 1 2 6 2 13c0 9 12 23 12 23s12-14 12-23C26 6 21 1 14 1z"
+              fill="#c62828"/>
+        <circle cx="14" cy="13" r="4" fill="#ffffff"/>
       </svg>
     `,
-    iconSize: [26, 36],
-    iconAnchor: [13, 36],  // bottom tip of pin
-    popupAnchor: [0, -36]
+    iconSize: [28, 38],
+    iconAnchor: [14, 38],
+    popupAnchor: [0, -34]
   });
 
   if(!userMarker){
@@ -444,7 +450,6 @@ function addOrUpdateUserMarker(lat, lng){
     userMarker.setLatLng([lat, lng]);
   }
 }
-
 
 function findNearestFunctional(){
   ensurePanelOpen();
