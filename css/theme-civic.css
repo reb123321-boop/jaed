@@ -34,11 +34,19 @@ body.theme-civic .aed-icon{
 }
 
 body.theme-civic .badge.status-Active{
-  background: rgba(46,125,50,0.12);
+  background: rgba(46,125,50,0.18);
+  color: #1b5e20;
+  border-color: rgba(46,125,50,0.35);
 }
+
 body.theme-civic .badge.status-Out\ of\ Service{
-  background: rgba(198,40,40,0.12);
+  background: rgba(120,120,120,0.18);
+  color: #555;
+  border-color: rgba(120,120,120,0.35);
 }
+
 body.theme-civic .badge.status-Unknown{
-  background: rgba(249,168,37,0.16);
+  background: rgba(11,92,255,0.15);
+  color: #0b5cff;
+  border-color: rgba(11,92,255,0.35);
 }
