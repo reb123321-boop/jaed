@@ -55,13 +55,6 @@ body{
   margin-bottom:12px;
 }
 
-.controls-secondary{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-left:auto;
-}
-
 .select{
   display:flex;
   align-items:center;
