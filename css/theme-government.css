@@ -5,18 +5,18 @@
 body.theme-government{
   background:#f5f7f9;
   color:#000;
-}
 
-body.theme-government{
   --radius: 6px;
   --radius-small: 4px;
   --shadow: none;
 }
 
+/* --- Header --- */
+
 body.theme-government .app-header{
-  background:#0b3c5d;
+  background:#c8102e;              /* gov.je red */
   color:#fff;
-  border-bottom: 1px solid rgba(255,255,255,0.18);
+  border-bottom:none;
 }
 
 body.theme-government .tagline{
@@ -24,20 +24,43 @@ body.theme-government .tagline{
 }
 
 body.theme-government .aed-icon{
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
   color:#fff;
 }
+
+/* --- Buttons --- */
 
 body.theme-government .btn{
   background:#fff;
 }
 
+/* Primary (Find Nearest + Navigate) */
+
 body.theme-government .btn-primary{
-  background:#0b3c5d;
+  background:#c8102e;
   color:#fff;
-  border-color:#0b3c5d;
+  border-color:#c8102e;
 }
+
+body.theme-government .btn-primary:hover{
+  background:#a60d25;
+  border-color:#a60d25;
+}
+
+/* Secondary (Call 999 / Zoom) */
+
+body.theme-government .btn-secondary{
+  background:#fff;
+  color:#c8102e;
+  border:1px solid #c8102e;
+}
+
+body.theme-government .btn-secondary:hover{
+  background:rgba(200,16,46,0.08);
+}
+
+/* --- Surfaces --- */
 
 body.theme-government .panel,
 body.theme-government .map-wrap,
