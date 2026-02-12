@@ -1,0 +1,44 @@
+body.theme-civic{
+  background: #f6f8fb;
+  color:#0e1726;
+}
+
+body.theme-civic .app-header{
+  background:white;
+}
+
+body.theme-civic .btn{
+  background:white;
+}
+
+body.theme-civic .btn-primary{
+  border-color: rgba(0,0,0,0.12);
+  background: #0b5cff;
+  color:white;
+}
+
+body.theme-civic .btn-secondary{
+  background:white;
+}
+
+body.theme-civic .card{
+  background:white;
+}
+
+body.theme-civic .panel{
+  background:white;
+}
+
+body.theme-civic .aed-icon{
+  background: white;
+}
+
+body.theme-civic .badge.status-Active{
+  background: rgba(46,125,50,0.12);
+}
+body.theme-civic .badge.status-Out\ of\ Service{
+  background: rgba(198,40,40,0.12);
+}
+body.theme-civic .badge.status-Unknown{
+  background: rgba(249,168,37,0.16);
+}
