@@ -332,12 +332,12 @@ body{
   }
 
   .select{
-    font-size:13px;
-    padding:4px 8px;
+    font-size:12px;
+    padding:3px 6px;
   }
 
   .select span{
-    font-size:11px;
+    font-size:10px;
   }
 
   .select select{
