@@ -99,10 +99,11 @@ legend.onAdd = function () {
       <span class="legend-dot" style="background:#0b5cff;"></span>
       Unknown
     </div>
-    <div class="legend-item">
-      <span class="legend-dot legend-user"></span>
-      Your location
-    </div>
+   <div class="legend-item">
+     <span class="legend-pin"></span>
+     Your location
+   </div>
+
   `;
 
   return div;
@@ -412,14 +413,29 @@ function ensurePanelOpen(){
 }
 
 function addOrUpdateUserMarker(lat, lng){
-  const latlng = [lat, lng];
+
+  const redPinIcon = L.divIcon({
+    className: "custom-user-pin",
+    html: `
+      <svg width="26" height="36" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C6 0 1 5 1 11c0 8 11 25 11 25s11-17 11-25C23 5 18 0 12 0z"
+              fill="#b71c1c"/>
+        <circle cx="12" cy="11" r="4" fill="#ffffff"/>
+      </svg>
+    `,
+    iconSize: [26, 36],
+    iconAnchor: [13, 36],  // bottom tip of pin
+    popupAnchor: [0, -36]
+  });
+
   if(!userMarker){
-    userMarker = L.circleMarker(latlng, { radius: 8 });
+    userMarker = L.marker([lat, lng], { icon: redPinIcon });
     userMarker.addTo(map);
   } else {
-    userMarker.setLatLng(latlng);
+    userMarker.setLatLng([lat, lng]);
   }
 }
+
 
 function findNearestFunctional(){
   ensurePanelOpen();
