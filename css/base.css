@@ -300,3 +300,23 @@ body{
   margin-left:10px;
   opacity:0.75;
 }
+
+@media (max-width: 600px){
+
+  .app-header{
+    padding:8px 12px;
+  }
+
+  .brand-text h1{
+    font-size:16px;
+  }
+
+  .tagline{
+    display:none; /* hide on small screens */
+  }
+
+  .updated-meta{
+    font-size:11px;
+  }
+
+}
