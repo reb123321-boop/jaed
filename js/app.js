@@ -24,31 +24,6 @@ const GITHUB_USER = "reb123321-boop";
 const GITHUB_REPO = "jaed";
 const GITHUB_BRANCH = "main";
 
-function setUpdatedTimestamp(){
-  const el = document.getElementById("updatedMeta");
-  if(!el) return;
-
-  const now = new Date();
-
-  // Format: yyyy-MM-dd HH:mm:ss ±hh:mm
-  const pad = n => String(n).padStart(2,"0");
-
-  const yyyy = now.getFullYear();
-  const mm = pad(now.getMonth()+1);
-  const dd = pad(now.getDate());
-  const hh = pad(now.getHours());
-  const mi = pad(now.getMinutes());
-  const ss = pad(now.getSeconds());
-
-  const tzOffsetMinutes = -now.getTimezoneOffset();
-  const sign = tzOffsetMinutes >= 0 ? "+" : "-";
-  const tzH = pad(Math.floor(Math.abs(tzOffsetMinutes)/60));
-  const tzM = pad(Math.abs(tzOffsetMinutes)%60);
-
-  el.textContent = `App last updated ${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss} ${sign}${tzH}:${tzM}`;
-}
-
-
 let map;
 let markersLayer;
 let userMarker = null;
@@ -83,49 +58,52 @@ function initMap(){
   }).addTo(map);
 
   markersLayer = L.layerGroup().addTo(map);
-   // --- Legend Control ---
-const legend = L.control({ position: "bottomright" });
 
-legend.onAdd = function () {
-  const div = L.DomUtil.create("div", "map-legend");
+  // --- Legend Control ---
+  const legend = L.control({ position: "bottomright" });
 
-  div.innerHTML = `
-    <div class="legend-title">Legend</div>
-    <div class="legend-item">
-      <span class="legend-dot" style="background:#2e7d32;"></span>
-      Active
-    </div>
-    <div class="legend-item">
-      <span class="legend-dot" style="background:#888888;"></span>
-      Out of Service
-    </div>
-    <div class="legend-item">
-      <span class="legend-dot" style="background:#0b5cff;"></span>
-      Unknown
-    </div>
-   <div class="legend-item">
-     <span class="legend-pin-svg">
-       <svg width="18" height="24" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">
-         <path d="M14 1C7 1 2 6 2 13c0 9 12 23 12 23s12-14 12-23C26 6 21 1 14 1z"
-               fill="#c62828"/>
-         <circle cx="14" cy="13" r="4" fill="#ffffff"/>
-       </svg>
-     </span>
-     Your location
-   </div>
-   <div class="legend-item">
-  <span class="legend-nearest"></span>
-     Nearest AED
-   </div>
+  legend.onAdd = function () {
+    const div = L.DomUtil.create("div", "map-legend");
 
+    // NOTE: Unknown now uses navy (#0b2e6b) to match badges
+    div.innerHTML = `
+      <div class="legend-title">Legend</div>
 
-  `;
+      <div class="legend-item">
+        <span class="legend-dot" style="background:#2e7d32;"></span>
+        Active
+      </div>
 
-  return div;
-};
+      <div class="legend-item">
+        <span class="legend-dot" style="background:#888888;"></span>
+        Out of Service
+      </div>
 
-legend.addTo(map);
+      <div class="legend-item">
+        <span class="legend-dot" style="background:#0b2e6b;"></span>
+        Unknown
+      </div>
 
+      <div class="legend-item">
+        <span class="legend-pin-svg">
+          <svg width="18" height="24" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 1C7 1 2 6 2 13c0 9 12 23 12 23s12-14 12-23C26 6 21 1 14 1z" fill="#c62828"/>
+            <circle cx="14" cy="13" r="4" fill="#ffffff"/>
+          </svg>
+        </span>
+        Your location
+      </div>
+
+      <div class="legend-item">
+        <span class="legend-nearest"></span>
+        Nearest AED
+      </div>
+    `;
+
+    return div;
+  };
+
+  legend.addTo(map);
 }
 
 function buildGoogleNavLink(lat, lng){
@@ -154,8 +132,24 @@ function distanceKm(lat1, lon1, lat2, lon2){
 }
 
 function statusToClass(status){
-  // Used for badge class names; keep spaces for CSS escaping in theme files
+  // Used for badge class names; keep spaces for CSS escaping
   return `status-${status || "Unknown"}`;
+}
+
+/**
+ * Scroll the results panel so `cardEl` aligns to the TOP of the results pane
+ * (not the page).
+ */
+function scrollResultsToCard(cardEl){
+  const panelBody = $("panelBody");
+  if(!panelBody || !cardEl) return;
+
+  // Compute position relative to the scroll container using rects
+  const panelRect = panelBody.getBoundingClientRect();
+  const cardRect = cardEl.getBoundingClientRect();
+  const offset = (cardRect.top - panelRect.top) + panelBody.scrollTop;
+
+  panelBody.scrollTo({ top: Math.max(0, offset - 10), behavior: "smooth" });
 }
 
 function renderMarkers(items){
@@ -181,48 +175,46 @@ function renderMarkers(items){
       </div>
     `;
 
-    // Marker styling can be enhanced later (custom icons)
-let markerColor;
+    // Marker color by status
+    let markerColor;
+    switch(aed.status){
+      case "Active":
+        markerColor = "#2e7d32";
+        break;
+      case "Out of Service":
+        markerColor = "#888888";
+        break;
+      case "Unknown":
+      default:
+        markerColor = "#0b2e6b"; // navy to match legend/badges
+        break;
+    }
 
-switch(aed.status){
-  case "Active":
-    markerColor = "#2e7d32";
-    break;
-  case "Out of Service":
-    markerColor = "#888888";
-    break;
-  case "Unknown":
-  default:
-    markerColor = "#0b5cff";
-    break;
-}
+    const isNearest = aed.__nearestCandidate === true;
 
-// 🔥 Enlarge if nearest candidate
-const isNearest = aed.__nearestCandidate === true;
+    const marker = L.circleMarker([aed.lat, aed.lng], {
+      radius: isNearest ? 12 : 8,
+      fillColor: markerColor,
+      color: isNearest ? "#b71c1c" : "#ffffff",  // red ring for nearest
+      weight: isNearest ? 3 : 2,
+      opacity: 1,
+      fillOpacity: 0.95
+    }).bindPopup(popupHtml);
 
-const marker = L.circleMarker([aed.lat, aed.lng], {
-  radius: isNearest ? 12 : 8,
-  fillColor: markerColor,
-  color: isNearest ? "#b71c1c" : "#ffffff",   // <-- dark red ring for nearest
-  weight: isNearest ? 3 : 2,
-  opacity: 1,
-  fillOpacity: 0.95
-}).bindPopup(popupHtml);
+    // ✅ FIX: Only scroll results when the marker is clicked (and card exists)
+    marker.on("click", () => {
+      ensurePanelOpen();
 
+      // Find the matching card in the results pane
+      const cardEl = document.querySelector(`.card[data-aed-id="${aed.id}"]`);
+      if(cardEl){
+        scrollResultsToCard(cardEl);
 
-if (card && panelBody) {
-
-  const panelRect = panelBody.getBoundingClientRect();
-  const cardRect  = card.getBoundingClientRect();
-
-  const offset = cardRect.top - panelRect.top + panelBody.scrollTop;
-
-  panelBody.scrollTo({
-    top: offset - 10,
-    behavior: "smooth"
-  });
-}
-
+        // Optional: visually indicate selection (safe if you add CSS later)
+        // cardEl.classList.add("selected");
+        // setTimeout(()=>cardEl.classList.remove("selected"), 900);
+      }
+    });
 
     markersLayer.addLayer(marker);
   });
@@ -240,9 +232,10 @@ function renderResults(items){
     return;
   }
 
-  const nearestId = items[0]?.__nearestCandidate ? items[0].id : null;
+  // Nearest marker is set on the object, but list might not be sorted by nearest if no location.
+  const nearestId = items.find(x => x.__nearestCandidate)?.id || null;
 
-  items.forEach((aed, idx) => {
+  items.forEach((aed) => {
     const isNearest = (nearestId && aed.id === nearestId);
     const distText = aed.distanceKm != null ? formatDistance(aed.distanceKm) : "";
 
@@ -256,11 +249,12 @@ function renderResults(items){
     card.setAttribute("data-aed-id", aed.id);
 
     card.innerHTML = `
-     <h3>${
-       isNearest
-         ? `Nearest (${distText}) – ${escapeHtml(aed.name || "Defibrillator")}`
-         : `${distText ? distText + " – " : ""}${escapeHtml(aed.name || "Defibrillator")}`
-     }</h3>
+      <h3>${
+        isNearest
+          ? `Nearest (${distText}) – ${escapeHtml(aed.name || "Defibrillator")}`
+          : `${distText ? distText + " – " : ""}${escapeHtml(aed.name || "Defibrillator")}`
+      }</h3>
+
       <div class="meta-row">
         <span class="badge ${badgeClass}">${escapeHtml(status)}</span>
         ${aed.parish ? `<span class="badge">${escapeHtml(aed.parish)}</span>` : ""}
@@ -285,14 +279,13 @@ function renderResults(items){
       map.setView([lat, lng], 16, { animate: true });
     });
 
-    // clicking card zooms and opens popup (best-effort)
+    // clicking card zooms (best-effort)
     card.addEventListener("click", (e) => {
-      // avoid hijacking clicks on buttons/links
       const tag = e.target?.tagName?.toLowerCase();
       if(tag === "a" || tag === "button") return;
-
-      map.setView([aed.lat, aed.lng], 16, { animate: true });
-      // Open matching popup (best-effort: Leaflet doesn't give easy mapping without storing marker refs)
+      if(typeof aed.lat === "number" && typeof aed.lng === "number"){
+        map.setView([aed.lat, aed.lng], 16, { animate: true });
+      }
     });
 
     list.appendChild(card);
@@ -319,7 +312,6 @@ function applyFiltersAndRender(){
     });
     visibleAEDs.sort((x,y) => (x.distanceKm ?? 1e9) - (y.distanceKm ?? 1e9));
   } else {
-    // no distances: stable sort by name
     visibleAEDs.forEach(a => { a.distanceKm = null; });
     visibleAEDs.sort((x,y) => (x.name || "").localeCompare(y.name || ""));
   }
@@ -355,7 +347,6 @@ async function fetchAirtable(){
   const data = await res.json();
   const records = data.records || [];
 
-  // Map Airtable fields -> our object schema
   allAEDs = records.map(r => {
     const f = r.fields || {};
     return {
@@ -396,11 +387,9 @@ function toBool(v){
 
 function normalizeDate(v){
   if(!v) return "";
-  // Airtable may return ISO date
   try{
     const d = new Date(v);
     if(Number.isNaN(d.getTime())) return String(v);
-    // simple readable format (local)
     return d.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"2-digit" });
   }catch{
     return String(v);
@@ -436,13 +425,11 @@ function ensurePanelOpen(){
 }
 
 function addOrUpdateUserMarker(lat, lng){
-
   const redPinIcon = L.divIcon({
     className: "custom-user-pin",
     html: `
       <svg width="28" height="38" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">
-        <path d="M14 1C7 1 2 6 2 13c0 9 12 23 12 23s12-14 12-23C26 6 21 1 14 1z"
-              fill="#c62828"/>
+        <path d="M14 1C7 1 2 6 2 13c0 9 12 23 12 23s12-14 12-23C26 6 21 1 14 1z" fill="#c62828"/>
         <circle cx="14" cy="13" r="4" fill="#ffffff"/>
       </svg>
     `,
@@ -463,7 +450,7 @@ function findNearestFunctional(){
   ensurePanelOpen();
 
   const note = $("geoNote");
-  note.innerHTML = `To find the nearest defibrillator, we need temporary access to your location. This is not stored.`;
+  note.innerHTML = `Tip: Click <strong>Find Nearest</strong> to use your location. Your location is not stored.`;
 
   if(!navigator.geolocation){
     alert("Geolocation is not supported in this browser.");
@@ -478,14 +465,14 @@ function findNearestFunctional(){
       lastUserLocation = [lat, lng];
       addOrUpdateUserMarker(lat, lng);
 
-      // Filter to functional + public for nearest logic, but keep overall list visible per your MVP.
+      // Mark nearest candidate in the dataset
+      allAEDs.forEach(a => { a.__nearestCandidate = false; });
+
       const functionalPublic = visibleAEDs
         .filter(a => (a.status || "Unknown") === "Active" && a.publicAccess === true && typeof a.lat === "number" && typeof a.lng === "number")
         .map(a => ({ ...a, distanceKm: distanceKm(lat, lng, a.lat, a.lng) }))
         .sort((a,b) => a.distanceKm - b.distanceKm);
 
-      // Mark nearest candidate in the *visibleAEDs* list
-      allAEDs.forEach(a => { a.__nearestCandidate = false; });
       if(functionalPublic.length > 0){
         const nearest = functionalPublic[0];
         const match = allAEDs.find(a => a.id === nearest.id);
@@ -499,7 +486,6 @@ function findNearestFunctional(){
         map.setView([lat, lng], 15, { animate: true });
       }
 
-      // Apply distances + rerender list sorted by distance
       applyFiltersAndRender();
     },
     (err) => {
@@ -526,13 +512,8 @@ function escapeHtml(str){
 function bindUI(){
   $("panelToggle").addEventListener("click", togglePanel);
 
-  $("parishFilter").addEventListener("change", () => {
-    applyFiltersAndRender();
-  });
-
-  $("statusFilter").addEventListener("change", () => {
-    applyFiltersAndRender();
-  });
+  $("parishFilter").addEventListener("change", applyFiltersAndRender);
+  $("statusFilter").addEventListener("change", applyFiltersAndRender);
 
   $("btnFindNearest").addEventListener("click", findNearestFunctional);
 
@@ -554,10 +535,9 @@ async function setUpdatedFromGitHub(){
   if(!el) return;
 
   try{
-   const response = await fetch(
-     `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
-   );
-
+    const response = await fetch(
+      `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
+    );
 
     if(!response.ok) throw new Error("GitHub API error");
 
@@ -586,7 +566,6 @@ async function setUpdatedFromGitHub(){
   }
 }
 
-
 async function main(){
   loadTheme();
   applyThemeFromUrl();
@@ -595,7 +574,7 @@ async function main(){
   setReportUrl();
 
   await setUpdatedFromGitHub();
-   
+
   try{
     await fetchAirtable();
   } catch (e){
