@@ -20,6 +20,10 @@ const CONFIG = {
   JERSEY_ZOOM: 12
 };
 
+const GITHUB_USER = "YOUR_USERNAME";
+const GITHUB_REPO = "YOUR_REPO";
+const GITHUB_BRANCH = "main";
+
 function setUpdatedTimestamp(){
   const el = document.getElementById("updatedMeta");
   if(!el) return;
@@ -527,14 +531,52 @@ function applyThemeFromUrl(){
   if(t === "civic") setTheme("theme-civic");
 }
 
+async function setUpdatedFromGitHub(){
+  const el = document.getElementById("updatedMeta");
+  if(!el) return;
+
+  try{
+    const response = await fetch(
+      `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
+    );
+
+    if(!response.ok) throw new Error("GitHub API error");
+
+    const data = await response.json();
+    const commitDate = new Date(data.commit.committer.date);
+
+    const pad = n => String(n).padStart(2,"0");
+
+    const yyyy = commitDate.getFullYear();
+    const mm = pad(commitDate.getMonth()+1);
+    const dd = pad(commitDate.getDate());
+    const hh = pad(commitDate.getHours());
+    const mi = pad(commitDate.getMinutes());
+    const ss = pad(commitDate.getSeconds());
+
+    const tzOffsetMinutes = -commitDate.getTimezoneOffset();
+    const sign = tzOffsetMinutes >= 0 ? "+" : "-";
+    const tzH = pad(Math.floor(Math.abs(tzOffsetMinutes)/60));
+    const tzM = pad(Math.abs(tzOffsetMinutes)%60);
+
+    el.textContent = `App last updated ${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss} ${sign}${tzH}:${tzM}`;
+  }
+  catch(error){
+    console.error("Could not fetch commit info:", error);
+    el.textContent = "Updated (commit info unavailable)";
+  }
+}
+
+
 async function main(){
   loadTheme();
-  setUpdatedTimestamp();
   applyThemeFromUrl();
   initMap();
   bindUI();
   setReportUrl();
 
+  await setUpdatedFromGitHub();
+   
   try{
     await fetchAirtable();
   } catch (e){
