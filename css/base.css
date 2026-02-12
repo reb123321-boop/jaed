@@ -139,11 +139,15 @@ body{
 .meta-parish{
   font-size:14px;
   font-weight:700;
+  display:inline-flex;
+  align-items:center;
 }
 
 .meta-address{
   font-size:12px;
   opacity:0.75;
+  display:inline-flex;
+  align-items:center;
 }
 
 .panel-body{
@@ -186,10 +190,9 @@ body{
 .meta-row{
   display:flex;
   flex-wrap:wrap;
+  align-items:center;   /* <-- this is the key */
   gap:8px 10px;
   margin:6px 0 10px 0;
-  font-size:13px;
-  opacity:0.92;
 }
 
 .badge{
