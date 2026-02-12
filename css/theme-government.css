@@ -46,9 +46,9 @@ body.theme-government .badge.status-Active{
 }
 
 body.theme-government .badge.status-Out\ of\ Service{
-  background: rgba(180,180,180,0.35);
-  color: #444;
-  border-color: rgba(180,180,180,0.55);
+  background: #e0e0e0;   /* solid neutral grey */
+  color: #333;
+  border-color: #c8c8c8;
 }
 
 body.theme-government .badge.status-Unknown{
