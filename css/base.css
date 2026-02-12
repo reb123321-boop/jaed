@@ -163,6 +163,10 @@ body{
   font-size:15px;
 }
 
+.card.nearest h3 {
+  font-weight: 800;
+}
+
 .meta-row{
   display:flex;
   flex-wrap:wrap;
