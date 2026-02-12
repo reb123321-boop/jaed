@@ -20,6 +20,31 @@ const CONFIG = {
   JERSEY_ZOOM: 12
 };
 
+function setUpdatedTimestamp(){
+  const el = document.getElementById("updatedMeta");
+  if(!el) return;
+
+  const now = new Date();
+
+  // Format: yyyy-MM-dd HH:mm:ss ±hh:mm
+  const pad = n => String(n).padStart(2,"0");
+
+  const yyyy = now.getFullYear();
+  const mm = pad(now.getMonth()+1);
+  const dd = pad(now.getDate());
+  const hh = pad(now.getHours());
+  const mi = pad(now.getMinutes());
+  const ss = pad(now.getSeconds());
+
+  const tzOffsetMinutes = -now.getTimezoneOffset();
+  const sign = tzOffsetMinutes >= 0 ? "+" : "-";
+  const tzH = pad(Math.floor(Math.abs(tzOffsetMinutes)/60));
+  const tzM = pad(Math.abs(tzOffsetMinutes)%60);
+
+  el.textContent = `Updated ${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss} ${sign}${tzH}:${tzM}`;
+}
+
+
 let map;
 let markersLayer;
 let userMarker = null;
