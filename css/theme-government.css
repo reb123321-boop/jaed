@@ -1,0 +1,51 @@
+/* Jersey-government-inspired: formal, high-clarity, minimal softness */
+body.theme-government{
+  background:#f5f7f9;
+  color:#000;
+}
+
+body.theme-government{
+  --radius: 6px;
+  --radius-small: 4px;
+  --shadow: none;
+}
+
+body.theme-government .app-header{
+  background:#0b3c5d;
+  color:#fff;
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+}
+
+body.theme-government .tagline{ opacity:0.95; }
+
+body.theme-government .aed-icon{
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.25);
+  color:#fff;
+}
+
+body.theme-government .btn{
+  background:#fff;
+}
+
+body.theme-government .btn-primary{
+  background:#0b3c5d;
+  color:#fff;
+  border-color:#0b3c5d;
+}
+
+body.theme-government .panel,
+body.theme-government .map-wrap,
+body.theme-government .card{
+  background:#fff;
+}
+
+body.theme-government .badge.status-Active{
+  background: rgba(27,94,32,0.10);
+}
+body.theme-government .badge.status-Out\ of\ Service{
+  background: rgba(139,0,0,0.10);
+}
+body.theme-government .badge.status-Unknown{
+  background: rgba(184,134,11,0.14);
+}
