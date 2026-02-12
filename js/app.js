@@ -110,7 +110,33 @@ function renderMarkers(items){
     `;
 
     // Marker styling can be enhanced later (custom icons)
-    const marker = L.marker([aed.lat, aed.lng]).bindPopup(popupHtml);
+let markerColor;
+
+switch(aed.status){
+  case "Active":
+    markerColor = "#2e7d32";
+    break;
+  case "Out of Service":
+    markerColor = "#888888";
+    break;
+  case "Unknown":
+  default:
+    markerColor = "#0b5cff";
+    break;
+}
+
+// 🔥 Enlarge if nearest candidate
+const isNearest = aed.__nearestCandidate === true;
+
+const marker = L.circleMarker([aed.lat, aed.lng], {
+  radius: isNearest ? 12 : 8,   // <-- THIS is the enlargement
+  fillColor: markerColor,
+  color: "#ffffff",
+  weight: isNearest ? 3 : 2,    // slightly stronger border too
+  opacity: 1,
+  fillOpacity: 0.95
+}).bindPopup(popupHtml);
+
 
     marker.on("click", () => {
       // On marker click, scroll the panel card into view if present
