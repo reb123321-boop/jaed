@@ -40,9 +40,9 @@ body.theme-civic .badge.status-Active{
 }
 
 body.theme-civic .badge.status-Out\ of\ Service{
-  background: rgba(160,160,160,0.25);
-  color: #555;
-  border-color: rgba(160,160,160,0.45);
+  background: #ececec;      /* soft light grey */
+  color: #444;
+  border-color: #d6d6d6;
 }
 
 body.theme-civic .badge.status-Unknown{
