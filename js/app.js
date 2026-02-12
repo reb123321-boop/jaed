@@ -256,7 +256,10 @@ function renderResults(items){
       }</h3>
 
       <div class="meta-row">
-        <span class="badge ${badgeClass}">${escapeHtml(status)}</span>
+        <span class="badge ${badgeClass}" data-status="${escapeHtml(status)}" role="button" tabindex="0">
+           ${escapeHtml(status)}
+         </span>
+
       
         ${aed.parish ? `<span class="meta-parish">${escapeHtml(aed.parish)}</span>` : ""}
       
@@ -276,6 +279,24 @@ function renderResults(items){
       </div>
     `;
 
+      // Status badge click handler
+      const statusBadge = card.querySelector(".badge[data-status]");
+      if(statusBadge){
+        const statusText = statusBadge.getAttribute("data-status");
+      
+        statusBadge.addEventListener("click", (e) => {
+          e.stopPropagation();
+          alert(`Defibrillator status is ${statusText}`);
+        });
+      
+        statusBadge.addEventListener("keypress", (e) => {
+          if(e.key === "Enter"){
+            alert(`Defibrillator status is ${statusText}`);
+          }
+        });
+      }
+
+     
     card.querySelector('button[data-zoom]')?.addEventListener("click", (e) => {
       const [lat, lng] = e.currentTarget.getAttribute("data-zoom").split(",").map(Number);
       map.setView([lat, lng], 16, { animate: true });
