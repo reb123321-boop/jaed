@@ -175,11 +175,11 @@ body{
   align-items:center;
   gap:6px;
   padding:4px 8px;
-  border-radius: 999px;
-  border: var(--border);
+  border-radius:999px;
   font-size:12px;
   font-weight:700;
 }
+
 
 /* --- Status Badge Colours (transparent style) --- */
 
