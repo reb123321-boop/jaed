@@ -210,20 +210,19 @@ const marker = L.circleMarker([aed.lat, aed.lng], {
 }).bindPopup(popupHtml);
 
 
-    marker.on("click", () => {
-      // On marker click, scroll the panel card into view if present
-      const card = document.querySelector(`[data-aed-id="${aed.id}"]`);
-      if(card){
-        const panelBody = document.getElementById("panelBody");
-        if(panelBody){
-          const offsetTop = card.offsetTop;
-          panelBody.scrollTo({
-            top: offsetTop - 10,
-            behavior: "smooth"
-          });
-        }
-      }
-    });
+if (card && panelBody) {
+
+  const panelRect = panelBody.getBoundingClientRect();
+  const cardRect  = card.getBoundingClientRect();
+
+  const offset = cardRect.top - panelRect.top + panelBody.scrollTop;
+
+  panelBody.scrollTo({
+    top: offset - 10,
+    behavior: "smooth"
+  });
+}
+
 
     markersLayer.addLayer(marker);
   });
