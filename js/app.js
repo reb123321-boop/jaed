@@ -534,7 +534,7 @@ async function setUpdatedFromGitHub(){
   const el = document.getElementById("updatedMeta");
   if(!el) return;
 
-  try{
+  try {
     const response = await fetch(
       `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
     );
@@ -544,20 +544,22 @@ async function setUpdatedFromGitHub(){
     const data = await response.json();
     const commitDate = new Date(data.commit.committer.date);
 
-      const pad = n => String(n).padStart(2,"0");
-      
-      const yyyy = commitDate.getFullYear();
-      const mm = pad(commitDate.getMonth()+1);
-      const dd = pad(commitDate.getDate());
-      const hh = pad(commitDate.getHours());
-      const mi = pad(commitDate.getMinutes());
-      
-      el.textContent = `Released ${yyyy}-${mm}-${dd} ${hh}:${mi}`;
+    const pad = n => String(n).padStart(2,"0");
+
+    const yyyy = commitDate.getFullYear();
+    const mm = pad(commitDate.getMonth()+1);
+    const dd = pad(commitDate.getDate());
+    const hh = pad(commitDate.getHours());
+    const mi = pad(commitDate.getMinutes());
+
+    el.textContent = `Released ${yyyy}-${mm}-${dd} ${hh}:${mi}`;
+  }
   catch(error){
     console.error("Could not fetch commit info:", error);
-    el.textContent = "Updated (commit info unavailable)";
+    el.textContent = "Released (unavailable)";
   }
 }
+
 
 async function main(){
   loadTheme();
