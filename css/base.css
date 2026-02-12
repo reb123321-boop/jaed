@@ -228,3 +228,39 @@ body{
   .map-wrap{ min-height: 520px; }
   .controls-secondary{ margin-left:0; width:100%; }
 }
+
+/* --- Map Legend --- */
+
+.map-legend{
+  background:white;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.15);
+  box-shadow:0 4px 14px rgba(0,0,0,0.12);
+  font-size:13px;
+  line-height:1.4;
+}
+
+.legend-title{
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:4px;
+}
+
+.legend-dot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  display:inline-block;
+  border:2px solid #ffffff;
+}
+
+.legend-user{
+  background:#000;
+}
