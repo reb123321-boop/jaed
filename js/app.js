@@ -41,7 +41,7 @@ function setUpdatedTimestamp(){
   const tzH = pad(Math.floor(Math.abs(tzOffsetMinutes)/60));
   const tzM = pad(Math.abs(tzOffsetMinutes)%60);
 
-  el.textContent = `Updated ${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss} ${sign}${tzH}:${tzM}`;
+  el.textContent = `App last updated ${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss} ${sign}${tzH}:${tzM}`;
 }
 
 
@@ -513,6 +513,7 @@ function applyThemeFromUrl(){
 
 async function main(){
   loadTheme();
+  setUpdatedTimestamp();
   applyThemeFromUrl();
   initMap();
   bindUI();
