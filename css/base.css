@@ -131,6 +131,11 @@ body{
 
 .panel-meta{ font-size:12px; opacity:0.85; }
 
+.meta-text{
+  font-size:13px;
+  opacity:0.9;
+}
+
 .panel-body{
   padding:12px;
   overflow:auto;
