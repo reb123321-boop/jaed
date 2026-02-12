@@ -107,6 +107,11 @@ legend.onAdd = function () {
      <span class="legend-pin"></span>
      Your location
    </div>
+   <div class="legend-item">
+  <span class="legend-nearest"></span>
+     Nearest AED
+   </div>
+
 
   `;
 
@@ -190,10 +195,10 @@ switch(aed.status){
 const isNearest = aed.__nearestCandidate === true;
 
 const marker = L.circleMarker([aed.lat, aed.lng], {
-  radius: isNearest ? 12 : 8,   // <-- THIS is the enlargement
+  radius: isNearest ? 12 : 8,
   fillColor: markerColor,
-  color: "#ffffff",
-  weight: isNearest ? 3 : 2,    // slightly stronger border too
+  color: isNearest ? "#b71c1c" : "#ffffff",   // <-- dark red ring for nearest
+  weight: isNearest ? 3 : 2,
   opacity: 1,
   fillOpacity: 0.95
 }).bindPopup(popupHtml);
