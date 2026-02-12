@@ -1,4 +1,7 @@
-/* Jersey-government-inspired: formal, high-clarity, minimal softness */
+/* -----------------------------
+   Government Theme (Jersey-inspired)
+------------------------------ */
+
 body.theme-government{
   background:#f5f7f9;
   color:#000;
@@ -16,7 +19,9 @@ body.theme-government .app-header{
   border-bottom: 1px solid rgba(255,255,255,0.18);
 }
 
-body.theme-government .tagline{ opacity:0.95; }
+body.theme-government .tagline{
+  opacity:0.95;
+}
 
 body.theme-government .aed-icon{
   background: rgba(255,255,255,0.10);
@@ -38,20 +43,4 @@ body.theme-government .panel,
 body.theme-government .map-wrap,
 body.theme-government .card{
   background:#fff;
-}
-
-body.theme-government .badge.status-Active{
-  background: rgba(27,94,32,0.12);
-  color:#1b5e20;
-}
-
-body.theme-government .badge.status-Out\ of\ Service{
-  background: #e0e0e0;   /* solid neutral grey */
-  color: #333;
-  border-color: #c8c8c8;
-}
-
-body.theme-government .badge.status-Unknown{
-  background: rgba(11,60,93,0.15);
-  color:#0b3c5d;
 }
