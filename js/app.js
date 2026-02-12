@@ -544,22 +544,15 @@ async function setUpdatedFromGitHub(){
     const data = await response.json();
     const commitDate = new Date(data.commit.committer.date);
 
-    const pad = n => String(n).padStart(2,"0");
-
-    const yyyy = commitDate.getFullYear();
-    const mm = pad(commitDate.getMonth()+1);
-    const dd = pad(commitDate.getDate());
-    const hh = pad(commitDate.getHours());
-    const mi = pad(commitDate.getMinutes());
-    const ss = pad(commitDate.getSeconds());
-
-    const tzOffsetMinutes = -commitDate.getTimezoneOffset();
-    const sign = tzOffsetMinutes >= 0 ? "+" : "-";
-    const tzH = pad(Math.floor(Math.abs(tzOffsetMinutes)/60));
-    const tzM = pad(Math.abs(tzOffsetMinutes)%60);
-
-    el.textContent = `App last updated ${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss} ${sign}${tzH}:${tzM}`;
-  }
+      const pad = n => String(n).padStart(2,"0");
+      
+      const yyyy = commitDate.getFullYear();
+      const mm = pad(commitDate.getMonth()+1);
+      const dd = pad(commitDate.getDate());
+      const hh = pad(commitDate.getHours());
+      const mi = pad(commitDate.getMinutes());
+      
+      el.textContent = `Released ${yyyy}-${mm}-${dd} ${hh}:${mi}`;
   catch(error){
     console.error("Could not fetch commit info:", error);
     el.textContent = "Updated (commit info unavailable)";
