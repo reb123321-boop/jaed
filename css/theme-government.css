@@ -65,7 +65,12 @@ body.theme-government .btn-secondary:hover{
 body.theme-government .panel,
 body.theme-government .map-wrap,
 body.theme-government .card{
-  background:#fff;
+  background:#ffffff;
+  border:1px solid #d8d8d8;
+}
+
+body.theme-government .results{
+  gap:14px;
 }
 
 /* --- Theme Toggle Button (in red header) --- */
