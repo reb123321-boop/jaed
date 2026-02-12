@@ -257,11 +257,13 @@ function renderResults(items){
 
       <div class="meta-row">
         <span class="badge ${badgeClass}">${escapeHtml(status)}</span>
-        ${aed.parish ? `<span class="badge">${escapeHtml(aed.parish)}</span>` : ""}
+      
+        ${aed.parish ? `<span class="meta-text">${escapeHtml(aed.parish)}</span>` : ""}
+      
+        ${aed.address ? `<span class="meta-text">${escapeHtml(aed.address)}</span>` : ""}
+      
         ${aed.publicAccess === true ? `<span class="badge">Public access</span>` : ""}
       </div>
-
-      ${aed.address ? `<div class="small">${escapeHtml(aed.address)}</div>` : ""}
 
       ${aed.access ? `<div class="small"><strong>Access:</strong> ${escapeHtml(aed.access)}</div>` : ""}
 
