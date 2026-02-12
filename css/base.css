@@ -181,22 +181,22 @@ body{
 }
 
 
-/* --- Status Badge Colours (transparent style) --- */
+/* --- Status Badge Colours (25% tinted fill) --- */
 
 .badge.status-Active{
-  background: transparent;
+  background: rgba(46,125,50,0.25);
   color: #2e7d32;
   border: 2px solid #2e7d32;
 }
 
 .badge.status-Out\ of\ Service{
-  background: transparent;
+  background: rgba(136,136,136,0.25);
   color: #888888;
   border: 2px solid #888888;
 }
 
 .badge.status-Unknown{
-  background: transparent;
+  background: rgba(11,46,107,0.25);
   color: #0b2e6b;
   border: 2px solid #0b2e6b;
 }
