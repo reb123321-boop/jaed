@@ -258,9 +258,9 @@ function renderResults(items){
       <div class="meta-row">
         <span class="badge ${badgeClass}">${escapeHtml(status)}</span>
       
-        ${aed.parish ? `<span class="meta-text">${escapeHtml(aed.parish)}</span>` : ""}
+        ${aed.parish ? `<span class="meta-parish">${escapeHtml(aed.parish)}</span>` : ""}
       
-        ${aed.address ? `<span class="meta-text">${escapeHtml(aed.address)}</span>` : ""}
+        ${aed.address ? `<span class="meta-address">${escapeHtml(aed.address)}</span>` : ""}
       
         ${aed.publicAccess === true ? `<span class="badge">Public access</span>` : ""}
       </div>
