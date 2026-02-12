@@ -264,3 +264,10 @@ body{
 .legend-user{
   background:#000;
 }
+
+.updated-meta{
+  font-size:12px;
+  font-weight:400;
+  margin-left:10px;
+  opacity:0.75;
+}
