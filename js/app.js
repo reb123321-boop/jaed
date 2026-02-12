@@ -8,8 +8,8 @@ const CONFIG = {
   // ---- Airtable ----
   // Recommended: use a READ-ONLY public proxy in future (serverless) to avoid exposing keys.
   // For prototype: you can use a restricted token + read-only base, but know it is visible in source.
-  AIRTABLE_API_KEY: "REPLACE_ME",
-  AIRTABLE_BASE_ID: "REPLACE_ME",
+  AIRTABLE_API_KEY: "patjiuZllI8qqq7ff.5dc279e7a8273b0dadf608f5bd0e502194fae256882f17f28d6ad423800ee961",
+  AIRTABLE_BASE_ID: "appWLevXmVq6r9tmN",
   AIRTABLE_TABLE_NAME: "AED Locations",
 
   // Optional: your report/update form URL (Google Form / Airtable form)
