@@ -332,9 +332,18 @@ body{
   }
 
   .select{
-    padding:6px 8px;
+    font-size:13px;
+    padding:4px 8px;
   }
 
+  .select span{
+    font-size:11px;
+  }
+
+  .select select{
+    font-size:13px;
+  }
+  
   .panel-header{
     padding:8px 10px;
   }
