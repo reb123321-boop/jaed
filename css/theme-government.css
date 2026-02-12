@@ -67,3 +67,16 @@ body.theme-government .map-wrap,
 body.theme-government .card{
   background:#fff;
 }
+
+/* --- Theme Toggle Button (in red header) --- */
+
+body.theme-government #themeToggle{
+  background:#ffffff;
+  color:#c8102e;
+  border:1px solid rgba(255,255,255,0.6);
+  font-weight:600;
+}
+
+body.theme-government #themeToggle:hover{
+  background:#f3f3f3;
+}
