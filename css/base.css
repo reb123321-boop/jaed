@@ -181,24 +181,24 @@ body{
   font-weight:700;
 }
 
-/* --- Status Badge Colours (match legend exactly) --- */
+/* --- Status Badge Colours (transparent style) --- */
 
 .badge.status-Active{
-  background: #2e7d32;
-  color: #ffffff;
-  border-color: #2e7d32;
+  background: transparent;
+  color: #2e7d32;
+  border: 2px solid #2e7d32;
 }
 
 .badge.status-Out\ of\ Service{
-  background: #888888;
-  color: #ffffff;
-  border-color: #888888;
+  background: transparent;
+  color: #888888;
+  border: 2px solid #888888;
 }
 
 .badge.status-Unknown{
-  background: #0b2e6b;
-  color: #ffffff;
-  border-color: #0b2e6b;
+  background: transparent;
+  color: #0b2e6b;
+  border: 2px solid #0b2e6b;
 }
 
 
