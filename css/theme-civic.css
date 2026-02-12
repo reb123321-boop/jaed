@@ -1,3 +1,7 @@
+/* -----------------------------
+   Civic Theme
+------------------------------ */
+
 body.theme-civic{
   background: #f6f8fb;
   color:#0e1726;
@@ -31,22 +35,4 @@ body.theme-civic .panel{
 
 body.theme-civic .aed-icon{
   background: white;
-}
-
-body.theme-civic .badge.status-Active{
-  background: rgba(46,125,50,0.18);
-  color: #1b5e20;
-  border-color: rgba(46,125,50,0.35);
-}
-
-body.theme-civic .badge.status-Out\ of\ Service{
-  background: #ececec;      /* soft light grey */
-  color: #444;
-  border-color: #d6d6d6;
-}
-
-body.theme-civic .badge.status-Unknown{
-  background: rgba(11,92,255,0.15);
-  color: #0b5cff;
-  border-color: rgba(11,92,255,0.35);
 }
