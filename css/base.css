@@ -292,6 +292,15 @@ body{
   border-top:6px solid #b71c1c;
 }
 
+.legend-nearest{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:white;
+  border:3px solid #b71c1c;
+  display:inline-block;
+}
+
 
 .updated-meta{
   font-size:12px;
