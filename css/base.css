@@ -349,17 +349,18 @@ body{
 
   .controls{
     display:flex;
-    flex-direction:column;
+    flex-wrap:wrap;
     gap:8px;
   }
 
-  /* Buttons share one row */
+  /* First two children = buttons */
   .controls > .btn{
     flex:1 1 calc(50% - 4px);
   }
 
-  .controls{
-    flex-wrap:wrap;
+  /* Filters row should take full width */
+  .filters-row{
+    flex:1 1 100%;
   }
 
   /* Filters row */
