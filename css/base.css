@@ -136,6 +136,16 @@ body{
   opacity:0.9;
 }
 
+.meta-parish{
+  font-size:14px;
+  font-weight:700;
+}
+
+.meta-address{
+  font-size:12px;
+  opacity:0.75;
+}
+
 .panel-body{
   padding:12px;
   overflow:auto;
