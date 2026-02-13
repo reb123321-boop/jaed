@@ -11,6 +11,8 @@ const CONFIG = {
 let map;
 let markersLayer;
 let allAEDs = [];
+let markerRegistry = {};
+let userMarker = null;
 
 const $ = id => document.getElementById(id);
 
@@ -47,6 +49,8 @@ function render(){
       fillOpacity: 0.9
     }).addTo(markersLayer);
 
+markerRegistry[a.id] = marker;
+
     marker.bindPopup(`
       <strong>${a.name}</strong><br>
       ${a.address || ""}
@@ -63,6 +67,14 @@ function render(){
 
   const count = $("resultsCount");
   if(count) count.textContent = `${allAEDs.length} listed`;
+}
+
+function addOrUpdateUserMarker(lat, lng){
+  if(!userMarker){
+    userMarker = L.marker([lat, lng]).addTo(map);
+  } else {
+    userMarker.setLatLng([lat, lng]);
+  }
 }
 
 /* ---------- Airtable ---------- */
@@ -94,20 +106,88 @@ async function fetchAirtable(){
   render();
 }
 
+/* ---------- Find Nearest ---------- */
+
+function findNearest(){
+  if(!navigator.geolocation){
+    alert("Geolocation not supported.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(pos => {
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+
+    addOrUpdateUserMarker(lat, lng);
+
+    // Find nearest AED
+    let nearest = null;
+    let nearestDist = Infinity;
+
+    allAEDs.forEach(a => {
+      if(!Number.isFinite(a.lat) || !Number.isFinite(a.lng)) return;
+
+      const d = distanceKm(lat, lng, a.lat, a.lng);
+      if(d < nearestDist){
+        nearestDist = d;
+        nearest = a;
+      }
+    });
+
+    if(!nearest) return;
+
+    // Step 1: fly to user
+    map.flyTo([lat, lng], 15, { duration: 1 });
+
+    // Step 2: pause, then fly to AED
+    setTimeout(() => {
+      map.flyTo([nearest.lat, nearest.lng], 16, { duration: 1.2 });
+
+      // Step 3: open popup (no recenter)
+      setTimeout(() => {
+        markerRegistry[nearest.id]?.openPopup();
+      }, 1200);
+
+    }, 1000);
+
+  }, err => {
+    alert("Could not access location.");
+  }, {
+    enableHighAccuracy: true,
+    timeout: 10000
+  });
+}
+
 /* ---------- Init ---------- */
 
 async function main(){
   initMap();
 
+  // Wire Find Nearest button
+  const findBtn = $("btnFindNearest");
+  if(findBtn){
+    findBtn.addEventListener("click", findNearest);
+  }
+
   try{
     await fetchAirtable();
   }catch(e){
     console.error(e);
+
     const list = $("resultsList");
     if(list){
-      list.innerHTML = `<div class="panel-note">Could not load data.</div>`;
+      list.innerHTML = `
+        <div class="panel-note">
+          <strong>Could not load data.</strong>
+        </div>`;
+    }
+
+    const count = $("resultsCount");
+    if(count){
+      count.textContent = "0 listed";
     }
   }
 }
 
 main();
+
