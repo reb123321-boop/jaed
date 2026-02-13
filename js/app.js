@@ -724,40 +724,38 @@ function bindUI(){
   }
 
   // --- Overlay Close Logic ---
-  const overlay = document.getElementById("imageOverlay");
-  const overlayImg = document.getElementById("overlayImage");
-  const closeBtn = document.getElementById("overlayCloseBtn");
-
-  if(overlay){
-
-    const closeOverlay = () => {
-      overlay.classList.remove("active");
-      if(overlayImg) overlayImg.src = "";
-    };
-
-    // Close when clicking dark background only
-    overlay.addEventListener("click", (e) => {
-      if(e.target === overlay){
-        closeOverlay();
-      }
-    });
-
-    // Close via ✕ button (if present)
-    if(closeBtn){
-      closeBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        closeOverlay();
-      });
-    }
-
-    // Close via ESC key
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape" && overlay.classList.contains("active")){
-        closeOverlay();
-      }
-    });
-
-  }
+   const overlay = document.getElementById("imageOverlay");
+   const overlayImg = document.getElementById("overlayImage");
+   const closeBtn = document.getElementById("overlayCloseBtn");
+   
+   if(overlay){
+   
+     const closeOverlay = () => {
+       overlay.classList.remove("active");
+       if(overlayImg) overlayImg.src = "";
+     };
+   
+     // Close when clicking ANYWHERE on overlay except the image
+     overlay.addEventListener("click", (e) => {
+       if(!e.target.closest("#overlayImage")){
+         closeOverlay();
+       }
+     });
+   
+     // Close button always closes
+     closeBtn?.addEventListener("click", (e) => {
+       e.stopPropagation();
+       closeOverlay();
+     });
+   
+     // ESC closes
+     document.addEventListener("keydown", (e) => {
+       if(e.key === "Escape"){
+         closeOverlay();
+       }
+     });
+   
+   }
 }
 
 
