@@ -722,23 +722,44 @@ function bindUI(){
       setTheme(isGov ? "theme-civic" : "theme-government");
     });
   }
-   // Image overlay close handler
-   const overlay = document.getElementById("imageOverlay");
-   if(overlay){
-     overlay.addEventListener("click", (e) => {
-   
-       // Only close when clicking the dark background,
-       // not when clicking the image itself
-       if(e.target === overlay){
-         overlay.classList.remove("active");
-   
-         const img = document.getElementById("overlayImage");
-         if(img) img.src = "";
-       }
-   
-     });
-   }
+
+  // --- Overlay Close Logic ---
+  const overlay = document.getElementById("imageOverlay");
+  const overlayImg = document.getElementById("overlayImage");
+  const closeBtn = document.getElementById("overlayCloseBtn");
+
+  if(overlay){
+
+    const closeOverlay = () => {
+      overlay.classList.remove("active");
+      if(overlayImg) overlayImg.src = "";
+    };
+
+    // Close when clicking dark background only
+    overlay.addEventListener("click", (e) => {
+      if(e.target === overlay){
+        closeOverlay();
+      }
+    });
+
+    // Close via ✕ button (if present)
+    if(closeBtn){
+      closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        closeOverlay();
+      });
+    }
+
+    // Close via ESC key
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && overlay.classList.contains("active")){
+        closeOverlay();
+      }
+    });
+
+  }
 }
+
 
 function applyThemeFromUrl(){
   const params = new URLSearchParams(location.search);
