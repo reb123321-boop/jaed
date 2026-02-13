@@ -135,28 +135,6 @@ body{
   min-height:0;
 }
 
-.panel-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:10px 12px;
-  border-bottom: var(--border);
-  gap:10px;
-}
-
-.panel-toggle{
-  border:none;
-  background:transparent;
-  font: inherit;
-  font-weight:800;
-  cursor:pointer;
-  padding:6px 8px;
-  border-radius: var(--radius-small);
-}
-.panel-toggle:focus{ outline: 3px solid rgba(0,0,0,0.18); outline-offset:2px; }
-
-.panel-meta{ font-size:12px; opacity:0.85; }
-
 .meta-text{
   font-size:13px;
   opacity:0.9;
@@ -290,10 +268,6 @@ body{
   opacity:0.75;
   margin-bottom:6px;
 }
-
-/* Collapsed panel (desktop) */
-.panel.collapsed .panel-body{ display:none; }
-.panel.collapsed{ min-height: unset; }
 
 /* Mobile */
 @media (max-width: 900px){
