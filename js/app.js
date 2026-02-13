@@ -320,7 +320,7 @@ function renderResults(items){
       
         ${aed.address ? `<span class="meta-address">${escapeHtml(aed.address)}</span>` : ""}
       
-        /* ${aed.publicAccess === true ? `<span class="badge">Public access</span>` : ""} */
+        ${""}  // Public access badge temporarily disabled
 
       </div>
 
