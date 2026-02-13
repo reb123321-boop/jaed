@@ -320,7 +320,8 @@ function renderResults(items){
       
         ${aed.address ? `<span class="meta-address">${escapeHtml(aed.address)}</span>` : ""}
       
-        ${aed.publicAccess === true ? `<span class="badge">Public access</span>` : ""}
+        /* ${aed.publicAccess === true ? `<span class="badge">Public access</span>` : ""} */
+
       </div>
 
       ${aed.access ? `<div class="small"><strong>Access:</strong> ${escapeHtml(aed.access)}</div>` : ""}
