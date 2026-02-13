@@ -27,6 +27,7 @@ const GITHUB_BRANCH = "main";
 let map;
 let markersLayer;
 let userMarker = null;
+let markerRegistry = {};
 
 let allAEDs = [];      // raw
 let visibleAEDs = [];  // filtered
@@ -154,6 +155,7 @@ function scrollResultsToCard(cardEl){
 
 function renderMarkers(items){
   markersLayer.clearLayers();
+  markerRegistry = {};
 
   items.forEach(aed => {
     if(typeof aed.lat !== "number" || typeof aed.lng !== "number") return;
@@ -224,6 +226,8 @@ function renderMarkers(items){
       fillOpacity: 0.95
     }).bindPopup(popupHtml);
 
+     markerRegistry[aed.id] = marker;
+     
      marker.on("popupopen", () => {
 
         const popupEl = document.querySelector(".leaflet-popup-content");
@@ -558,11 +562,21 @@ function findNearestFunctional(){
          
          // Step 2 — after 1 second pause, move to nearest
          setTimeout(() => {
+         
            map.flyTo([nearest.lat, nearest.lng], 16, {
              animate: true,
              duration: 1.2
            });
-         }, 2000); // 1s animation + 1s pause
+         
+           // After fly animation finishes, open popup
+           setTimeout(() => {
+             const marker = markerRegistry[nearest.id];
+             if(marker){
+               marker.openPopup();
+             }
+           }, 1200); // match fly duration
+         
+         }, 2000);
       } else {
         alert("No active, publicly accessible defibrillators are currently shown with valid coordinates.");
         map.setView([lat, lng], 15, { animate: true });
