@@ -224,6 +224,28 @@ function renderMarkers(items){
       fillOpacity: 0.95
     }).bindPopup(popupHtml);
 
+     marker.on("popupopen", () => {
+
+        const popupEl = document.querySelector(".leaflet-popup-content");
+      
+        if(!popupEl) return;
+      
+        const img = popupEl.querySelector(".popup-image");
+      
+        if(img){
+          img.addEventListener("click", (e) => {
+            e.stopPropagation();
+      
+            const overlay = document.getElementById("imageOverlay");
+            const overlayImg = document.getElementById("overlayImage");
+      
+            overlayImg.src = img.src;
+            overlay.hidden = false;
+          });
+        }
+      
+      });
+
     // ✅ FIX: Only scroll results when the marker is clicked (and card exists)
     marker.on("click", () => {
       ensurePanelOpen();
@@ -569,6 +591,14 @@ function bindUI(){
   $("themeToggle").addEventListener("click", () => {
     const isGov = document.body.classList.contains("theme-government");
     setTheme(isGov ? "theme-civic" : "theme-government");
+  });
+}
+
+const overlay = document.getElementById("imageOverlay");
+if(overlay){
+  overlay.addEventListener("click", () => {
+    overlay.hidden = true;
+    document.getElementById("overlayImage").src = "";
   });
 }
 
