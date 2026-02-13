@@ -507,3 +507,7 @@ button {
   align-items:center;
   gap:10px;
 }
+
+.leaflet-container {
+  background: white !important;
+}
