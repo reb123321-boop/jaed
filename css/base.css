@@ -259,6 +259,12 @@ body{
   opacity:0.9;
 }
 
+.release-meta{
+  font-size:12px;
+  opacity:0.75;
+  margin-bottom:6px;
+}
+
 /* Collapsed panel (desktop) */
 .panel.collapsed .panel-body{ display:none; }
 .panel.collapsed{ min-height: unset; }
