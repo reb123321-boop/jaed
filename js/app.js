@@ -613,10 +613,13 @@ function bindUI(){
 
   $("btnFindNearest").addEventListener("click", findNearestFunctional);
 
-  $("themeToggle").addEventListener("click", () => {
-    const isGov = document.body.classList.contains("theme-government");
-    setTheme(isGov ? "theme-civic" : "theme-government");
-  });
+   const iconToggle = document.getElementById("themeIconToggle");
+   if(iconToggle){
+     iconToggle.addEventListener("click", () => {
+       const isGov = document.body.classList.contains("theme-government");
+       setTheme(isGov ? "theme-civic" : "theme-government");
+     });
+   }
 }
 
 const overlay = document.getElementById("imageOverlay");
