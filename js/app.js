@@ -446,8 +446,6 @@ async function fetchAirtable(){
     };
   });
 
-  $("panelMeta").textContent = `${allAEDs.length} loaded`;
-
   populateParishFilter();
   applyFiltersAndRender();
 }
@@ -669,7 +667,6 @@ async function main(){
     await fetchAirtable();
   } catch (e){
     console.error(e);
-    $("panelMeta").textContent = "Data load failed";
     $("resultsList").innerHTML = `
       <div class="panel-note">
         <strong>Could not load data.</strong><br/>
