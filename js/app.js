@@ -276,6 +276,12 @@ function renderResults(items){
   const meta = $("panelMeta");
   meta.textContent = `${items.length} shown`;
 
+  const countEl = document.getElementById("resultsCount");
+  if(countEl){
+     countEl.textContent = `${items.length} listed`;
+}
+
+
   if(items.length === 0){
     list.innerHTML = `<div class="panel-note">No defibrillators match the current filters.</div>`;
     return;
