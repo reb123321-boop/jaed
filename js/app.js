@@ -158,22 +158,44 @@ function renderMarkers(items){
   items.forEach(aed => {
     if(typeof aed.lat !== "number" || typeof aed.lng !== "number") return;
 
-    const popupHtml = `
-      <div style="min-width:220px">
-        <strong>${escapeHtml(aed.name || "Defibrillator")}</strong><br/>
-        <span>${escapeHtml(aed.address || "")}</span><br/>
-        <span style="opacity:.85">${escapeHtml(aed.parish || "")}</span><br/>
-        <div style="margin-top:6px">
-          <span><strong>Status:</strong> ${escapeHtml(aed.status || "Unknown")}</span>
-        </div>
-        ${aed.access ? `<div style="margin-top:6px"><strong>Access:</strong> ${escapeHtml(aed.access)}</div>` : ""}
-        <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
-          <a href="${buildGoogleNavLink(aed.lat, aed.lng)}" target="_blank" rel="noopener" style="text-decoration:none;">
-            Navigate
-          </a>
-        </div>
-      </div>
-    `;
+   const popupHtml = `
+     <div style="min-width:220px">
+   
+       ${aed.imageUrl ? `
+         <div style="margin-bottom:8px;">
+           <img src="${aed.imageUrl}"
+                alt="Defibrillator location"
+                style="width:100%; border-radius:8px; max-height:160px; object-fit:cover;">
+         </div>
+       ` : ""}
+   
+       <strong>${escapeHtml(aed.name || "Defibrillator")}</strong><br/>
+       <span>${escapeHtml(aed.address || "")}</span><br/>
+       <span style="opacity:.85">${escapeHtml(aed.parish || "")}</span><br/>
+   
+       <div style="margin-top:6px">
+         <strong>Status:</strong> ${escapeHtml(aed.status || "Unknown")}
+       </div>
+   
+       ${aed.access ? `
+         <div style="margin-top:6px">
+           <strong>Access:</strong> ${escapeHtml(aed.access)}
+         </div>
+       ` : ""}
+   
+       <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+         <a href="${buildGoogleNavLink(aed.lat, aed.lng)}"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-primary"
+            style="text-decoration:none;">
+           Navigate
+         </a>
+       </div>
+   
+     </div>
+   `;
+
 
     // Marker color by status
     let markerColor;
@@ -383,6 +405,9 @@ async function fetchAirtable(){
       publicAccess: toBool(f["Public Access"] ?? f.PublicAccess ?? f.public_access),
       access: f["Access Instructions"] || f.Access || f.access_instructions || "",
       lastVerified: normalizeDate(f["Last Verified"] || f.last_verified),
+      imageUrl: Array.isArray(f.Image) && f.Image.length > 0
+        ? f.Image[0].url
+        : null,
       distanceKm: null,
       __nearestCandidate: false
     };
