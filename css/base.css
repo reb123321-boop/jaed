@@ -461,6 +461,15 @@ body{
   #map {
     height: 45vh;
   }
+
+  #map + * {
+    margin-top: 0;
+  }
+
+  .panel:has(#map) {
+    padding-bottom: 0;
+  }
+  
 }
 
 .image-overlay{
