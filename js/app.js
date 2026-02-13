@@ -159,6 +159,23 @@ function scrollResultsToCard(cardEl){
   panelBody.scrollTo({ top: Math.max(0, offset - 10), behavior: "smooth" });
 }
 
+// Encode array of URLs safely for HTML attribute use
+function encodeUrlsForAttr(urls){
+  try{
+    return encodeURIComponent(JSON.stringify(urls || []));
+  }catch{
+    return encodeURIComponent("[]");
+  }
+}
+
+function decodeUrlsFromAttr(encoded){
+  try{
+    return JSON.parse(decodeURIComponent(encoded || "[]"));
+  }catch{
+    return [];
+  }
+}
+
 function renderMarkers(items){
   markersLayer.clearLayers();
   markerRegistry = {};
@@ -166,45 +183,86 @@ function renderMarkers(items){
   items.forEach(aed => {
     if(typeof aed.lat !== "number" || typeof aed.lng !== "number") return;
 
-   const popupHtml = `
-     <div style="min-width:220px">
-   
-      ${aed.imageUrl ? `
-        <div style="margin-bottom:8px;">
-          <img src="${aed.imageUrl}"
-               alt="Defibrillator location"
-               class="popup-image"
-               style="width:100%; border-radius:8px; max-height:160px; object-fit:cover; cursor:pointer;">
-        </div>
-      ` : ""}
-   
-       <strong>${escapeHtml(aed.name || "Defibrillator")}</strong><br/>
-       <span>${escapeHtml(aed.address || "")}</span><br/>
-       <span style="opacity:.85">${escapeHtml(aed.parish || "")}</span><br/>
-   
-       <div style="margin-top:6px">
-         <strong>Status:</strong> ${escapeHtml(aed.status || "Unknown")}
-       </div>
-   
-       ${aed.access ? `
-         <div style="margin-top:6px">
-           <strong>Access:</strong> ${escapeHtml(aed.access)}
-         </div>
-       ` : ""}
-   
-       <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
-         <a href="${buildGoogleNavLink(aed.lat, aed.lng)}"
-            target="_blank"
-            rel="noopener"
-            class="btn btn-primary"
-            style="text-decoration:none;">
-           Navigate
-         </a>
-       </div>
-   
-     </div>
-   `;
+    // Support 0..n images (Airtable attachments)
+    const imageUrls = Array.isArray(aed.images)
+      ? aed.images.map(x => x && x.url).filter(Boolean)
+      : [];
 
+    const encodedUrls = encodeUrlsForAttr(imageUrls);
+
+    const popupHtml = `
+      <div style="min-width:220px">
+
+        ${imageUrls.length ? `
+          <div class="popup-image-wrapper"
+               data-images="${encodedUrls}"
+               data-index="0"
+               style="position:relative; margin-bottom:8px;">
+
+            <button type="button" class="popup-img-prev" aria-label="Previous image"
+              style="
+                position:absolute;
+                left:6px;
+                top:50%;
+                transform:translateY(-50%);
+                background:rgba(0,0,0,0.6);
+                color:white;
+                border:none;
+                padding:4px 8px;
+                border-radius:6px;
+                cursor:pointer;
+                ${imageUrls.length === 1 ? "display:none;" : ""}
+              ">◀</button>
+
+            <img src="${imageUrls[0]}"
+                 alt="Defibrillator location"
+                 class="popup-image"
+                 style="width:100%; border-radius:8px; max-height:160px; object-fit:cover; cursor:pointer;">
+
+            <button type="button" class="popup-img-next" aria-label="Next image"
+              style="
+                position:absolute;
+                right:6px;
+                top:50%;
+                transform:translateY(-50%);
+                background:rgba(0,0,0,0.6);
+                color:white;
+                border:none;
+                padding:4px 8px;
+                border-radius:6px;
+                cursor:pointer;
+                ${imageUrls.length === 1 ? "display:none;" : ""}
+              ">▶</button>
+
+          </div>
+        ` : ""}
+
+        <strong>${escapeHtml(aed.name || "Defibrillator")}</strong><br/>
+        <span>${escapeHtml(aed.address || "")}</span><br/>
+        <span style="opacity:.85">${escapeHtml(aed.parish || "")}</span><br/>
+
+        <div style="margin-top:6px">
+          <strong>Status:</strong> ${escapeHtml(aed.status || "Unknown")}
+        </div>
+
+        ${aed.access ? `
+          <div style="margin-top:6px">
+            <strong>Access:</strong> ${escapeHtml(aed.access)}
+          </div>
+        ` : ""}
+
+        <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="${buildGoogleNavLink(aed.lat, aed.lng)}"
+             target="_blank"
+             rel="noopener"
+             class="btn btn-primary"
+             style="text-decoration:none;">
+            Navigate
+          </a>
+        </div>
+
+      </div>
+    `;
 
     // Marker color by status
     let markerColor;
@@ -232,29 +290,60 @@ function renderMarkers(items){
       fillOpacity: 0.95
     }).bindPopup(popupHtml);
 
-     markerRegistry[aed.id] = marker;
-     
-     marker.on("popupopen", () => {
+    markerRegistry[aed.id] = marker;
 
-        const popupEl = document.querySelector(".leaflet-popup-content");
-      
-        if(!popupEl) return;
-      
-        const img = popupEl.querySelector(".popup-image");
-      
-        if(img){
-          img.addEventListener("click", (e) => {
-            e.stopPropagation();
-      
-            const overlay = document.getElementById("imageOverlay");
-            const overlayImg = document.getElementById("overlayImage");
-      
-            overlayImg.src = img.src;
-            overlay.classList.add("active");
-          });
-        }
-      
+    marker.on("popupopen", () => {
+      // IMPORTANT: scope everything to THIS popup element (not document-wide)
+      const popupEl = marker.getPopup()?.getElement();
+      if(!popupEl) return;
+
+      // --- Image overlay click (existing behaviour) ---
+      const img = popupEl.querySelector(".popup-image");
+      if(img && !img.dataset.bound){
+        img.dataset.bound = "1";
+        img.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const overlay = document.getElementById("imageOverlay");
+          const overlayImg = document.getElementById("overlayImage");
+          if(!overlay || !overlayImg) return;
+          overlayImg.src = img.src;
+          overlay.classList.add("active");
+        });
+      }
+
+      // --- Multi-image cycling ---
+      const wrapper = popupEl.querySelector(".popup-image-wrapper");
+      if(!wrapper) return;
+
+      // Avoid duplicate listeners if popup is reopened
+      if(wrapper.dataset.bound === "1") return;
+      wrapper.dataset.bound = "1";
+
+      const urls = decodeUrlsFromAttr(wrapper.getAttribute("data-images"));
+      if(!Array.isArray(urls) || urls.length <= 1) return;
+
+      const prev = wrapper.querySelector(".popup-img-prev");
+      const next = wrapper.querySelector(".popup-img-next");
+      const imageEl = wrapper.querySelector(".popup-image");
+
+      let index = 0;
+
+      const setIndex = (i) => {
+        index = (i + urls.length) % urls.length;
+        wrapper.setAttribute("data-index", String(index));
+        if(imageEl) imageEl.src = urls[index];
+      };
+
+      prev?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setIndex(index - 1);
       });
+
+      next?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setIndex(index + 1);
+      });
+    });
 
     // ✅ FIX: Only scroll results when the marker is clicked (and card exists)
     marker.on("click", () => {
@@ -264,10 +353,6 @@ function renderMarkers(items){
       const cardEl = document.querySelector(`.card[data-aed-id="${aed.id}"]`);
       if(cardEl){
         scrollResultsToCard(cardEl);
-
-        // Optional: visually indicate selection (safe if you add CSS later)
-        // cardEl.classList.add("selected");
-        // setTimeout(()=>cardEl.classList.remove("selected"), 900);
       }
     });
 
@@ -284,9 +369,8 @@ function renderResults(items){
 
   const countEl = document.getElementById("resultsCount");
   if(countEl){
-     countEl.textContent = `${items.length} listed`;
-}
-
+    countEl.textContent = `${items.length} listed`;
+  }
 
   if(items.length === 0){
     list.innerHTML = `<div class="panel-note">No defibrillators match the current filters.</div>`;
@@ -319,18 +403,14 @@ function renderResults(items){
 
       <div class="meta-row">
         <span class="badge ${badgeClass}" data-status="${escapeHtml(status)}" role="button" tabindex="0">
-           ${escapeHtml(status)}
-         </span>
+          ${escapeHtml(status)}
+        </span>
 
-      
         ${aed.parish ? `<span class="meta-parish">${escapeHtml(aed.parish)}</span>` : ""}
-      
         ${aed.address ? `<span class="meta-address">${escapeHtml(aed.address)}</span>` : ""}
-
       </div>
 
       ${aed.access ? `<div class="small"><strong>Access:</strong> ${escapeHtml(aed.access)}</div>` : ""}
-
       ${verifiedText ? `<div class="small">${escapeHtml(verifiedText)}</div>` : ""}
 
       <div class="card-actions" style="margin-top:10px;">
@@ -340,24 +420,23 @@ function renderResults(items){
       </div>
     `;
 
-      // Status badge click handler
-      const statusBadge = card.querySelector(".badge[data-status]");
-      if(statusBadge){
-        const statusText = statusBadge.getAttribute("data-status");
-      
-        statusBadge.addEventListener("click", (e) => {
-          e.stopPropagation();
-          alert(`Defibrillator status is ${statusText}`);
-        });
-      
-        statusBadge.addEventListener("keypress", (e) => {
-          if(e.key === "Enter"){
-            alert(`Defibrillator status is ${statusText}`);
-          }
-        });
-      }
+    // Status badge click handler
+    const statusBadge = card.querySelector(".badge[data-status]");
+    if(statusBadge){
+      const statusText = statusBadge.getAttribute("data-status");
 
-     
+      statusBadge.addEventListener("click", (e) => {
+        e.stopPropagation();
+        alert(`Defibrillator status is ${statusText}`);
+      });
+
+      statusBadge.addEventListener("keypress", (e) => {
+        if(e.key === "Enter"){
+          alert(`Defibrillator status is ${statusText}`);
+        }
+      });
+    }
+
     card.querySelector('button[data-zoom]')?.addEventListener("click", (e) => {
       const [lat, lng] = e.currentTarget.getAttribute("data-zoom").split(",").map(Number);
       map.setView([lat, lng], 16, { animate: true });
@@ -433,6 +512,16 @@ async function fetchAirtable(){
 
   allAEDs = records.map(r => {
     const f = r.fields || {};
+
+    const attachments = Array.isArray(f.Image) ? f.Image : [];
+    const images = attachments
+      .map(a => ({
+        url: a?.url || null,
+        filename: a?.filename || "",
+        type: a?.type || ""
+      }))
+      .filter(x => x.url);
+
     return {
       id: r.id,
       name: f.Name || f.name || "",
@@ -444,9 +533,13 @@ async function fetchAirtable(){
       publicAccess: toBool(f["Public Access"] ?? f.PublicAccess ?? f.public_access),
       access: f["Access Instructions"] || f.Access || f.access_instructions || "",
       lastVerified: normalizeDate(f["Last Verified"] || f.last_verified),
-      imageUrl: Array.isArray(f.Image) && f.Image.length > 0
-        ? f.Image[0].url
-        : null,
+
+      // NEW: store all images (0..n)
+      images,
+
+      // Keep backwards compat in case anything else uses it
+      imageUrl: images.length ? images[0].url : null,
+
       distanceKm: null,
       __nearestCandidate: false
     };
@@ -566,29 +659,19 @@ function findNearestFunctional(){
         if(match) match.__nearestCandidate = true;
 
         // Zoom to user then to nearest (gentle)
-         // Step 1 — fly to user location (1 second animation)
-         map.flyTo([lat, lng], 15, {
-           animate: true,
-           duration: 1.0
-         });
-         
-         // Step 2 — after 1 second pause, move to nearest
-         setTimeout(() => {
-         
-           map.flyTo([nearest.lat, nearest.lng], 16, {
-             animate: true,
-             duration: 1.2
-           });
-         
-           // After fly animation finishes, open popup
-           setTimeout(() => {
-             const marker = markerRegistry[nearest.id];
-             if(marker){
-               marker.openPopup();
-             }
-           }, 1200); // match fly duration
-         
-         }, 2000);
+        map.flyTo([lat, lng], 15, { animate: true, duration: 1.0 });
+
+        setTimeout(() => {
+          map.flyTo([nearest.lat, nearest.lng], 16, { animate: true, duration: 1.2 });
+
+          setTimeout(() => {
+            const marker = markerRegistry[nearest.id];
+            if(marker){
+              marker.openPopup();
+            }
+          }, 1200);
+        }, 2000);
+
       } else {
         alert("No active, publicly accessible defibrillators are currently shown with valid coordinates.");
         map.setView([lat, lng], 15, { animate: true });
@@ -625,20 +708,21 @@ function bindUI(){
 
   $("btnFindNearest").addEventListener("click", findNearestFunctional);
 
-   const iconToggle = document.getElementById("themeIconToggle");
-   if(iconToggle){
-     iconToggle.addEventListener("click", () => {
-       const isGov = document.body.classList.contains("theme-government");
-       setTheme(isGov ? "theme-civic" : "theme-government");
-     });
-   }
+  const iconToggle = document.getElementById("themeIconToggle");
+  if(iconToggle){
+    iconToggle.addEventListener("click", () => {
+      const isGov = document.body.classList.contains("theme-government");
+      setTheme(isGov ? "theme-civic" : "theme-government");
+    });
+  }
 }
 
 const overlay = document.getElementById("imageOverlay");
 if(overlay){
   overlay.addEventListener("click", () => {
     overlay.classList.remove("active");
-    document.getElementById("overlayImage").src = "";
+    const img = document.getElementById("overlayImage");
+    if(img) img.src = "";
   });
 }
 
@@ -655,7 +739,7 @@ async function setUpdatedFromGitHub(){
 
   try {
     const response = await fetch(
-     `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
+      `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
     );
 
     if(!response.ok) throw new Error("GitHub API error");
@@ -678,7 +762,6 @@ async function setUpdatedFromGitHub(){
     el.textContent = "Released (unavailable)";
   }
 }
-
 
 async function main(){
   loadTheme();
