@@ -99,6 +99,20 @@ body{
 }
 .btn:focus{ outline: 3px solid rgba(0,0,0,0.18); outline-offset:2px; }
 
+.buttons-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* Results count styling */
+.results-count{
+  font-size:13px;
+  font-weight:600;
+  opacity:0.75;
+  white-space:nowrap;
+}
+
 .results-count{
   font-size:13px;
   opacity:0.8;
@@ -403,6 +417,20 @@ body{
     font-size:13px;
   }
 
+  .buttons-row{
+    display:flex;
+    gap:8px;
+  }
+
+  .buttons-row .btn{
+    flex:1;
+  }
+
+  .results-count{
+    font-size:12px;
+    opacity:0.7;
+  }
+  
   .select{
     font-size:12px;
     padding:4px 6px;
