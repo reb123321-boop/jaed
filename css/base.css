@@ -459,7 +459,7 @@ body{
   }
 
   #map {
-    height: 45vh;
+    height: 40vh;
   }
 
   #map + * {
