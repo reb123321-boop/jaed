@@ -297,19 +297,26 @@ function renderMarkers(items){
       const popupEl = marker.getPopup()?.getElement();
       if(!popupEl) return;
 
-      // --- Image overlay click (existing behaviour) ---
-      const img = popupEl.querySelector(".popup-image");
-      if(img && !img.dataset.bound){
-        img.dataset.bound = "1";
-        img.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const overlay = document.getElementById("imageOverlay");
-          const overlayImg = document.getElementById("overlayImage");
-          if(!overlay || !overlayImg) return;
-          overlayImg.src = img.src;
-          overlay.classList.add("active");
-        });
-      }
+// --- Image overlay open behaviour ---
+popupEl.querySelectorAll(".popup-image").forEach(img => {
+
+  if(img.dataset.bound === "1") return;
+  img.dataset.bound = "1";
+
+  img.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const overlay = document.getElementById("imageOverlay");
+    const overlayImg = document.getElementById("overlayImage");
+
+    if(!overlay || !overlayImg) return;
+
+    overlayImg.src = img.src;
+    overlay.classList.add("active");
+  });
+
+});
+
 
       // --- Multi-image cycling ---
       const wrapper = popupEl.querySelector(".popup-image-wrapper");
@@ -715,15 +722,22 @@ function bindUI(){
       setTheme(isGov ? "theme-civic" : "theme-government");
     });
   }
-}
-
-const overlay = document.getElementById("imageOverlay");
-if(overlay){
-  overlay.addEventListener("click", () => {
-    overlay.classList.remove("active");
-    const img = document.getElementById("overlayImage");
-    if(img) img.src = "";
-  });
+   // Image overlay close handler
+   const overlay = document.getElementById("imageOverlay");
+   if(overlay){
+     overlay.addEventListener("click", (e) => {
+   
+       // Only close when clicking the dark background,
+       // not when clicking the image itself
+       if(e.target === overlay){
+         overlay.classList.remove("active");
+   
+         const img = document.getElementById("overlayImage");
+         if(img) img.src = "";
+       }
+   
+     });
+   }
 }
 
 function applyThemeFromUrl(){
