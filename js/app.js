@@ -51,7 +51,14 @@ function loadTheme(){
 }
 
 function initMap(){
-  map = L.map("map", { zoomControl: true }).setView(CONFIG.JERSEY_CENTER, CONFIG.JERSEY_ZOOM);
+
+  const isMobile = window.matchMedia("(max-width: 600px)").matches;
+
+  map = L.map("map", { zoomControl: true })
+    .setView(
+      CONFIG.JERSEY_CENTER,
+      isMobile ? CONFIG.JERSEY_ZOOM - 1 : CONFIG.JERSEY_ZOOM
+    );
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
@@ -66,7 +73,6 @@ function initMap(){
   legend.onAdd = function () {
     const div = L.DomUtil.create("div", "map-legend");
 
-    // NOTE: Unknown now uses navy (#0b2e6b) to match badges
     div.innerHTML = `
       <div class="legend-title">Legend</div>
 
