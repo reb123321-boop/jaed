@@ -240,7 +240,7 @@ function renderMarkers(items){
             const overlayImg = document.getElementById("overlayImage");
       
             overlayImg.src = img.src;
-            overlay.hidden = false;
+            overlay.classList.add("active");
           });
         }
       
@@ -597,7 +597,7 @@ function bindUI(){
 const overlay = document.getElementById("imageOverlay");
 if(overlay){
   overlay.addEventListener("click", () => {
-    overlay.hidden = true;
+    overlay.classList.remove("active");
     document.getElementById("overlayImage").src = "";
   });
 }
