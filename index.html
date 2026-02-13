@@ -32,46 +32,44 @@
     </div>
 
     <div class="header-actions">
-      <button id="themeToggle" class="btn btn-secondary" type="button" aria-label="Switch theme">
-        Civic / Formal
-      </button>
     </div>
   </header>
 
   <main class="app-main">
-    <section class="controls" aria-label="Primary actions">
+    <section class="controls">
+    
+      <div class="filters-row">
+        <label class="select">
+          <span>Status</span>
+          <select id="statusFilter">
+            <option value="">All</option>
+            <option value="Active">Active</option>
+            <option value="Out of Service">Out of Service</option>
+            <option value="Unknown">Unknown</option>
+          </select>
+        </label>
+    
+        <label class="select">
+          <span>Parish</span>
+          <select id="parishFilter">
+            <option value="">All</option>
+          </select>
+        </label>
+      </div>
     
       <div class="buttons-row">
+        <div class="results-count" id="resultsCount">0 listed</div>
+    
         <button id="btnFindNearest" class="btn btn-primary" type="button">
           Find Nearest
         </button>
     
-        <a id="btnReportUpdate" class="btn btn-secondary" href="#" target="_blank" rel="noopener noreferrer">
+        <a id="btnReportUpdate" class="btn btn-secondary"
+           href="#" target="_blank" rel="noopener noreferrer">
           Report an Update
         </a>
       </div>
     
-      <div class="filters-row">
-
-    <label class="select">
-      <span>Status</span>
-      <select id="statusFilter">
-        <option value="">All</option>
-        <option value="Active">Active</option>
-        <option value="Out of Service">Out of Service</option>
-        <option value="Unknown">Unknown</option>
-      </select>
-    </label>
-  
-    <label class="select">
-      <span>Parish</span>
-      <select id="parishFilter">
-        <option value="">All</option>
-      </select>
-    </label>
-  
-  </div>
-
     </section>
 
     <section class="content">
