@@ -161,13 +161,14 @@ function renderMarkers(items){
    const popupHtml = `
      <div style="min-width:220px">
    
-       ${aed.imageUrl ? `
-         <div style="margin-bottom:8px;">
-           <img src="${aed.imageUrl}"
-                alt="Defibrillator location"
-                style="width:100%; border-radius:8px; max-height:160px; object-fit:cover;">
-         </div>
-       ` : ""}
+      ${aed.imageUrl ? `
+        <div style="margin-bottom:8px;">
+          <img src="${aed.imageUrl}"
+               alt="Defibrillator location"
+               class="popup-image"
+               style="width:100%; border-radius:8px; max-height:160px; object-fit:cover; cursor:pointer;">
+        </div>
+      ` : ""}
    
        <strong>${escapeHtml(aed.name || "Defibrillator")}</strong><br/>
        <span>${escapeHtml(aed.address || "")}</span><br/>
