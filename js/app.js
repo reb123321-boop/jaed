@@ -665,15 +665,24 @@ async function main(){
 
   try{
     await fetchAirtable();
-  } catch (e){
-    console.error(e);
-    $("resultsList").innerHTML = `
-      <div class="panel-note">
-        <strong>Could not load data.</strong><br/>
-        Check Airtable config in <code>js/app.js</code> (API key/base/table).<br/>
-        ${escapeHtml(e.message)}
-      </div>`;
-  }
+   } catch (e){
+     console.error(e);
+   
+     const list = $("resultsList");
+     if(list){
+       list.innerHTML = `
+         <div class="panel-note">
+           <strong>Could not load data.</strong><br/>
+           Check Airtable config in <code>js/app.js</code> (API key/base/table).<br/>
+           ${escapeHtml(e.message)}
+         </div>`;
+     }
+   
+     const countEl = document.getElementById("resultsCount");
+     if(countEl){
+       countEl.textContent = "0 listed";
+     }
+   }
 }
 
 main();
