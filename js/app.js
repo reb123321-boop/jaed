@@ -303,6 +303,7 @@ function renderResults(items){
     card.className = `card ${isNearest ? "nearest" : ""}`;
     card.setAttribute("data-aed-id", aed.id);
 
+    // Public access badge temporarily disabled
     card.innerHTML = `
       <h3>${
         isNearest
@@ -319,8 +320,6 @@ function renderResults(items){
         ${aed.parish ? `<span class="meta-parish">${escapeHtml(aed.parish)}</span>` : ""}
       
         ${aed.address ? `<span class="meta-address">${escapeHtml(aed.address)}</span>` : ""}
-      
-        ${""}  // Public access badge temporarily disabled
 
       </div>
 
