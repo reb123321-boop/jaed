@@ -457,7 +457,10 @@ body{
     font-size:12px;
     opacity:0.75;
   }
-  
+
+  #map {
+    height: 90%;
+  }
 }
 
 .image-overlay{
