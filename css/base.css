@@ -6,6 +6,10 @@
   --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
 }
 
+html {
+  color-scheme: light;
+}
+
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
 body{
