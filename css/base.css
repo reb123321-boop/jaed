@@ -99,6 +99,12 @@ body{
 }
 .btn:focus{ outline: 3px solid rgba(0,0,0,0.18); outline-offset:2px; }
 
+.results-count{
+  font-size:13px;
+  opacity:0.8;
+  font-weight:600;
+}
+
 .content{
   display:grid;
   grid-template-columns: minmax(280px, 32%) 1fr;
@@ -419,6 +425,11 @@ body{
     display:none;
   }
 
+  .results-count{
+    font-size:12px;
+    opacity:0.75;
+  }
+  
 }
 
 .image-overlay{
