@@ -99,7 +99,7 @@ body{
 }
 .btn:focus{ outline: 3px solid rgba(0,0,0,0.18); outline-offset:2px; }
 
-.buttons-row{
+.s-row{
   display:flex;
   align-items:center;
   gap:10px;
@@ -388,7 +388,7 @@ body{
     gap:8px;
   }
 
-  /* First two children = buttons */
+  /* First two children = s */
   .controls > .btn{
     flex:1 1 calc(50% - 4px);
   }
@@ -417,12 +417,12 @@ body{
     font-size:13px;
   }
 
-  .buttons-row{
+  .s-row{
     display:flex;
     gap:8px;
   }
 
-  .buttons-row .btn{
+  .s-row .btn{
     flex:1;
   }
 
@@ -484,4 +484,8 @@ body{
 /* Hide the Results panel header (keep in DOM so JS doesn't break) */
 .panel-header{
   display: none !important;
+}
+
+button {
+  white-space: nowrap;
 }
