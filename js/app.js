@@ -490,21 +490,6 @@ function setReportUrl(){
   }
 }
 
-function togglePanel(){
-  const panel = $("resultsPanel");
-  const btn = $("panelToggle");
-  const collapsed = panel.classList.toggle("collapsed");
-  btn.setAttribute("aria-expanded", String(!collapsed));
-}
-
-function ensurePanelOpen(){
-  const panel = $("resultsPanel");
-  if(panel.classList.contains("collapsed")){
-    panel.classList.remove("collapsed");
-    $("panelToggle").setAttribute("aria-expanded", "true");
-  }
-}
-
 function addOrUpdateUserMarker(lat, lng){
   const redPinIcon = L.divIcon({
     className: "custom-user-pin",
@@ -528,7 +513,6 @@ function addOrUpdateUserMarker(lat, lng){
 }
 
 function findNearestFunctional(){
-  ensurePanelOpen();
 
   const note = $("geoNote");
   note.innerHTML = `Tip: Click <strong>Find Nearest</strong> to use your location. Your location is not stored.`;
@@ -612,8 +596,6 @@ function escapeHtml(str){
 }
 
 function bindUI(){
-  $("panelToggle").addEventListener("click", togglePanel);
-
   $("parishFilter").addEventListener("change", applyFiltersAndRender);
   $("statusFilter").addEventListener("change", applyFiltersAndRender);
 
