@@ -550,8 +550,19 @@ function findNearestFunctional(){
         if(match) match.__nearestCandidate = true;
 
         // Zoom to user then to nearest (gentle)
-        map.setView([lat, lng], 15, { animate: true });
-        setTimeout(() => map.setView([nearest.lat, nearest.lng], 16, { animate: true }), 600);
+         // Step 1 — fly to user location (1 second animation)
+         map.flyTo([lat, lng], 15, {
+           animate: true,
+           duration: 1.0
+         });
+         
+         // Step 2 — after 1 second pause, move to nearest
+         setTimeout(() => {
+           map.flyTo([nearest.lat, nearest.lng], 16, {
+             animate: true,
+             duration: 1.2
+           });
+         }, 2000); // 1s animation + 1s pause
       } else {
         alert("No active, publicly accessible defibrillators are currently shown with valid coordinates.");
         map.setView([lat, lng], 15, { animate: true });
