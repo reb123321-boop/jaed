@@ -190,19 +190,23 @@ body{
 
 /* ================= CARDS ================= */
 
-.results{ display:flex; flex-direction:column; gap:10px; }
+.results{
+  display:flex;
+  flex-direction:column;
+  gap:8px;               /* was 10px */
+}
 
 .card{
   border: var(--border);
   border-radius: var(--radius);
-  padding:10px;
+  padding:8px 10px;      /* reduced vertical padding */
   box-shadow: var(--shadow);
 }
 
 .card.nearest{ border-width:2px; }
 
 .card h3{
-  margin:0 0 6px 0;
+  margin:0 0 4px 0;      /* was 6px */
   font-size:15px;
 }
 
@@ -215,47 +219,59 @@ body{
   display:flex;
   flex-wrap:wrap;
   align-items:center;
-  gap:8px 10px;
-  margin:6px 0 10px 0;
+  gap:6px 8px;           /* slightly tighter */
+  margin:4px 0 6px 0;    /* reduced */
 }
 
 .badge{
   display:inline-flex;
   align-items:center;
   gap:6px;
-  padding:4px 8px;
+  padding:3px 7px;       /* slightly tighter */
   border-radius:999px;
   font-size:12px;
   font-weight:700;
 }
 
-.badge.status-Active{
-  background:rgba(46,125,50,0.25);
+/* ================= STATUS COLOURS ================= */
+
+.status-Active{
+  background:#e6f4ea;
   color:#2e7d32;
-  border:2px solid #2e7d32;
+  border:1px solid #2e7d32;
 }
 
-.badge.status-Out\ of\ Service{
-  background:rgba(136,136,136,0.25);
-  color:#888;
-  border:2px solid #888;
+.status-Out\ of\ Service{
+  background:#f5f5f5;
+  color:#555;
+  border:1px solid #888;
 }
 
-.badge.status-Unknown{
-  background:rgba(11,46,107,0.25);
+.status-Unknown{
+  background:#e8edf7;
   color:#0b2e6b;
-  border:2px solid #0b2e6b;
+  border:1px solid #0b2e6b;
 }
+
 
 .card-actions{
   display:flex;
   flex-wrap:wrap;
-  gap:8px;
+  gap:6px;               /* was 8px */
+  margin-top:6px;        /* was inline 10px */
 }
 
-.card-actions .btn{ padding:8px 10px; font-size:13px; }
+.card-actions .btn{
+  padding:7px 9px;       /* slightly smaller */
+  font-size:13px;
+}
 
-.small{ font-size:12px; opacity:0.9; margin-top:6px; }
+.small{
+  font-size:12px;
+  opacity:0.9;
+  margin-top:4px;        /* was 6px */
+}
+
 
 /* ================= MAP ================= */
 
@@ -279,13 +295,38 @@ body{
   box-shadow:0 8px 24px rgba(0,0,0,0.15);
   font-size:13px;
   line-height:1.5;
+  min-width:160px;
 }
 
-.legend-title{
+/* Header (Legend + toggle button) */
+.legend-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   font-weight:700;
   margin-bottom:8px;
 }
 
+/* Toggle button */
+.legend-toggle{
+  background:none;
+  border:none;
+  font-size:16px;
+  cursor:pointer;
+  padding:0 4px;
+  line-height:1;
+}
+
+/* When collapsed */
+.map-legend.collapsed .legend-body{
+  display:none;
+}
+
+.map-legend.collapsed .legend-header{
+  margin-bottom:0;
+}
+
+/* Legend rows */
 .legend-item{
   display:flex;
   align-items:center;
@@ -358,6 +399,12 @@ body{
   .buttons-row .btn{
     flex:1 1 0;
   }
+
+  /* Hide Leaflet zoom buttons on mobile/tablet */
+  .leaflet-control-zoom {
+    display: none !important;
+  }
+  
 }
 
 @media (max-width: 600px){
