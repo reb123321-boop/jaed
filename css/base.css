@@ -388,6 +388,10 @@ body{
   .leaflet-control-zoom {
     display: none !important;
   }
+
+  .map-legend .legend-body{
+    display:none;
+  }
   
 }
 
