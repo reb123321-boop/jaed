@@ -406,3 +406,39 @@ body{
 button{ white-space:nowrap; }
 
 .leaflet-container{ background:white !important; }
+
+/* ================= INFO MODAL ================= */
+
+.info-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;              /* HIDDEN BY DEFAULT */
+  align-items:center;
+  justify-content:center;
+  z-index:20000;
+}
+
+.info-modal.active{
+  display:flex;              /* Visible only when JS adds .active */
+}
+
+.info-modal-content{
+  background:white;
+  width:min(90%, 420px);
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.25);
+  position:relative;
+}
+
+.info-close-btn{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:none;
+  border:none;
+  font-size:20px;
+  cursor:pointer;
+}
+
