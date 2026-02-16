@@ -731,13 +731,21 @@ function escapeHtml(str){
 }
 
 function bindUI(){
-  $("panelToggle").addEventListener("click", togglePanel);
 
-  $("parishFilter").addEventListener("change", applyFiltersAndRender);
-  $("statusFilter").addEventListener("change", applyFiltersAndRender);
+  // Panel toggle (only if it exists)
+  const panelToggle = $("panelToggle");
+  if(panelToggle){
+    panelToggle.addEventListener("click", togglePanel);
+  }
 
-  $("btnFindNearest").addEventListener("click", findNearestFunctional);
+  // Filters
+  $("parishFilter")?.addEventListener("change", applyFiltersAndRender);
+  $("statusFilter")?.addEventListener("change", applyFiltersAndRender);
 
+  // Find nearest
+  $("btnFindNearest")?.addEventListener("click", findNearestFunctional);
+
+  // Theme toggle
   const iconToggle = document.getElementById("themeIconToggle");
   if(iconToggle){
     iconToggle.addEventListener("click", () => {
@@ -746,76 +754,67 @@ function bindUI(){
     });
   }
 
-   // --- Info Modal ---
-   const infoBtn = document.getElementById("infoButton");
-   const infoModal = document.getElementById("infoModal");
-   const infoCloseBtn = document.getElementById("infoCloseBtn");
-   
-   if (infoBtn && infoModal) {
-   
-     infoBtn.addEventListener("click", () => {
-       infoModal.classList.add("active");
-     });
-   
-     const closeInfo = () => {
-       infoModal.classList.remove("active");
-     };
-   
-     if (infoCloseBtn) {
-       infoCloseBtn.addEventListener("click", closeInfo);
-     }
-   
-     // Close when clicking backdrop
-     infoModal.addEventListener("click", (e) => {
-       if (e.target === infoModal) {
-         closeInfo();
-       }
-     });
-   
-     // ESC closes
-     document.addEventListener("keydown", (e) => {
-       if (e.key === "Escape") {
-         closeInfo();
-       }
-     });
-   
-   }
+  // --- Info Modal ---
+  const infoBtn = document.getElementById("infoButton");
+  const infoModal = document.getElementById("infoModal");
+  const infoCloseBtn = document.getElementById("infoCloseBtn");
 
+  if(infoBtn && infoModal){
+
+    infoBtn.addEventListener("click", () => {
+      infoModal.classList.add("active");
+    });
+
+    const closeInfo = () => {
+      infoModal.classList.remove("active");
+    };
+
+    infoCloseBtn?.addEventListener("click", closeInfo);
+
+    infoModal.addEventListener("click", (e) => {
+      if(e.target === infoModal){
+        closeInfo();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape"){
+        closeInfo();
+      }
+    });
+  }
 
   // --- Overlay Close Logic ---
-   const overlay = document.getElementById("imageOverlay");
-   const overlayImg = document.getElementById("overlayImage");
-   const closeBtn = document.getElementById("overlayCloseBtn");
-   
-   if(overlay){
-   
-     const closeOverlay = () => {
-       overlay.classList.remove("active");
-       if(overlayImg) overlayImg.src = "";
-     };
-   
-     // Close when clicking ANYWHERE on overlay except the image
-     overlay.addEventListener("click", (e) => {
-       if(!e.target.closest("#overlayImage")){
-         closeOverlay();
-       }
-     });
-   
-     // Close button always closes
-     closeBtn?.addEventListener("click", (e) => {
-       e.stopPropagation();
-       closeOverlay();
-     });
-   
-     // ESC closes
-     document.addEventListener("keydown", (e) => {
-       if(e.key === "Escape"){
-         closeOverlay();
-       }
-     });
-   
-   }
+  const overlay = document.getElementById("imageOverlay");
+  const overlayImg = document.getElementById("overlayImage");
+  const closeBtn = document.getElementById("overlayCloseBtn");
+
+  if(overlay){
+
+    const closeOverlay = () => {
+      overlay.classList.remove("active");
+      if(overlayImg) overlayImg.src = "";
+    };
+
+    overlay.addEventListener("click", (e) => {
+      if(!e.target.closest("#overlayImage")){
+        closeOverlay();
+      }
+    });
+
+    closeBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeOverlay();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape"){
+        closeOverlay();
+      }
+    });
+  }
 }
+
 
 
 function applyThemeFromUrl(){
