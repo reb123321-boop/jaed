@@ -85,21 +85,33 @@ body{
 
 .controls{
   display:flex;
-  flex-wrap:wrap;
+  justify-content:space-between;
   align-items:center;
-  gap:10px;
+  gap:16px;
   margin-bottom:12px;
-}
-
-.controls .results-count{
-  margin-left:auto;
-  margin-right:6px;
+  flex-wrap:wrap;
 }
 
 .filters-row{
   display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.buttons-row{
+  display:flex;
+  align-items:center;
   gap:10px;
 }
+
+.results-count{
+  font-size:13px;
+  font-weight:600;
+  opacity:0.75;
+  white-space:nowrap;
+}
+
+/* SELECTS */
 
 .select{
   display:flex;
@@ -119,6 +131,8 @@ body{
   outline:none;
 }
 
+/* BUTTONS */
+
 .btn{
   display:inline-flex;
   align-items:center;
@@ -131,13 +145,6 @@ body{
   user-select:none;
   font-weight:600;
   font-size:14px;
-}
-
-.results-count{
-  font-size:13px;
-  font-weight:600;
-  opacity:0.75;
-  white-space:nowrap;
 }
 
 /* ================= LAYOUT ================= */
@@ -164,9 +171,6 @@ body{
 /* FULLY REMOVE RESULTS HEADER */
 .panel-header{
   display:none !important;
-  height:0;
-  padding:0;
-  border:0;
 }
 
 .panel-body{
@@ -259,7 +263,7 @@ body{
   border-radius: var(--radius);
   overflow:hidden;
   flex:1;
-  min-height:240px;
+  min-height:300px;
 }
 
 .map{ height:100%; }
@@ -268,16 +272,17 @@ body{
 
 .map-legend{
   background:white;
-  padding:10px 12px;
-  border-radius:10px;
+  padding:12px 14px;
+  border-radius:12px;
   border:1px solid rgba(0,0,0,0.15);
-  box-shadow:0 4px 14px rgba(0,0,0,0.12);
+  box-shadow:0 8px 24px rgba(0,0,0,0.15);
   font-size:13px;
+  line-height:1.5;
 }
 
 .legend-title{
   font-weight:700;
-  margin-bottom:6px;
+  margin-bottom:8px;
 }
 
 .legend-item{
@@ -321,6 +326,21 @@ body{
     grid-template-columns:1fr;
   }
 
+  .controls{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .filters-row{
+    width:100%;
+    flex-wrap:wrap;
+  }
+
+  .buttons-row{
+    width:100%;
+    justify-content:flex-start;
+  }
+
 }
 
 @media (max-width: 600px){
@@ -330,12 +350,6 @@ body{
   .brand-text h1{ font-size:16px; }
 
   .tagline{ display:none; }
-
-  .controls{ gap:8px; }
-
-  .filters-row{ width:100%; gap:8px; }
-
-  .filters-row .select{ flex:1; min-width:0; }
 
   .btn{ padding:8px 10px; font-size:13px; }
 
