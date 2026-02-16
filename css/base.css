@@ -358,6 +358,12 @@ body{
   .buttons-row .btn{
     flex:1 1 0;
   }
+
+  /* Hide Leaflet zoom buttons on mobile/tablet */
+  .leaflet-control-zoom {
+    display: none !important;
+  }
+  
 }
 
 @media (max-width: 600px){
