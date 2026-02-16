@@ -6,17 +6,22 @@
   --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
 }
 
-html {
-  color-scheme: light;
-}
+html { color-scheme: light; }
 
 *{ box-sizing:border-box; }
+
 html,body{ height:100%; }
+
 body{
   margin:0;
   font-family: var(--font);
   line-height:1.35;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
 }
+
+/* ================= HEADER ================= */
 
 .app-header{
   display:flex;
@@ -28,6 +33,7 @@ body{
 }
 
 .brand{ display:flex; align-items:center; gap:12px; }
+
 .aed-icon{
   appearance:none;
   background:none;
@@ -43,10 +49,8 @@ body{
   padding:0;
 }
 
-.brand-text h1{
-  font-size:18px;
-  margin:0;
-}
+.brand-text h1{ font-size:18px; margin:0; }
+
 .tagline{
   margin:2px 0 0 0;
   font-size:13px;
@@ -67,38 +71,7 @@ body{
   cursor:pointer;
 }
 
-.info-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:20000;
-}
-
-.info-modal.active{
-  display:flex;
-}
-
-.info-modal-content{
-  background:white;
-  width:min(90%, 420px);
-  padding:20px;
-  border-radius:14px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.25);
-  position:relative;
-}
-
-.info-close-btn{
-  position:absolute;
-  top:12px;
-  right:12px;
-  background:none;
-  border:none;
-  font-size:20px;
-  cursor:pointer;
-}
+/* ================= MAIN ================= */
 
 .app-main{
   padding:12px;
@@ -108,7 +81,8 @@ body{
   min-height:0;
 }
 
-/* Desktop default */
+/* ================= CONTROLS ================= */
+
 .controls{
   display:flex;
   flex-wrap:wrap;
@@ -117,7 +91,11 @@ body{
   margin-bottom:12px;
 }
 
-/* Filters wrapper (desktop default = inline with others) */
+.controls .results-count{
+  margin-left:auto;
+  margin-right:6px;
+}
+
 .filters-row{
   display:flex;
   gap:10px;
@@ -131,7 +109,9 @@ body{
   border-radius: var(--radius-small);
   padding:8px 10px;
 }
+
 .select span{ font-size:12px; opacity:0.85; }
+
 .select select{
   border:none;
   background:transparent;
@@ -152,15 +132,7 @@ body{
   font-weight:600;
   font-size:14px;
 }
-.btn:focus{ outline: 3px solid rgba(0,0,0,0.18); outline-offset:2px; }
 
-.s-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-/* Results count styling */
 .results-count{
   font-size:13px;
   font-weight:600;
@@ -168,11 +140,7 @@ body{
   white-space:nowrap;
 }
 
-.results-count{
-  font-size:13px;
-  opacity:0.8;
-  font-weight:600;
-}
+/* ================= LAYOUT ================= */
 
 .content{
   display:grid;
@@ -181,6 +149,8 @@ body{
   flex:1;
   min-height:0;
 }
+
+/* ================= PANEL ================= */
 
 .panel{
   border: var(--border);
@@ -191,45 +161,12 @@ body{
   min-height:0;
 }
 
+/* FULLY REMOVE RESULTS HEADER */
 .panel-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:10px 12px;
-  border-bottom: var(--border);
-  gap:10px;
-}
-
-.panel-toggle{
-  border:none;
-  background:transparent;
-  font: inherit;
-  font-weight:800;
-  cursor:pointer;
-  padding:6px 8px;
-  border-radius: var(--radius-small);
-}
-.panel-toggle:focus{ outline: 3px solid rgba(0,0,0,0.18); outline-offset:2px; }
-
-.panel-meta{ font-size:12px; opacity:0.85; }
-
-.meta-text{
-  font-size:13px;
-  opacity:0.9;
-}
-
-.meta-parish{
-  font-size:14px;
-  font-weight:700;
-  display:inline-flex;
-  align-items:center;
-}
-
-.meta-address{
-  font-size:12px;
-  opacity:0.75;
-  display:inline-flex;
-  align-items:center;
+  display:none !important;
+  height:0;
+  padding:0;
+  border:0;
 }
 
 .panel-body{
@@ -246,6 +183,8 @@ body{
   margin-bottom:10px;
 }
 
+/* ================= CARDS ================= */
+
 .results{ display:flex; flex-direction:column; gap:10px; }
 
 .card{
@@ -255,24 +194,22 @@ body{
   box-shadow: var(--shadow);
 }
 
-.card.nearest{
-  border-width:2px;
-}
+.card.nearest{ border-width:2px; }
 
 .card h3{
   margin:0 0 6px 0;
   font-size:15px;
 }
 
-.card.nearest h3 {
-  font-weight: 800;
-  color: #b71c1c; /* dark red */
+.card.nearest h3{
+  font-weight:800;
+  color:#b71c1c;
 }
 
 .meta-row{
   display:flex;
   flex-wrap:wrap;
-  align-items:center;   /* <-- this is the key */
+  align-items:center;
   gap:8px 10px;
   margin:6px 0 10px 0;
 }
@@ -287,27 +224,23 @@ body{
   font-weight:700;
 }
 
-
-/* --- Status Badge Colours (25% tinted fill) --- */
-
 .badge.status-Active{
-  background: rgba(46,125,50,0.25);
-  color: #2e7d32;
-  border: 2px solid #2e7d32;
+  background:rgba(46,125,50,0.25);
+  color:#2e7d32;
+  border:2px solid #2e7d32;
 }
 
 .badge.status-Out\ of\ Service{
-  background: rgba(136,136,136,0.25);
-  color: #888888;
-  border: 2px solid #888888;
+  background:rgba(136,136,136,0.25);
+  color:#888;
+  border:2px solid #888;
 }
 
 .badge.status-Unknown{
-  background: rgba(11,46,107,0.25);
-  color: #0b2e6b;
-  border: 2px solid #0b2e6b;
+  background:rgba(11,46,107,0.25);
+  color:#0b2e6b;
+  border:2px solid #0b2e6b;
 }
-
 
 .card-actions{
   display:flex;
@@ -317,68 +250,21 @@ body{
 
 .card-actions .btn{ padding:8px 10px; font-size:13px; }
 
-.small{
-  font-size:12px;
-  opacity:0.9;
-  margin:6px 0 0 0;
-}
+.small{ font-size:12px; opacity:0.9; margin-top:6px; }
+
+/* ================= MAP ================= */
 
 .map-wrap{
   border: var(--border);
   border-radius: var(--radius);
   overflow:hidden;
   flex:1;
-  min-height:240px;   /* ensures map always visible */
+  min-height:240px;
 }
 
-.map{
-  height:100%;
-}
+.map{ height:100%; }
 
-.app-footer{
-  padding:12px 16px;
-  border-top: var(--border);
-  font-size:12px;
-  opacity:0.9;
-}
-
-.release-meta{
-  font-size:12px;
-  opacity:0.75;
-  margin-bottom:6px;
-}
-
-/* Collapsed panel (desktop) */
-.panel.collapsed .panel-body{ display:none; }
-.panel.collapsed{ min-height: unset; }
-
-.app-footer{
-  display:none;
-}
-
-body{
-  margin:0;
-  font-family: var(--font);
-  line-height:1.35;
-
-  display:flex;
-  flex-direction:column;
-  min-height:100vh;
-}
-
-/* Mobile */
-@media (max-width: 900px){
-  .content{
-    display:grid;              /* keep grid */
-    grid-template-columns: 1fr;  /* stack */
-  }
-
-  .controls-secondary{
-    margin-left:0;
-    width:100%;
-  }
-
-/* --- Map Legend --- */
+/* ================= LEGEND ================= */
 
 .map-legend{
   background:white;
@@ -387,7 +273,6 @@ body{
   border:1px solid rgba(0,0,0,0.15);
   box-shadow:0 4px 14px rgba(0,0,0,0.12);
   font-size:13px;
-  line-height:1.4;
 }
 
 .legend-title{
@@ -398,145 +283,61 @@ body{
 .legend-item{
   display:flex;
   align-items:center;
-  gap:8px;
-  margin-bottom:4px;
+  gap:10px;
+  margin-bottom:6px;
 }
 
-/* Shared icon column */
 .legend-dot,
 .legend-pin-svg,
 .legend-nearest{
-  width:16px;              /* fixed alignment column */
-  display:inline-flex;
+  width:18px;
+  height:18px;
+  display:flex;
   align-items:center;
   justify-content:center;
+  flex-shrink:0;
 }
 
-/* Dot */
 .legend-dot{
-  height:12px;
   border-radius:50%;
-  border:2px solid #ffffff;
+  border:2px solid #fff;
 }
 
-/* Pin */
 .legend-pin-svg svg{
-  width:14px;
-  height:auto;
+  width:16px;
 }
 
-/* Nearest ring */
 .legend-nearest{
-  height:14px;
   border-radius:50%;
   background:white;
   border:3px solid #b71c1c;
 }
 
-.updated-meta{
-  font-size:12px;
-  font-weight:400;
-  margin-left:10px;
-  opacity:0.75;
+/* ================= MOBILE ================= */
+
+@media (max-width: 900px){
+
+  .content{
+    grid-template-columns:1fr;
+  }
+
 }
 
 @media (max-width: 600px){
 
-  /* ---- Header compact ---- */
+  .app-header{ padding:8px 12px; }
 
-  .app-header{
-    padding:8px 12px;
-  }
+  .brand-text h1{ font-size:16px; }
 
-  .brand-text h1{
-    font-size:16px;
-  }
+  .tagline{ display:none; }
 
-  .tagline{
-    display:none;
-  }
+  .controls{ gap:8px; }
 
-  .updated-meta{
-    font-size:11px;
-  }
+  .filters-row{ width:100%; gap:8px; }
 
-  /* ---- Controls layout ---- */
+  .filters-row .select{ flex:1; min-width:0; }
 
-  .controls{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-  }
-
-  /* First two children = s */
-  .controls > .btn{
-    flex:1 1 calc(50% - 4px);
-  }
-
-  /* Filters row should take full width */
-  .filters-row{
-    flex:1 1 100%;
-  }
-
-  /* Filters row */
-  .filters-row{
-    display:flex;
-    gap:8px;
-    width:100%;
-  }
-
-  .filters-row .select{
-    flex:1;
-    min-width:0;
-  }
-
-  /* Compact sizing */
-
-  .btn{
-    padding:8px 10px;
-    font-size:13px;
-  }
-
-  .s-row{
-    display:flex;
-    gap:8px;
-  }
-
-  .s-row .btn{
-    flex:1;
-  }
-
-  .results-count{
-    font-size:12px;
-    opacity:0.7;
-  }
-  
-  .select{
-    font-size:12px;
-    padding:4px 6px;
-  }
-
-  .select span{
-    font-size:10px;
-  }
-
-  .select select{
-    font-size:13px;
-  }
-
-  .panel-header{
-    padding:8px 10px;
-  }
-
-  /* Hide mobile tip */
-  #geoNote{
-    display:none;
-  }
-
-  .results-count{
-    font-size:12px;
-    opacity:0.75;
-  }
+  .btn{ padding:8px 10px; font-size:13px; }
 
   #resultsPanel{
     flex:1;
@@ -544,44 +345,29 @@ body{
     display:flex;
     flex-direction:column;
   }
-  
+
   #panelBody{
     flex:1;
     overflow:auto;
   }
-  
-  #map{
-    height:100%;
-  }
 
-  #map + * {
-    margin-top: 0;
-  }
+  #geoNote{ display:none; }
 
-  .panel:has(#map) {
-    padding-bottom: 0;
-  }
-  
-  #panelBody{
-    flex:1;
-    overflow:auto;
-  }
-  
 }
+
+/* ================= IMAGE OVERLAY ================= */
 
 .image-overlay{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.85);
-  display:none;              /* <-- IMPORTANT */
+  display:none;
   align-items:center;
   justify-content:center;
   z-index:10000;
 }
 
-.image-overlay.active{
-  display:flex;              /* <-- only visible when active */
-}
+.image-overlay.active{ display:flex; }
 
 .image-overlay img{
   max-width:95%;
@@ -611,21 +397,6 @@ body{
   background:rgba(0,0,0,0.8);
 }
 
-/* Hide the Results panel header (keep in DOM so JS doesn't break) */
-.panel-header{
-  display: none !important;
-}
+button{ white-space:nowrap; }
 
-button {
-  white-space: nowrap;
-}
-
-.buttons-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.leaflet-container {
-  background: white !important;
-}
+.leaflet-container{ background:white !important; }
