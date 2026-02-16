@@ -50,26 +50,27 @@ function loadTheme(){
   if(saved === "theme-government" || saved === "theme-civic") setTheme(saved);
 }
 
+function fixMobileMapCenter(){
+  if(!map) return;
+
+  // Re-check at call time (orientation/address bar can change sizes)
+  const isMobileNow = window.matchMedia("(max-width: 600px)").matches;
+  const targetZoom = isMobileNow ? (CONFIG.JERSEY_ZOOM - 1) : CONFIG.JERSEY_ZOOM;
+
+  // Two RAFs ensures DOM/layout has settled before Leaflet recalcs
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      map.invalidateSize(true);
+      map.setView(CONFIG.JERSEY_CENTER, targetZoom, { animate:false });
+    });
+  });
+}
+
 function initMap(){
-
   const isMobile = window.matchMedia("(max-width: 600px)").matches;
+  const startZoom = isMobile ? CONFIG.JERSEY_ZOOM - 1 : CONFIG.JERSEY_ZOOM;
 
-   map = L.map("map", { zoomControl: true });
-   
-   map.setView(
-     CONFIG.JERSEY_CENTER,
-     isMobile ? CONFIG.JERSEY_ZOOM - 1 : CONFIG.JERSEY_ZOOM
-   );
-   
-   // 🔥 Force correct centering after layout settles
-   setTimeout(() => {
-     map.invalidateSize();
-     map.setView(
-       CONFIG.JERSEY_CENTER,
-       isMobile ? CONFIG.JERSEY_ZOOM - 1 : CONFIG.JERSEY_ZOOM,
-       { animate: false }
-     );
-   }, 300);
+  map = L.map("map", { zoomControl: true }).setView(CONFIG.JERSEY_CENTER, startZoom);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
@@ -855,6 +856,10 @@ async function main(){
 
   try{
     await fetchAirtable();
+
+    // Ensure map recentres after data + layout stabilises
+    fixMobileMapCenter();
+
   } catch (e){
     console.error(e);
     $("panelMeta").textContent = "Data load failed";
@@ -865,6 +870,18 @@ async function main(){
         ${escapeHtml(e.message)}
       </div>`;
   }
+
+  // 🔵 Handle mobile viewport settling (address bar animation)
+  window.addEventListener("load", fixMobileMapCenter);
+
+  // 🔵 Handle orientation + resize changes safely
+  window.addEventListener("resize", () => {
+    clearTimeout(window.__mapResizeTimer);
+    window.__mapResizeTimer = setTimeout(() => {
+      fixMobileMapCenter();
+    }, 150);
+  });
 }
 
 main();
+
