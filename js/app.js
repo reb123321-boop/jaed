@@ -91,49 +91,67 @@ function initMap(){
   markersLayer = L.layerGroup().addTo(map);
 
   // --- Legend Control ---
-  const legend = L.control({ position: "bottomright" });
+   const legend = L.control({ position: "bottomright" });
+   
+   legend.onAdd = function () {
+   
+     const container = L.DomUtil.create("div", "map-legend");
+   
+     container.innerHTML = `
+       <div class="legend-header">
+         <span>Legend</span>
+         <button type="button" class="legend-toggle" aria-label="Toggle legend">–</button>
+       </div>
+   
+       <div class="legend-body">
+         <div class="legend-item">
+           <span class="legend-dot" style="background:#2e7d32;"></span>
+           Active
+         </div>
+   
+         <div class="legend-item">
+           <span class="legend-dot" style="background:#888888;"></span>
+           Out of Service
+         </div>
+   
+         <div class="legend-item">
+           <span class="legend-dot" style="background:#0b2e6b;"></span>
+           Unknown
+         </div>
+   
+         <div class="legend-item">
+           <span class="legend-pin-svg">
+             <svg width="18" height="24" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">
+               <path d="M14 1C7 1 2 6 2 13c0 9 12 23 12 23s12-14 12-23C26 6 21 1 14 1z" fill="#c62828"/>
+               <circle cx="14" cy="13" r="4" fill="#ffffff"/>
+             </svg>
+           </span>
+           Your location
+         </div>
+   
+         <div class="legend-item">
+           <span class="legend-nearest"></span>
+           Nearest AED
+         </div>
+       </div>
+     `;
+   
+     L.DomEvent.disableClickPropagation(container);
+   
+     // Toggle logic
+     const toggleBtn = container.querySelector(".legend-toggle");
+     const body = container.querySelector(".legend-body");
+   
+     toggleBtn.addEventListener("click", () => {
+       const collapsed = container.classList.toggle("collapsed");
+       toggleBtn.textContent = collapsed ? "+" : "–";
+     });
+   
+     return container;
+   };
+   
+   legend.addTo(map);
 
-  legend.onAdd = function () {
-    const div = L.DomUtil.create("div", "map-legend");
-
-    div.innerHTML = `
-      <div class="legend-title">Legend</div>
-
-      <div class="legend-item">
-        <span class="legend-dot" style="background:#2e7d32;"></span>
-        Active
-      </div>
-
-      <div class="legend-item">
-        <span class="legend-dot" style="background:#888888;"></span>
-        Out of Service
-      </div>
-
-      <div class="legend-item">
-        <span class="legend-dot" style="background:#0b2e6b;"></span>
-        Unknown
-      </div>
-
-      <div class="legend-item">
-        <span class="legend-pin-svg">
-          <svg width="18" height="24" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14 1C7 1 2 6 2 13c0 9 12 23 12 23s12-14 12-23C26 6 21 1 14 1z" fill="#c62828"/>
-            <circle cx="14" cy="13" r="4" fill="#ffffff"/>
-          </svg>
-        </span>
-        Your location
-      </div>
-
-      <div class="legend-item">
-        <span class="legend-nearest"></span>
-        Nearest AED
-      </div>
-    `;
-
-    return div;
-  };
-
-  legend.addTo(map);
 }
 
 function buildGoogleNavLink(lat, lng){
