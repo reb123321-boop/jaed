@@ -352,15 +352,14 @@ body{
 }
 
 .legend-pin-svg svg{
-  width:12px;
-  height:12px;
+  width:14px;
+  height:14px;
 }
 
 .legend-nearest{
   border-radius:50%;
   background:white;
   border:2px solid #b71c1c;
-  transform: scale(1.25);
 }
 
 /* ================= MOBILE ================= */
@@ -371,10 +370,6 @@ body{
     grid-template-columns:1fr;
   }
 
-  /* Force 2-row layout on mobile:
-     Row 1: Status + Parish + count
-     Row 2: Find Nearest + Fix Info
-  */
   .controls{
     flex-direction:column;
     align-items:stretch;
