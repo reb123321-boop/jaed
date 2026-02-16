@@ -437,11 +437,6 @@ body{
 
 @media (max-width: 600px){
 
-  html, body {
-    height: 100%;
-    overflow: hidden;
-  }
-  
   /* ---- Header compact ---- */
 
   .app-header{
