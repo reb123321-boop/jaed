@@ -33,12 +33,14 @@
     </div>
 
     <div class="header-actions">
+      <button id="infoButton" class="info-btn" aria-label="App information">ℹ️</button>
     </div>
   </header>
 
   <main class="app-main">
     <section class="controls">
     
+      <!-- ROW 1: Filters -->
       <div class="filters-row">
         <label class="select">
           <span>Status</span>
@@ -58,6 +60,7 @@
         </label>
       </div>
     
+      <!-- ROW 2: Count + Buttons -->
       <div class="buttons-row">
         <div class="results-count" id="resultsCount">0 listed</div>
     
@@ -72,7 +75,7 @@
       </div>
     
     </section>
-
+    
     <section class="content">
       <aside class="panel" id="resultsPanel" aria-label="Nearest defibrillators">
         <div class="panel-header">
@@ -98,17 +101,34 @@
   </main>
 
   <footer class="app-footer">
-    <div class="release-meta" id="updatedMeta"></div>
-    <p>
-      This website is a community-led demonstration project and is not an official Government of Jersey service.
-      Location data may not always be current. In a medical emergency, always call <strong>999</strong> immediately
-      and follow the operator’s instructions.
-    </p>
   </footer>
 
   <script src="./js/app.js"></script>
   <div id="imageOverlay" class="image-overlay">
-    <img id="overlayImage" src="" alt="Full size image">
+    <button id="overlayCloseBtn" class="overlay-close-btn" aria-label="Close image">✕</button>
+    <img id="overlayImage" src="" alt="">
   </div>
+  <div id="infoModal" class="info-modal">
+    <div class="info-modal-content">
+      <button id="infoCloseBtn" class="info-close-btn" aria-label="Close info">✕</button>
+  
+      <h2>About This Map</h2>
+  
+      <p id="infoReleaseText"></p>
+
+      <p>
+        This website is a community-led demonstration project and is not an official Government of Jersey service.
+      </p>
+      
+      <p>
+        This map is provided for community awareness purposes only.
+        Always call <strong>999</strong> in an emergency.
+      </p>
+  
+      <p>
+        AED status and availability may change. Please verify on arrival.
+      </p>
+    </div>
+  </div>  
 </body>
 </html>
