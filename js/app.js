@@ -750,38 +750,37 @@ function bindUI(){
    const infoBtn = document.getElementById("infoButton");
    const infoModal = document.getElementById("infoModal");
    const infoCloseBtn = document.getElementById("infoCloseBtn");
-   const infoReleaseText = document.getElementById("infoReleaseText");
    
-   if(infoBtn && infoModal){
+   if (infoBtn && infoModal) {
    
      infoBtn.addEventListener("click", () => {
-   
-       // Pull current release text dynamically
-       const updated = document.getElementById("updatedMeta");
-       if(updated && infoReleaseText){
-         infoReleaseText.textContent = updated.textContent;
-       }
-   
        infoModal.classList.add("active");
      });
    
-     const closeInfo = () => infoModal.classList.remove("active");
+     const closeInfo = () => {
+       infoModal.classList.remove("active");
+     };
    
-     infoCloseBtn?.addEventListener("click", closeInfo);
+     if (infoCloseBtn) {
+       infoCloseBtn.addEventListener("click", closeInfo);
+     }
    
+     // Close when clicking backdrop
      infoModal.addEventListener("click", (e) => {
-       if(e.target === infoModal){
+       if (e.target === infoModal) {
          closeInfo();
        }
      });
    
+     // ESC closes
      document.addEventListener("keydown", (e) => {
-       if(e.key === "Escape"){
+       if (e.key === "Escape") {
          closeInfo();
        }
      });
    
    }
+
 
   // --- Overlay Close Logic ---
    const overlay = document.getElementById("imageOverlay");
