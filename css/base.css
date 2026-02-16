@@ -374,32 +374,32 @@ body{
 
   #geoNote{ display:none; }
 
-  /* Force layout stacking */
+  /* Stack overall control container */
   .controls{
     flex-direction:column;
     align-items:stretch;
-    gap:10px;
+    gap:8px;
   }
 
-  /* Filters always first row */
+  /* Allow filters to wrap */
   .filters-row{
     width:100%;
-    flex-wrap:nowrap;       /* keep Status + Parish on one line */
-    justify-content:space-between;
-  }
-
-  /* Count + buttons second row */
-  .results-count{
-    order:2;
-    align-self:flex-start;
-  }
-
-  .buttons-row{
-    width:100%;
-    order:3;
-    display:flex;
+    flex-wrap:wrap;
     gap:10px;
   }
+
+  /* Force "n listed" to new line */
+  .results-count{
+    flex-basis:100%;
+    margin-top:4px;
+  }
+
+  /* Buttons sit on same row as count */
+  .buttons-row{
+    width:100%;
+    margin-top:-4px;
+  }
+
 }
 
 /* ================= IMAGE OVERLAY ================= */
