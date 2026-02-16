@@ -368,9 +368,12 @@ body{
 /* Mobile */
 @media (max-width: 900px){
   .content{ grid-template-columns: 1fr; }
+
   .map-wrap{
-  min-height: 380px;
-}
+    height: auto;
+    min-height: 0;
+  }
+
   .controls-secondary{ margin-left:0; width:100%; }
 }
 
