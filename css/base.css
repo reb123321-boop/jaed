@@ -279,13 +279,38 @@ body{
   box-shadow:0 8px 24px rgba(0,0,0,0.15);
   font-size:13px;
   line-height:1.5;
+  min-width:160px;
 }
 
-.legend-title{
+/* Header (Legend + toggle button) */
+.legend-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   font-weight:700;
   margin-bottom:8px;
 }
 
+/* Toggle button */
+.legend-toggle{
+  background:none;
+  border:none;
+  font-size:16px;
+  cursor:pointer;
+  padding:0 4px;
+  line-height:1;
+}
+
+/* When collapsed */
+.map-legend.collapsed .legend-body{
+  display:none;
+}
+
+.map-legend.collapsed .legend-header{
+  margin-bottom:0;
+}
+
+/* Legend rows */
 .legend-item{
   display:flex;
   align-items:center;
