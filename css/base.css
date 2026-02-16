@@ -175,12 +175,11 @@ body{
 }
 
 .content{
-  display:flex;
-  flex-direction:column;
+  display:grid;
+  grid-template-columns: minmax(320px, 36%) 1fr;
   gap:12px;
   flex:1;
   min-height:0;
-  height:100%;  
 }
 
 .panel{
@@ -369,10 +368,15 @@ body{
 
 /* Mobile */
 @media (max-width: 900px){
-  .content{ grid-template-columns: 1fr; }
+  .content{
+    display:grid;              /* keep grid */
+    grid-template-columns: 1fr;  /* stack */
+  }
 
-  .controls-secondary{ margin-left:0; width:100%; }
-}
+  .controls-secondary{
+    margin-left:0;
+    width:100%;
+  }
 
 /* --- Map Legend --- */
 
