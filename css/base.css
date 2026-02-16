@@ -401,30 +401,36 @@ body{
   margin-bottom:4px;
 }
 
-.legend-dot{
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  display:inline-block;
-  border:2px solid #ffffff;
-}
-
-.legend-pin-svg{
+/* Shared icon column */
+.legend-dot,
+.legend-pin-svg,
+.legend-nearest{
+  width:16px;              /* fixed alignment column */
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width:18px;
 }
 
-.legend-nearest{
+/* Dot */
+.legend-dot{
+  height:12px;
+  border-radius:50%;
+  border:2px solid #ffffff;
+}
+
+/* Pin */
+.legend-pin-svg svg{
   width:14px;
+  height:auto;
+}
+
+/* Nearest ring */
+.legend-nearest{
   height:14px;
   border-radius:50%;
   background:white;
   border:3px solid #b71c1c;
-  display:inline-block;
 }
-
 
 .updated-meta{
   font-size:12px;
