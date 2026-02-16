@@ -723,6 +723,43 @@ function bindUI(){
     });
   }
 
+   // --- Info Modal ---
+   const infoBtn = document.getElementById("infoButton");
+   const infoModal = document.getElementById("infoModal");
+   const infoCloseBtn = document.getElementById("infoCloseBtn");
+   const infoReleaseText = document.getElementById("infoReleaseText");
+   
+   if(infoBtn && infoModal){
+   
+     infoBtn.addEventListener("click", () => {
+   
+       // Pull current release text dynamically
+       const updated = document.getElementById("updatedMeta");
+       if(updated && infoReleaseText){
+         infoReleaseText.textContent = updated.textContent;
+       }
+   
+       infoModal.classList.add("active");
+     });
+   
+     const closeInfo = () => infoModal.classList.remove("active");
+   
+     infoCloseBtn?.addEventListener("click", closeInfo);
+   
+     infoModal.addEventListener("click", (e) => {
+       if(e.target === infoModal){
+         closeInfo();
+       }
+     });
+   
+     document.addEventListener("keydown", (e) => {
+       if(e.key === "Escape"){
+         closeInfo();
+       }
+     });
+   
+   }
+
   // --- Overlay Close Logic ---
    const overlay = document.getElementById("imageOverlay");
    const overlayImg = document.getElementById("overlayImage");
