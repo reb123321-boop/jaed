@@ -538,7 +538,7 @@ body{
   }
 
   #map {
-    height: 40vh;
+    height: clamp(260px, 42vh, 420px);
   }
 
   #map + * {
