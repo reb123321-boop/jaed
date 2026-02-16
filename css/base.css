@@ -345,6 +345,10 @@ body{
 .panel.collapsed .panel-body{ display:none; }
 .panel.collapsed{ min-height: unset; }
 
+.app-footer{
+  display:none;
+}
+
 /* Mobile */
 @media (max-width: 900px){
   .content{ grid-template-columns: 1fr; }
