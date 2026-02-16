@@ -83,35 +83,34 @@ body{
 
 .controls{
   display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:16px;
+  align-items:center;
+  gap:12px;
   margin-bottom:12px;
   flex-wrap:wrap;
 }
 
-/* Filters row (Status + Parish + count) */
+/* First row = filters */
 .filters-row{
   display:flex;
   align-items:center;
   gap:12px;
-  flex-wrap:nowrap;
+  flex:0 0 auto;
 }
 
-/* Buttons row */
-.buttons-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:nowrap;
-}
-
-/* Count styling */
+/* Count */
 .results-count{
   font-size:13px;
   font-weight:600;
   opacity:0.75;
   white-space:nowrap;
+}
+
+/* Buttons sit directly after count */
+.buttons-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:0 0 auto;
 }
 
 /* SELECTS */
@@ -371,38 +370,36 @@ body{
 
   .tagline{ display:none; }
 
-  /* Shrink filter controls so Status + Parish + "n listed" fit on one row */
+  .btn{ padding:8px 10px; font-size:13px; }
+
+  #geoNote{ display:none; }
+
+  /* Force layout stacking */
+  .controls{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+  }
+
+  /* Filters always first row */
   .filters-row{
-    gap:8px;
+    width:100%;
+    flex-wrap:nowrap;       /* keep Status + Parish on one line */
+    justify-content:space-between;
   }
 
-  .select{
-    gap:6px;
-    padding:6px 8px;
-  }
-
-  .select span{
-    font-size:10px;
-  }
-
-  .select select{
-    font-size:13px;
-  }
-
+  /* Count + buttons second row */
   .results-count{
-    font-size:12px;
+    order:2;
+    align-self:flex-start;
   }
 
   .buttons-row{
-    gap:8px;
+    width:100%;
+    order:3;
+    display:flex;
+    gap:10px;
   }
-
-  .btn{
-    padding:8px 10px;
-    font-size:13px;
-  }
-
-  #geoNote{ display:none; }
 }
 
 /* ================= IMAGE OVERLAY ================= */
