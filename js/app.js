@@ -91,7 +91,7 @@ function initMap(){
   markersLayer = L.layerGroup().addTo(map);
 
   // --- Legend Control ---
-   const legend = L.control({ position: "bottomright" });
+   const legend = L.control({ position: "topright" });
    
    legend.onAdd = function () {
    
