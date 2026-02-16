@@ -83,28 +83,33 @@ body{
 
 /* ================= CONTROLS ================= */
 
+/* FORCE TWO DISTINCT ROWS */
+
 .controls{
   display:flex;
-  align-items:center;
-  gap:16px;
+  flex-direction:column;     /* STACK ROWS */
+  gap:12px;
   margin-bottom:12px;
-  flex-wrap:wrap;
 }
 
-/* Filters */
+/* ROW 1 — FILTERS ONLY */
 
 .filters-row{
   display:flex;
   align-items:center;
   gap:12px;
+  width:100%;
+  flex-wrap:nowrap;          /* KEEP STATUS + PARISH SIDE BY SIDE */
 }
 
-/* Buttons + count */
+/* ROW 2 — COUNT + BUTTONS */
 
 .buttons-row{
   display:flex;
   align-items:center;
   gap:10px;
+  width:100%;
+  flex-wrap:nowrap;
 }
 
 /* Count styling */
@@ -330,18 +335,13 @@ body{
     grid-template-columns:1fr;
   }
 
-  .controls{
-    flex-direction:column;
-    align-items:flex-start;
-  }
+  /* Still keep 2 clean rows on mobile */
 
   .filters-row{
-    width:100%;
     flex-wrap:wrap;
   }
 
   .buttons-row{
-    width:100%;
     flex-wrap:wrap;
   }
 
@@ -413,14 +413,14 @@ button{ white-space:nowrap; }
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.6);
-  display:none;              /* HIDDEN BY DEFAULT */
+  display:none;
   align-items:center;
   justify-content:center;
   z-index:20000;
 }
 
 .info-modal.active{
-  display:flex;              /* Visible only when JS adds .active */
+  display:flex;
 }
 
 .info-modal-content{
@@ -441,4 +441,3 @@ button{ white-space:nowrap; }
   font-size:20px;
   cursor:pointer;
 }
-
