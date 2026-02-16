@@ -7,9 +7,7 @@
 }
 
 html { color-scheme: light; }
-
 *{ box-sizing:border-box; }
-
 html,body{ height:100%; }
 
 body{
@@ -83,37 +81,32 @@ body{
 
 /* ================= CONTROLS ================= */
 
-/* FORCE TWO DISTINCT ROWS */
-
 .controls{
   display:flex;
-  flex-direction:column;     /* STACK ROWS */
-  gap:12px;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
   margin-bottom:12px;
+  flex-wrap:wrap;
 }
 
-/* ROW 1 — FILTERS ONLY */
-
+/* Filters row (Status + Parish + count) */
 .filters-row{
   display:flex;
   align-items:center;
   gap:12px;
-  width:100%;
-  flex-wrap:nowrap;          /* KEEP STATUS + PARISH SIDE BY SIDE */
+  flex-wrap:nowrap;
 }
 
-/* ROW 2 — COUNT + BUTTONS */
-
+/* Buttons row */
 .buttons-row{
   display:flex;
   align-items:center;
   gap:10px;
-  width:100%;
   flex-wrap:nowrap;
 }
 
 /* Count styling */
-
 .results-count{
   font-size:13px;
   font-weight:600;
@@ -130,6 +123,7 @@ body{
   border: var(--border);
   border-radius: var(--radius-small);
   padding:8px 10px;
+  min-width:0;
 }
 
 .select span{ font-size:12px; opacity:0.85; }
@@ -139,6 +133,7 @@ body{
   background:transparent;
   font: inherit;
   outline:none;
+  min-width:0;
 }
 
 /* BUTTONS */
@@ -335,16 +330,37 @@ body{
     grid-template-columns:1fr;
   }
 
-  /* Still keep 2 clean rows on mobile */
+  /* Force 2-row layout on mobile:
+     Row 1: Status + Parish + count
+     Row 2: Find Nearest + Fix Info
+  */
+  .controls{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+  }
 
   .filters-row{
-    flex-wrap:wrap;
+    width:100%;
+    flex-wrap:nowrap;
+  }
+
+  .select{
+    flex:1 1 0;
+  }
+
+  .results-count{
+    flex:0 0 auto;
   }
 
   .buttons-row{
-    flex-wrap:wrap;
+    width:100%;
+    flex-wrap:nowrap;
   }
 
+  .buttons-row .btn{
+    flex:1 1 0;
+  }
 }
 
 @media (max-width: 600px){
@@ -355,10 +371,38 @@ body{
 
   .tagline{ display:none; }
 
-  .btn{ padding:8px 10px; font-size:13px; }
+  /* Shrink filter controls so Status + Parish + "n listed" fit on one row */
+  .filters-row{
+    gap:8px;
+  }
+
+  .select{
+    gap:6px;
+    padding:6px 8px;
+  }
+
+  .select span{
+    font-size:10px;
+  }
+
+  .select select{
+    font-size:13px;
+  }
+
+  .results-count{
+    font-size:12px;
+  }
+
+  .buttons-row{
+    gap:8px;
+  }
+
+  .btn{
+    padding:8px 10px;
+    font-size:13px;
+  }
 
   #geoNote{ display:none; }
-
 }
 
 /* ================= IMAGE OVERLAY ================= */
@@ -413,14 +457,14 @@ button{ white-space:nowrap; }
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.6);
-  display:none;
+  display:none;              /* HIDDEN BY DEFAULT */
   align-items:center;
   justify-content:center;
   z-index:20000;
 }
 
 .info-modal.active{
-  display:flex;
+  display:flex;              /* Visible only when JS adds .active */
 }
 
 .info-modal-content{
