@@ -50,6 +50,17 @@ function loadTheme(){
   if(saved === "theme-government" || saved === "theme-civic") setTheme(saved);
 }
 
+function forceMapResize(){
+  if(!map) return;
+
+  map.invalidateSize(true);
+
+  // Only recenter on mobile
+  if(window.matchMedia("(max-width: 768px)").matches){
+    map.setView(CONFIG.JERSEY_CENTER, CONFIG.JERSEY_ZOOM - 1);
+  }
+}
+
 function fixMobileMapCenter(){
   if(!map) return;
 
@@ -856,10 +867,7 @@ async function main(){
 
   try{
     await fetchAirtable();
-
-    // Ensure map recentres after data + layout stabilises
-    fixMobileMapCenter();
-
+    forceMapResize();
   } catch (e){
     console.error(e);
     $("panelMeta").textContent = "Data load failed";
@@ -871,17 +879,21 @@ async function main(){
       </div>`;
   }
 
-  // 🔵 Handle mobile viewport settling (address bar animation)
-  window.addEventListener("load", fixMobileMapCenter);
+  window.addEventListener("load", forceMapResize);
 
-  // 🔵 Handle orientation + resize changes safely
   window.addEventListener("resize", () => {
     clearTimeout(window.__mapResizeTimer);
-    window.__mapResizeTimer = setTimeout(() => {
-      fixMobileMapCenter();
-    }, 150);
+    window.__mapResizeTimer = setTimeout(forceMapResize, 150);
   });
+
+  if(window.visualViewport){
+    window.visualViewport.addEventListener("resize", () => {
+      clearTimeout(window.__vvTimer);
+      window.__vvTimer = setTimeout(forceMapResize, 120);
+    });
+  }
 }
 
 main();
+
 
