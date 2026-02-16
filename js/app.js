@@ -54,11 +54,22 @@ function initMap(){
 
   const isMobile = window.matchMedia("(max-width: 600px)").matches;
 
-  map = L.map("map", { zoomControl: true })
-    .setView(
-      CONFIG.JERSEY_CENTER,
-      isMobile ? CONFIG.JERSEY_ZOOM - 1 : CONFIG.JERSEY_ZOOM
-    );
+   map = L.map("map", { zoomControl: true });
+   
+   map.setView(
+     CONFIG.JERSEY_CENTER,
+     isMobile ? CONFIG.JERSEY_ZOOM - 1 : CONFIG.JERSEY_ZOOM
+   );
+   
+   // 🔥 Force correct centering after layout settles
+   setTimeout(() => {
+     map.invalidateSize();
+     map.setView(
+       CONFIG.JERSEY_CENTER,
+       isMobile ? CONFIG.JERSEY_ZOOM - 1 : CONFIG.JERSEY_ZOOM,
+       { animate: false }
+     );
+   }, 300);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
