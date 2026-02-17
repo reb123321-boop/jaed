@@ -338,26 +338,65 @@ function renderMarkers(items){
       const popupEl = marker.getPopup()?.getElement();
       if(!popupEl) return;
 
-// --- Image overlay open behaviour ---
-popupEl.querySelectorAll(".popup-image").forEach(img => {
-
-  if(img.dataset.bound === "1") return;
-  img.dataset.bound = "1";
-
-  img.addEventListener("click", (e) => {
-    e.stopPropagation();
-
-    const overlay = document.getElementById("imageOverlay");
-    const overlayImg = document.getElementById("overlayImage");
-
-    if(!overlay || !overlayImg) return;
-
-    overlayImg.src = img.src;
-    overlay.classList.add("active");
-  });
-
-});
-
+   // --- Image overlay open behaviour ---
+   popupEl.querySelectorAll(".popup-image").forEach(img => {
+   
+     if(img.dataset.bound === "1") return;
+     img.dataset.bound = "1";
+   
+     img.addEventListener("click", (e) => {
+       e.stopPropagation();
+   
+       const overlay = document.getElementById("imageOverlay");
+       const overlayImg = document.getElementById("overlayImage");
+   
+       if(!overlay || !overlayImg) return;
+   
+       overlayImg.src = img.src;
+       overlay.classList.add("active");
+     });
+   
+   });
+   
+   // --- Image overlay close behaviour (global, bind once) ---
+   const overlay = document.getElementById("imageOverlay");
+   const overlayImg = document.getElementById("overlayImage");
+   const overlayClose = document.getElementById("overlayCloseBtn");
+   
+   if(overlay && overlayImg){
+   
+     // Click outside image closes
+     overlay.addEventListener("click", (e) => {
+       if(e.target === overlay){
+         overlay.classList.remove("active");
+         overlayImg.src = "";
+       }
+     });
+   
+     // Click on image closes (mobile friendly)
+     overlayImg.addEventListener("click", (e) => {
+       e.stopPropagation();
+       overlay.classList.remove("active");
+       overlayImg.src = "";
+     });
+   
+     // Close button
+     overlayClose?.addEventListener("click", (e) => {
+       e.stopPropagation();
+       overlay.classList.remove("active");
+       overlayImg.src = "";
+     });
+   
+     // Escape key closes
+     document.addEventListener("keydown", (e) => {
+       if(e.key === "Escape" && overlay.classList.contains("active")){
+         overlay.classList.remove("active");
+         overlayImg.src = "";
+       }
+     });
+   
+   }
+       
 
       // --- Multi-image cycling ---
       const wrapper = popupEl.querySelector(".popup-image-wrapper");
