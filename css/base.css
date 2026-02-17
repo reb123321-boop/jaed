@@ -33,6 +33,12 @@ body{
   border-bottom: var(--border);
 }
 
+.app-logo{
+  width:24px;
+  height:24px;
+  display:block;
+}
+
 .brand{ display:flex; align-items:center; gap:12px; }
 
 .aed-icon{
