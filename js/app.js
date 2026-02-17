@@ -945,27 +945,27 @@ function openImageOverlay(images, startIndex = 0){
 
   if (!overlay || !overlayImg) return;
 
-  // Set state
   overlayImages = images;
   overlayIndex = Math.max(0, Math.min(startIndex, images.length - 1));
 
-  // Show current image
   overlayImg.src = overlayImages[overlayIndex];
   overlay.classList.add("active");
 
   const hasMultiple = overlayImages.length > 1;
 
-  // Show / hide buttons properly
+  // 🔑 Force visibility on open
   if (prevBtn && nextBtn) {
-    prevBtn.style.display = hasMultiple ? "flex" : "none";
-    nextBtn.style.display = hasMultiple ? "flex" : "none";
+    if (hasMultiple) {
+      prevBtn.classList.remove("hidden");
+      nextBtn.classList.remove("hidden");
+    } else {
+      prevBtn.classList.add("hidden");
+      nextBtn.classList.add("hidden");
+    }
 
-    // Boundary hiding
-    prevBtn.style.display =
-      hasMultiple && overlayIndex > 0 ? "flex" : "none";
-
-    nextBtn.style.display =
-      hasMultiple && overlayIndex < overlayImages.length - 1 ? "flex" : "none";
+    // Boundary rules
+    if (overlayIndex === 0) prevBtn.classList.add("hidden");
+    if (overlayIndex === overlayImages.length - 1) nextBtn.classList.add("hidden");
   }
 }
 
