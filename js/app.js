@@ -811,35 +811,41 @@ function bindUI(){
     });
   }
 
-  // --- Info Modal ---
-  const infoBtn = document.getElementById("infoButton");
-  const infoModal = document.getElementById("infoModal");
-  const infoCloseBtn = document.getElementById("infoCloseBtn");
-
-  if(infoBtn && infoModal){
-
-    infoBtn.addEventListener("click", () => {
-      infoModal.classList.add("active");
-    });
-
-    const closeInfo = () => {
-      infoModal.classList.remove("active");
-    };
-
-    infoCloseBtn?.addEventListener("click", closeInfo);
-
-    infoModal.addEventListener("click", (e) => {
-      if(e.target === infoModal){
-        closeInfo();
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape"){
-        closeInfo();
-      }
-    });
-  }
+   // --- Info Modal ---
+   document.addEventListener("DOMContentLoaded", () => {
+   
+     const infoBtn = document.getElementById("infoButton");
+     const infoModal = document.getElementById("infoModal");
+     const infoCloseBtn = document.getElementById("infoCloseBtn");
+   
+     if(!infoBtn || !infoModal){
+       console.warn("Info modal elements not found");
+       return;
+     }
+   
+     const closeInfo = () => {
+       infoModal.classList.remove("active");
+     };
+   
+     infoBtn.addEventListener("click", () => {
+       infoModal.classList.add("active");
+     });
+   
+     infoCloseBtn?.addEventListener("click", closeInfo);
+   
+     infoModal.addEventListener("click", (e) => {
+       if(e.target === infoModal){
+         closeInfo();
+       }
+     });
+   
+     document.addEventListener("keydown", (e) => {
+       if(e.key === "Escape"){
+         closeInfo();
+       }
+     });
+   
+   });
 
   // --- Overlay Close Logic ---
   const overlay = document.getElementById("imageOverlay");
