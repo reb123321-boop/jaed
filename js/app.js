@@ -36,6 +36,11 @@ let lastUserLocation = null;
 let overlayImages = [];
 let overlayIndex = 0;
 
+const overlay = document.getElementById("imageOverlay");
+const overlayImg = document.getElementById("overlayImage");
+const overlayPrev = document.querySelector(".overlay-prev");
+const overlayNext = document.querySelector(".overlay-next");
+
 function $(id){ return document.getElementById(id); }
 
 function setTheme(themeName){
