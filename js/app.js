@@ -951,4 +951,22 @@ async function main(){
 
 main();
 
+// --- Branch badge (GitHub Pages) ---
+(async () => {
+  try {
+    const res = await fetch("version.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("version.json not found");
+
+    const data = await res.json();
+
+    const badge = document.createElement("div");
+    badge.className = `branch-badge ${data.branch.replace("/", "-")}`;
+    badge.textContent = data.branch;
+
+    document.body.appendChild(badge);
+  } catch (e) {
+    // Silently ignore if not present (safe on prod)
+    console.warn("Branch badge unavailable");
+  }
+})();
 
