@@ -33,6 +33,9 @@ let allAEDs = [];      // raw
 let visibleAEDs = [];  // filtered
 let lastUserLocation = null;
 
+let overlayImages = [];
+let overlayIndex = 0;
+
 function $(id){ return document.getElementById(id); }
 
 function setTheme(themeName){
@@ -341,7 +344,7 @@ function renderMarkers(items){
    // --- Image overlay open behaviour ---
    popupEl.querySelectorAll(".popup-image").forEach(img => {
    
-     if(img.dataset.bound === "1") return;
+     if (img.dataset.bound === "1") return;
      img.dataset.bound = "1";
    
      img.addEventListener("click", (e) => {
@@ -350,14 +353,23 @@ function renderMarkers(items){
        const overlay = document.getElementById("imageOverlay");
        const overlayImg = document.getElementById("overlayImage");
    
-       if(!overlay || !overlayImg) return;
+       if (!overlay || !overlayImg) return;
    
-       overlayImg.src = img.src;
-       overlay.classList.add("active");
+       const wrapper = img.closest(".popup-image-wrapper");
+   
+       const imagesFromThisPopup = wrapper
+         ? decodeUrlsFromAttr(wrapper.dataset.images)
+         : [img.src];
+   
+       const index = wrapper
+         ? parseInt(wrapper.dataset.index || "0", 10)
+         : 0;
+   
+       openImageOverlay(imagesFromThisPopup, index);
      });
    
    });
-   
+
    // --- Image overlay close behaviour (global, bind once) ---
    const overlay = document.getElementById("imageOverlay");
    const overlayImg = document.getElementById("overlayImage");
@@ -915,6 +927,15 @@ async function setUpdatedFromGitHub(){
     console.error("Could not fetch commit info:", error);
     el.textContent = "Released (unavailable)";
   }
+}
+
+function openImageOverlay(images, startIndex = 0) {
+  overlayImages = images;
+  overlayIndex = startIndex;
+
+  overlayImg.src = overlayImages[overlayIndex];
+  overlay.classList.add("active");
+  updateOverlayNav();
 }
 
 async function main(){
