@@ -33,6 +33,9 @@ let allAEDs = [];      // raw
 let visibleAEDs = [];  // filtered
 let lastUserLocation = null;
 
+let overlayImages = [];
+let overlayIndex = 0;
+
 function $(id){ return document.getElementById(id); }
 
 function setTheme(themeName){
@@ -341,23 +344,38 @@ function renderMarkers(items){
    // --- Image overlay open behaviour ---
    popupEl.querySelectorAll(".popup-image").forEach(img => {
    
-     if(img.dataset.bound === "1") return;
+     if (img.dataset.bound === "1") return;
      img.dataset.bound = "1";
    
      img.addEventListener("click", (e) => {
        e.stopPropagation();
+
+       const wrapper = img.closest(".popup-image-wrapper");
    
-       const overlay = document.getElementById("imageOverlay");
-       const overlayImg = document.getElementById("overlayImage");
+       let imagesFromThisPopup = [];
+       let index = 0;
    
-       if(!overlay || !overlayImg) return;
+       if (wrapper && wrapper.dataset.images) {
+         imagesFromThisPopup = decodeUrlsFromAttr(wrapper.dataset.images);
+         index = parseInt(wrapper.dataset.index || "0", 10) || 0;
+       }
+
+          // ✅ LOGS GO HERE (after variables exist)
+           console.log("WRAPPER:", wrapper);
+           console.log("DATA-IMAGES:", wrapper?.dataset.images);
+           console.log("DECODED:", imagesFromThisPopup);
    
-       overlayImg.src = img.src;
-       overlay.classList.add("active");
+       // 🔑 SAFETY NET: always open at least the clicked image
+       if (!Array.isArray(imagesFromThisPopup) || imagesFromThisPopup.length === 0) {
+         imagesFromThisPopup = [img.src];
+         index = 0;
+       }
+   
+       openImageOverlay(imagesFromThisPopup, index);
      });
    
    });
-   
+
    // --- Image overlay close behaviour (global, bind once) ---
    const overlay = document.getElementById("imageOverlay");
    const overlayImg = document.getElementById("overlayImage");
@@ -917,6 +935,76 @@ async function setUpdatedFromGitHub(){
   }
 }
 
+function openImageOverlay(images, startIndex = 0){
+  if (!Array.isArray(images) || images.length === 0) return;
+
+  const overlay = document.getElementById("imageOverlay");
+  const overlayImg = document.getElementById("overlayImage");
+  const prevBtn = document.getElementById("overlayPrevBtn");
+  const nextBtn = document.getElementById("overlayNextBtn");
+
+  if (!overlay || !overlayImg) return;
+
+  overlayImages = images;
+  overlayIndex = Math.max(0, Math.min(startIndex, images.length - 1));
+
+  overlayImg.src = overlayImages[overlayIndex];
+  overlay.classList.add("active");
+
+  const hasMultiple = overlayImages.length > 1;
+
+  // 🔑 Force visibility on open
+  if (prevBtn && nextBtn) {
+    if (hasMultiple) {
+      prevBtn.classList.remove("hidden");
+      nextBtn.classList.remove("hidden");
+    } else {
+      prevBtn.classList.add("hidden");
+      nextBtn.classList.add("hidden");
+    }
+
+    // Boundary rules
+    if (overlayIndex === 0) prevBtn.classList.add("hidden");
+    if (overlayIndex === overlayImages.length - 1) nextBtn.classList.add("hidden");
+  }
+}
+
+const overlayPrevBtn = document.getElementById("overlayPrevBtn");
+const overlayNextBtn = document.getElementById("overlayNextBtn");
+const overlayImg = document.getElementById("overlayImage");
+
+function updateOverlayNavButtons(){
+  const hasMultiple = overlayImages.length > 1;
+
+  if (!overlayPrevBtn || !overlayNextBtn) return;
+
+  overlayPrevBtn.style.display =
+    hasMultiple && overlayIndex > 0 ? "flex" : "none";
+
+  overlayNextBtn.style.display =
+    hasMultiple && overlayIndex < overlayImages.length - 1 ? "flex" : "none";
+}
+
+overlayPrevBtn?.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  if (overlayIndex > 0) {
+    overlayIndex--;
+    overlayImg.src = overlayImages[overlayIndex];
+    updateOverlayNavButtons();
+  }
+});
+
+overlayNextBtn?.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  if (overlayIndex < overlayImages.length - 1) {
+    overlayIndex++;
+    overlayImg.src = overlayImages[overlayIndex];
+    updateOverlayNavButtons();
+  }
+});
+   
 async function main(){
   loadTheme();
   applyThemeFromUrl();

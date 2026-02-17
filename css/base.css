@@ -463,6 +463,30 @@ body{
   box-shadow:0 10px 40px rgba(0,0,0,0.4);
 }
 
+.overlay-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.6);
+  color:white;
+  border:none;
+  font-size:32px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:5;
+  pointer-events:auto;
+}
+
+.overlay-prev{ left:16px; }
+.overlay-next{ right:16px; }
+
+.hidden{ display:none !important; }
+
 .overlay-close-btn{
   position:absolute;
   top:16px;
