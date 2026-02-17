@@ -349,7 +349,11 @@ function renderMarkers(items){
    
      img.addEventListener("click", (e) => {
        e.stopPropagation();
-   
+
+        console.log("WRAPPER:", wrapper);
+        console.log("DATA-IMAGES:", wrapper?.dataset.images);
+        console.log("DECODED:", imagesFromThisPopup);
+
        const wrapper = img.closest(".popup-image-wrapper");
    
        let imagesFromThisPopup = [];
