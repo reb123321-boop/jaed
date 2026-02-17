@@ -350,10 +350,6 @@ function renderMarkers(items){
      img.addEventListener("click", (e) => {
        e.stopPropagation();
 
-        console.log("WRAPPER:", wrapper);
-        console.log("DATA-IMAGES:", wrapper?.dataset.images);
-        console.log("DECODED:", imagesFromThisPopup);
-
        const wrapper = img.closest(".popup-image-wrapper");
    
        let imagesFromThisPopup = [];
@@ -363,6 +359,11 @@ function renderMarkers(items){
          imagesFromThisPopup = decodeUrlsFromAttr(wrapper.dataset.images);
          index = parseInt(wrapper.dataset.index || "0", 10) || 0;
        }
+
+          // ✅ LOGS GO HERE (after variables exist)
+           console.log("WRAPPER:", wrapper);
+           console.log("DATA-IMAGES:", wrapper?.dataset.images);
+           console.log("DECODED:", imagesFromThisPopup);
    
        // 🔑 SAFETY NET: always open at least the clicked image
        if (!Array.isArray(imagesFromThisPopup) || imagesFromThisPopup.length === 0) {
