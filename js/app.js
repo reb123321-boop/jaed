@@ -36,11 +36,6 @@ let lastUserLocation = null;
 let overlayImages = [];
 let overlayIndex = 0;
 
-const overlay = document.getElementById("imageOverlay");
-const overlayImg = document.getElementById("overlayImage");
-const overlayPrev = document.querySelector(".overlay-prev");
-const overlayNext = document.querySelector(".overlay-next");
-
 function $(id){ return document.getElementById(id); }
 
 function setTheme(themeName){
@@ -935,13 +930,27 @@ async function setUpdatedFromGitHub(){
   }
 }
 
-function openImageOverlay(images, startIndex = 0) {
+function openImageOverlay(images, startIndex = 0){
+  if(!Array.isArray(images) || images.length === 0) return;
+
+  const overlay = document.getElementById("imageOverlay");
+  const overlayImg = document.getElementById("overlayImage");
+  const overlayPrev = document.querySelector(".overlay-prev");
+  const overlayNext = document.querySelector(".overlay-next");
+
+  if(!overlay || !overlayImg) return;
+
   overlayImages = images;
-  overlayIndex = startIndex;
+  overlayIndex = Math.max(0, Math.min(startIndex, images.length - 1));
 
   overlayImg.src = overlayImages[overlayIndex];
   overlay.classList.add("active");
-  updateOverlayNav();
+
+  // Update nav buttons
+  const multi = overlayImages.length > 1;
+
+  overlayPrev?.classList.toggle("hidden", !multi || overlayIndex === 0);
+  overlayNext?.classList.toggle("hidden", !multi || overlayIndex === overlayImages.length - 1);
 }
 
 async function main(){
