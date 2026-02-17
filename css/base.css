@@ -509,3 +509,24 @@ button{ white-space:nowrap; }
   font-size:20px;
   cursor:pointer;
 }
+
+.build-info{
+  margin: 6px 0 10px;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.build-info-row{
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+
+/* Colour hints */
+.build-info-row.feature-dev{
+  color:#664d03;
+}
+
+.build-info-row.main{
+  color:#084298;
+}
