@@ -936,28 +936,51 @@ async function setUpdatedFromGitHub(){
 }
 
 function openImageOverlay(images, startIndex = 0){
-  if(!Array.isArray(images) || images.length === 0) return;
+  // Defensive checks
+  if (!Array.isArray(images) || images.length === 0) return;
 
   const overlay = document.getElementById("imageOverlay");
   const overlayImg = document.getElementById("overlayImage");
   const overlayPrev = document.querySelector(".overlay-prev");
   const overlayNext = document.querySelector(".overlay-next");
 
-  if(!overlay || !overlayImg) return;
+  if (!overlay || !overlayImg) return;
 
+  // Set state
   overlayImages = images;
   overlayIndex = Math.max(0, Math.min(startIndex, images.length - 1));
 
+  // Show image
   overlayImg.src = overlayImages[overlayIndex];
   overlay.classList.add("active");
 
-  // Update nav buttons
-  const multi = overlayImages.length > 1;
+  const hasMultiple = overlayImages.length > 1;
 
-  overlayPrev?.classList.toggle("hidden", !multi || overlayIndex === 0);
-  overlayNext?.classList.toggle("hidden", !multi || overlayIndex === overlayImages.length - 1);
+  // Explicitly show/hide nav buttons
+  if (overlayPrev && overlayNext) {
+    if (hasMultiple) {
+      overlayPrev.classList.remove("hidden");
+      overlayNext.classList.remove("hidden");
+    } else {
+      overlayPrev.classList.add("hidden");
+      overlayNext.classList.add("hidden");
+    }
+  }
+
+  // Hide prev at first image
+  if (overlayPrev) {
+    overlayPrev.classList.toggle("hidden", overlayIndex === 0);
+  }
+
+  // Hide next at last image
+  if (overlayNext) {
+    overlayNext.classList.toggle(
+      "hidden",
+      overlayIndex === overlayImages.length - 1
+    );
+  }
 }
-
+   
 async function main(){
   loadTheme();
   applyThemeFromUrl();
