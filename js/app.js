@@ -954,19 +954,13 @@ function openImageOverlay(images, startIndex = 0){
   const hasMultiple = overlayImages.length > 1;
 
   // 🔑 Force visibility on open
-  if (prevBtn && nextBtn) {
-    if (hasMultiple) {
-      prevBtn.classList.remove("hidden");
-      nextBtn.classList.remove("hidden");
-    } else {
-      prevBtn.classList.add("hidden");
-      nextBtn.classList.add("hidden");
-    }
-
-    // Boundary rules
-    if (overlayIndex === 0) prevBtn.classList.add("hidden");
-    if (overlayIndex === overlayImages.length - 1) nextBtn.classList.add("hidden");
-  }
+   if (prevBtn && nextBtn) {
+     prevBtn.style.display =
+       hasMultiple && overlayIndex > 0 ? "flex" : "none";
+   
+     nextBtn.style.display =
+       hasMultiple && overlayIndex < overlayImages.length - 1 ? "flex" : "none";
+   }
 }
 
 const overlayPrevBtn = document.getElementById("overlayPrevBtn");
