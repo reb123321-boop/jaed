@@ -936,13 +936,12 @@ async function setUpdatedFromGitHub(){
 }
 
 function openImageOverlay(images, startIndex = 0){
-  // Defensive checks
   if (!Array.isArray(images) || images.length === 0) return;
 
   const overlay = document.getElementById("imageOverlay");
   const overlayImg = document.getElementById("overlayImage");
-  const overlayPrev = document.querySelector(".overlay-prev");
-  const overlayNext = document.querySelector(".overlay-next");
+  const prevBtn = document.getElementById("overlayPrevBtn");
+  const nextBtn = document.getElementById("overlayNextBtn");
 
   if (!overlay || !overlayImg) return;
 
@@ -950,36 +949,49 @@ function openImageOverlay(images, startIndex = 0){
   overlayImages = images;
   overlayIndex = Math.max(0, Math.min(startIndex, images.length - 1));
 
-  // Show image
+  // Show current image
   overlayImg.src = overlayImages[overlayIndex];
   overlay.classList.add("active");
 
   const hasMultiple = overlayImages.length > 1;
 
-  // Explicitly show/hide nav buttons
-  if (overlayPrev && overlayNext) {
-    if (hasMultiple) {
-      overlayPrev.classList.remove("hidden");
-      overlayNext.classList.remove("hidden");
-    } else {
-      overlayPrev.classList.add("hidden");
-      overlayNext.classList.add("hidden");
-    }
-  }
+  // Show / hide buttons properly
+  if (prevBtn && nextBtn) {
+    prevBtn.style.display = hasMultiple ? "flex" : "none";
+    nextBtn.style.display = hasMultiple ? "flex" : "none";
 
-  // Hide prev at first image
-  if (overlayPrev) {
-    overlayPrev.classList.toggle("hidden", overlayIndex === 0);
-  }
+    // Boundary hiding
+    prevBtn.style.display =
+      hasMultiple && overlayIndex > 0 ? "flex" : "none";
 
-  // Hide next at last image
-  if (overlayNext) {
-    overlayNext.classList.toggle(
-      "hidden",
-      overlayIndex === overlayImages.length - 1
-    );
+    nextBtn.style.display =
+      hasMultiple && overlayIndex < overlayImages.length - 1 ? "flex" : "none";
   }
 }
+
+const overlayPrevBtn = document.getElementById("overlayPrevBtn");
+const overlayNextBtn = document.getElementById("overlayNextBtn");
+const overlayImg = document.getElementById("overlayImage");
+
+overlayPrevBtn?.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  if (overlayIndex > 0) {
+    overlayIndex--;
+    overlayImg.src = overlayImages[overlayIndex];
+    openImageOverlay(overlayImages, overlayIndex);
+  }
+});
+
+overlayNextBtn?.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  if (overlayIndex < overlayImages.length - 1) {
+    overlayIndex++;
+    overlayImg.src = overlayImages[overlayIndex];
+    openImageOverlay(overlayImages, overlayIndex);
+  }
+});
    
 async function main(){
   loadTheme();
