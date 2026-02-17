@@ -463,6 +463,8 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  z-index: 3;              /* 🔑 THIS IS THE FIX */
+  pointer-events: auto;    /* belt & braces */
 }
 
 .overlay-close-btn:hover{
