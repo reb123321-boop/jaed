@@ -951,7 +951,7 @@ async function main(){
 
 main();
 
-// --- Branch badge (GitHub Pages) ---
+// --- Build / branch info (Info modal) ---
 (async () => {
   try {
     const res = await fetch("version.json", { cache: "no-store" });
@@ -959,14 +959,17 @@ main();
 
     const data = await res.json();
 
-    const badge = document.createElement("div");
-    badge.className = `branch-badge ${data.branch.replace("/", "-")}`;
-    badge.textContent = data.branch;
+    const container = document.getElementById("buildInfo");
+    if (!container) return;
 
-    document.body.appendChild(badge);
+    container.innerHTML = `
+      <div class="build-info-row ${data.branch.replace("/", "-")}">
+        <strong>Build:</strong>
+        <span>${data.branch}</span>
+      </div>
+    `;
   } catch (e) {
-    // Silently ignore if not present (safe on prod)
-    console.warn("Branch badge unavailable");
+    console.warn("Build info unavailable");
   }
 })();
 
