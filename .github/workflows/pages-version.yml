@@ -1,0 +1,32 @@
+name: Inject Pages branch info
+
+on:
+  push:
+    branches:
+      - main
+      - feature/dev
+
+jobs:
+  write-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Write version.json
+        run: |
+          cat > version.json << EOF
+          {
+            "branch": "${GITHUB_REF_NAME}",
+            "commit": "${GITHUB_SHA}",
+            "deployed": "$(date -u +'%Y-%m-%d %H:%M UTC')"
+          }
+          EOF
+
+      - name: Commit version.json
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add version.json
+          git commit -m "chore: update deployed branch info" || echo "No changes"
+          git push
