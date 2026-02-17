@@ -973,13 +973,25 @@ const overlayPrevBtn = document.getElementById("overlayPrevBtn");
 const overlayNextBtn = document.getElementById("overlayNextBtn");
 const overlayImg = document.getElementById("overlayImage");
 
+function updateOverlayNavButtons(){
+  const hasMultiple = overlayImages.length > 1;
+
+  if (!overlayPrevBtn || !overlayNextBtn) return;
+
+  overlayPrevBtn.style.display =
+    hasMultiple && overlayIndex > 0 ? "flex" : "none";
+
+  overlayNextBtn.style.display =
+    hasMultiple && overlayIndex < overlayImages.length - 1 ? "flex" : "none";
+}
+
 overlayPrevBtn?.addEventListener("click", (e) => {
   e.stopPropagation();
 
   if (overlayIndex > 0) {
     overlayIndex--;
     overlayImg.src = overlayImages[overlayIndex];
-    openImageOverlay(overlayImages, overlayIndex);
+    updateOverlayNavButtons();
   }
 });
 
@@ -989,7 +1001,7 @@ overlayNextBtn?.addEventListener("click", (e) => {
   if (overlayIndex < overlayImages.length - 1) {
     overlayIndex++;
     overlayImg.src = overlayImages[overlayIndex];
-    openImageOverlay(overlayImages, overlayIndex);
+    updateOverlayNavButtons();
   }
 });
    
