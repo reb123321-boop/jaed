@@ -361,7 +361,7 @@ function renderMarkers(items){
    // --- Image overlay close behaviour (global, bind once) ---
    const overlay = document.getElementById("imageOverlay");
    const overlayImg = document.getElementById("overlayImage");
-   const overlayClose = document.getElementById("imageOverlayClose");
+   const overlayClose = document.getElementById("overlayCloseBtn");
    
    if(overlay && overlayImg){
    
