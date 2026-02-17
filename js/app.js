@@ -350,20 +350,21 @@ function renderMarkers(items){
      img.addEventListener("click", (e) => {
        e.stopPropagation();
    
-       const overlay = document.getElementById("imageOverlay");
-       const overlayImg = document.getElementById("overlayImage");
-   
-       if (!overlay || !overlayImg) return;
-   
        const wrapper = img.closest(".popup-image-wrapper");
    
-       const imagesFromThisPopup = wrapper
-         ? decodeUrlsFromAttr(wrapper.dataset.images)
-         : [img.src];
+       let imagesFromThisPopup = [];
+       let index = 0;
    
-       const index = wrapper
-         ? parseInt(wrapper.dataset.index || "0", 10)
-         : 0;
+       if (wrapper && wrapper.dataset.images) {
+         imagesFromThisPopup = decodeUrlsFromAttr(wrapper.dataset.images);
+         index = parseInt(wrapper.dataset.index || "0", 10) || 0;
+       }
+   
+       // 🔑 SAFETY NET: always open at least the clicked image
+       if (!Array.isArray(imagesFromThisPopup) || imagesFromThisPopup.length === 0) {
+         imagesFromThisPopup = [img.src];
+         index = 0;
+       }
    
        openImageOverlay(imagesFromThisPopup, index);
      });
