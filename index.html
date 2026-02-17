@@ -104,10 +104,29 @@
   </footer>
 
   <script src="./js/app.js"></script>
+  
   <div id="imageOverlay" class="image-overlay">
-    <button id="overlayCloseBtn" class="overlay-close-btn" aria-label="Close image">✕</button>
+    <button
+      id="overlayCloseBtn"
+      class="overlay-close-btn"
+      aria-label="Close image"
+    >✕</button>
+  
+    <button
+      id="overlayPrevBtn"
+      class="overlay-nav overlay-prev hidden"
+      aria-label="Previous image"
+    >‹</button>
+  
     <img id="overlayImage" src="" alt="">
+  
+    <button
+      id="overlayNextBtn"
+      class="overlay-nav overlay-next hidden"
+      aria-label="Next image"
+    >›</button>
   </div>
+  
   <div id="infoModal" class="info-modal">
     <div class="info-modal-content">
       <div class="info-modal-header">
