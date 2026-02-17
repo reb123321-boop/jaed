@@ -968,16 +968,17 @@ main();
     const container = document.getElementById("buildInfo");
     if (!container) return;
 
-    container.innerHTML = `
-      <div class="build-info-row ${data.branch.replace("/", "-")}">
-        <strong>Build:</strong>
-        <span>${data.branch}</span>
-      </div>
-      <div class="build-info-row build-info-deployed">
-        <strong>Deployed:</strong>
-        <span>${data.deployed}</span>
-      </div>
-    `;
+   container.innerHTML = `
+     <div class="build-info-row ${data.branch.replace("/", "-")}">
+       <strong>Build:</strong>
+       <span>${data.branch}</span>
+     </div>
+     <div class="build-info-row build-info-deployed ${data.branch.replace("/", "-")}">
+       <strong>Deployed:</strong>
+       <span>${data.deployed}</span>
+     </div>
+   `;
+
   } catch (e) {
     console.warn("Build info unavailable");
   }
