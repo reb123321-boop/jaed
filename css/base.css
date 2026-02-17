@@ -491,6 +491,17 @@ button{ white-space:nowrap; }
   display:flex;              /* Visible only when JS adds .active */
 }
 
+.info-modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+.info-modal-header h2{
+  margin:0;
+}
+
 .info-modal-content{
   background:white;
   width:min(90%, 420px);
@@ -501,7 +512,6 @@ button{ white-space:nowrap; }
 }
 
 .info-close-btn{
-  position:absolute;
   top:12px;
   right:12px;
   background:none;
