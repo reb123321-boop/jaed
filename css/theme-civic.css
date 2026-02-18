@@ -50,6 +50,7 @@ body.theme-civic .btn-primary:active {
 
 body.theme-civic .btn-secondary {
   background: #ffffff;
+  color: #0b5cff;
   border: none;
   border-radius: 10px;
   font-weight: 600;
@@ -71,7 +72,7 @@ body.theme-civic .btn-secondary:active {
     0 0 0 #dcdcdc,
     0 2px 6px rgba(0,0,0,0.12);
 
-  color: #0b5cff
+  color: #0b5cff;
 }
 
 
