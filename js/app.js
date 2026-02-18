@@ -81,107 +81,111 @@ function fixMobileMapCenter(){
 }
 
 function initMap(){
+
   const isMobile = window.matchMedia("(max-width: 600px)").matches;
   const startZoom = isMobile ? CONFIG.JERSEY_ZOOM - 1 : CONFIG.JERSEY_ZOOM;
 
-  map = L.map("map", { zoomControl: true }).setView(CONFIG.JERSEY_CENTER, startZoom);
+  map = L.map("map", { zoomControl: true })
+          .setView(CONFIG.JERSEY_CENTER, startZoom);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
+  // --- Base Layers ---
+  const street = L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      maxZoom: 19,
+      attribution: "© OpenStreetMap contributors"
+    }
+  );
 
+  const satellite = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    {
+      attribution:
+        "Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics"
+    }
+  );
+
+  // Default layer
+  street.addTo(map);
+
+  // Layer control (bottom left)
+  L.control.layers(
+    {
+      "Street Map": street,
+      "Satellite": satellite
+    },
+    null,
+    {
+      position: "bottomleft"
+    }
+  ).addTo(map);
+
+  // --- Markers Layer ---
   markersLayer = L.layerGroup().addTo(map);
 
   // --- Legend Control ---
-   const legend = L.control({ position: "topright" });
-   
-   legend.onAdd = function () {
-   
-     const container = L.DomUtil.create("div", "map-legend");
-   
-     container.innerHTML = `
-       <div class="legend-header">
-         <span>Legend</span>
-         <button type="button" class="legend-toggle" aria-label="Toggle legend">–</button>
-       </div>
-   
-       <div class="legend-body">
-         <div class="legend-item">
-           <span class="legend-dot" style="background:#00c853;"></span>
-           Active
-         </div>
-   
-         <div class="legend-item">
-           <span class="legend-dot" style="background:#42a5f5;"></span>
-           Unknown
-         </div>
+  const legend = L.control({ position: "topright" });
 
-         <div class="legend-item">
-           <span class="legend-dot" style="background:#888888;"></span>
-           Out of Service
-         </div>
-   
-         <div class="legend-item">
-           <span class="legend-pin-svg">
-             <svg width="18" height="24" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">
-               <path d="M14 1C7 1 2 6 2 13c0 9 12 23 12 23s12-14 12-23C26 6 21 1 14 1z" fill="#c62828"/>
-               <circle cx="14" cy="13" r="4" fill="#ffffff"/>
-             </svg>
-           </span>
-           Your location
-         </div>
-   
-         <div class="legend-item">
-           <span class="legend-nearest"></span>
-           Nearest AED
-         </div>
-       </div>
-     `;
-   
-     L.DomEvent.disableClickPropagation(container);
-   
-     // Toggle logic
-     const toggleBtn = container.querySelector(".legend-toggle");
-     const body = container.querySelector(".legend-body");
-   
-     toggleBtn.addEventListener("click", () => {
-       const collapsed = container.classList.toggle("collapsed");
-       toggleBtn.textContent = collapsed ? "+" : "–";
-     });
-   
-     return container;
-   };
-   
-   legend.addTo(map);
+  legend.onAdd = function () {
 
+    const container = L.DomUtil.create("div", "map-legend");
+
+    container.innerHTML = `
+      <div class="legend-header">
+        <span>Legend</span>
+        <button type="button" class="legend-toggle" aria-label="Toggle legend">–</button>
+      </div>
+
+      <div class="legend-body">
+
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#00c853;"></span>
+          Active
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#42a5f5;"></span>
+          Unknown
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#888888;"></span>
+          Out of Service
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-pin-svg">
+            <svg width="18" height="24" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 1C7 1 2 6 2 13c0 9 12 23 12 23s12-14 12-23C26 6 21 1 14 1z" fill="#c62828"/>
+              <circle cx="14" cy="13" r="4" fill="#ffffff"/>
+            </svg>
+          </span>
+          Your location
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-nearest"></span>
+          Nearest AED
+        </div>
+
+      </div>
+    `;
+
+    L.DomEvent.disableClickPropagation(container);
+
+    const toggleBtn = container.querySelector(".legend-toggle");
+    const body = container.querySelector(".legend-body");
+
+    toggleBtn.addEventListener("click", () => {
+      const collapsed = container.classList.toggle("collapsed");
+      toggleBtn.textContent = collapsed ? "+" : "–";
+    });
+
+    return container;
+  };
+
+  legend.addTo(map);
 }
-
-const street = L.tileLayer(
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  { attribution: "© OpenStreetMap contributors" }
-);
-
-const satellite = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  {
-    attribution:
-      'Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics'
-  }
-);
-
-street.addTo(map);
-
-L.control.layers(
-  {
-    "Street Map": street,
-    "Satellite": satellite
-  },
-  null,
-  {
-    position: "bottomleft"
-  }
-).addTo(map);
 
 function buildGoogleNavLink(lat, lng){
   // Opens directions in Google Maps
