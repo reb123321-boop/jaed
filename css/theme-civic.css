@@ -20,7 +20,7 @@ body.theme-civic .btn{
 body.theme-civic .btn-primary{
   background: #0b5cff;
   color: #ffffff;
-  border: #22C55E;
+  border: 2px solid #ffffff;
   border-radius: 10px;
   font-weight: 600;
 
