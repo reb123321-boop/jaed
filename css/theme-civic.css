@@ -23,13 +23,12 @@ body.theme-civic .btn-primary{
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  padding: 10px 16px;
   font-weight: 600;
 
   /* 3D effect */
   box-shadow: 
     0 4px 0 #0846c4,                /* bottom “depth” layer */
-    0 6px 12px rgba(0,0,0,0.15);     /* soft ambient shadow */
+    0 6px 12px rgba(0,0,0,0.12);     /* soft ambient shadow */
 
   transition: 
     transform 0.08s ease,
@@ -41,7 +40,7 @@ body.theme-civic .btn-primary:active {
   transform: translateY(4px);
   box-shadow: 
     0 0 0 #0846c4,
-    0 2px 6px rgba(0,0,0,0.15);
+    0 2px 6px rgba(0,0,0,0.12);
 
   color: #ffffff;
 }
