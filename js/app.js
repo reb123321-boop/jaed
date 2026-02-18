@@ -340,7 +340,7 @@ function renderMarkers(items){
              rel="noopener"
              class="btn btn-primary"
              style="text-decoration:none;">
-            Navigate
+            Directions
           </a>
         </div>
 
@@ -557,9 +557,8 @@ function renderResults(items){
       ${verifiedText ? `<div class="small">${escapeHtml(verifiedText)}</div>` : ""}
 
       <div class="card-actions" style="margin-top:10px;">
-        <a class="btn btn-primary" href="${buildGoogleNavLink(aed.lat, aed.lng)}" target="_blank" rel="noopener">Navigate</a>
+        <a class="btn btn-primary" href="${buildGoogleNavLink(aed.lat, aed.lng)}" target="_blank" rel="noopener">Directions</a>
         <a class="btn btn-secondary" href="tel:999">Call 999</a>
-        <button class="btn btn-secondary" type="button" data-zoom="${aed.lat},${aed.lng}">Zoom</button>
       </div>
     `;
 
