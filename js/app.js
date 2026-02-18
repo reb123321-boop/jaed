@@ -180,6 +180,16 @@ function initMap(){
       toggleBtn.textContent = collapsed ? "+" : "–";
     });
 
+     // --- Auto-collapse on mobile ---
+      const isMobile = window.matchMedia("(max-width: 600px)").matches;
+      
+      if (isMobile) {
+        setTimeout(() => {
+          container.classList.add("collapsed");
+          toggleBtn.textContent = "+";
+        }, 1500); // collapse after 1.5 seconds
+      }
+
     return container;
   };
 
