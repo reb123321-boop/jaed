@@ -585,13 +585,26 @@ function renderResults(items){
     });
 
     // clicking card zooms (best-effort)
-    card.addEventListener("click", (e) => {
-      const tag = e.target?.tagName?.toLowerCase();
-      if(tag === "a" || tag === "button") return;
-      if(typeof aed.lat === "number" && typeof aed.lng === "number"){
-        map.setView([aed.lat, aed.lng], 16, { animate: true });
-      }
-    });
+      card.addEventListener("click", (e) => {
+        const tag = e.target?.tagName?.toLowerCase();
+        if(tag === "a" || tag === "button") return;
+      
+        const marker = markerRegistry[aed.id];
+        if(!marker) return;
+      
+        ensurePanelOpen();
+      
+        // Smooth fly animation
+        map.flyTo(marker.getLatLng(), 16, {
+          animate: true,
+          duration: 0.6
+        });
+      
+        // Open popup slightly after fly starts
+        setTimeout(() => {
+          marker.openPopup();
+        }, 300);
+      });
 
     list.appendChild(card);
   });
