@@ -425,6 +425,52 @@ button{ white-space:nowrap; }
 
 
 /* =========================================================
+   MAP POPUP CARD (Styled like results cards)
+   ========================================================= */
+
+.popup-card{
+  min-width:220px;
+  font-size:13px;
+}
+
+.popup-title{
+  font-weight:700;
+  font-size:14px;
+  margin-bottom:4px;
+}
+
+.popup-meta{
+  font-size:12px;
+  margin-bottom:2px;
+}
+
+.popup-parish{
+  font-size:12px;
+  opacity:0.8;
+  margin-bottom:6px;
+}
+
+.popup-row{
+  margin-top:4px;
+}
+
+.popup-actions{
+  margin-top:8px;
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.leaflet-popup-content{
+  margin:8px 12px;
+}
+
+.leaflet-popup-content-wrapper{
+  border-radius:14px;
+}
+
+
+/* =========================================================
    IMAGE OVERLAY
    ========================================================= */
 

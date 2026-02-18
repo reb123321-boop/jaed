@@ -16,7 +16,7 @@ body.theme-government{
 body.theme-government .app-header{
   background:#c8102e;              /* gov.je red */
   color:#fff;
-  border-bottom:none;
+  border-bottom: 1px solid #c8102e;
 }
 
 body.theme-government .tagline{
@@ -63,11 +63,11 @@ body.theme-government .card{
   background:#ffffff;
   border:1px solid #d8d8d8;
 }
-
+/*
 body.theme-government .results{
   gap:14px;
 }
-
+*/
 /* --- Theme Toggle Button (in red header) --- */
 
 body.theme-government #themeToggle{
