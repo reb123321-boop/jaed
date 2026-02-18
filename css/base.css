@@ -157,7 +157,7 @@ body{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding:10px 12px;
+  padding:6px 8px;
   border-radius: var(--radius-small);
   border: var(--border);
   text-decoration:none;
@@ -244,7 +244,7 @@ body{
 .badge{
   display:inline-flex;
   align-items:center;
-  gap:2px;
+  gap:6px;
   padding:2px 6px;       /* slightly tighter */
   border-radius:999px;
   font-size:12px;
