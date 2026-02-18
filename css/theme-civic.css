@@ -42,6 +42,8 @@ body.theme-civic .btn-primary:active {
   box-shadow: 
     0 0 0 #0846c4,
     0 2px 6px rgba(0,0,0,0.15);
+
+  color: inherit; /* keeps original colour */
 }
 
 /* ================= Civic 3D Secondary Buttons ================= */
@@ -68,6 +70,8 @@ body.theme-civic .btn-secondary:active {
   box-shadow:
     0 0 0 #dcdcdc,
     0 2px 6px rgba(0,0,0,0.12);
+
+  color: inherit; /* keeps original colour */
 }
 
 
