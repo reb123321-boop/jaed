@@ -217,7 +217,7 @@ body{
 .card{
   border: var(--border);
   border-radius: var(--radius);
-/*  padding:6px 10px;      /* reduced vertical padding */
+  padding:6px 6px;      /* reduced vertical padding */
   box-shadow: var(--shadow);
 }
 
