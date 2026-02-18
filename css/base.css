@@ -221,11 +221,11 @@ body{
   box-shadow: var(--shadow);
 }
 
-/*.card.nearest{ border-width:2px; }*/
+.card.nearest{ border-width:20px; }
 
 .card h3{
   margin:0 0 2px 0;      /* was 6px */
-  font-size:32px;
+  font-size:15px;
 }
 
 .card.nearest h3{
