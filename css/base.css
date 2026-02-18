@@ -579,3 +579,22 @@ button{ white-space:nowrap; }
 .build-info-row.main{
   color:#084298;
 }
+
+/* =========================================
+   Focus Handling (Accessible + Clean UI)
+   ========================================= */
+
+/* Remove default focus outline when NOT keyboard focused */
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+.leaflet-control a:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Remove tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
