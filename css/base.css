@@ -1,3 +1,7 @@
+/* =========================================================
+   ROOT VARIABLES
+   ========================================================= */
+
 :root{
   --radius: 14px;
   --radius-small: 10px;
@@ -6,12 +10,18 @@
   --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
 }
 
+
+/* =========================================================
+   GLOBAL RESET & BASE LAYOUT
+   ========================================================= */
+
 html {
   color-scheme: light;
 }
 
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
 html, body{
@@ -30,7 +40,14 @@ body{
   overflow:hidden;      /* prevent page extending under nav bars */
 }
 
-/* ================= HEADER ================= */
+button{ white-space:nowrap; }
+
+.leaflet-container{ background:white !important; }
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .app-header{
   display:flex;
@@ -41,20 +58,43 @@ body{
   border-bottom: var(--border);
 }
 
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
 .app-logo{
   width:24px;
   height:24px;
   display:block;
 }
 
-.brand{ display:flex; align-items:center; gap:12px; }
+.brand-text h1{
+  font-size:18px;
+  margin:0;
+}
+
+.tagline{
+  margin:2px 0 0 0;
+  font-size:13px;
+  opacity:0.85;
+}
+
+.header-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+/* Header Buttons */
 
 .aed-icon{
   appearance:none;
-  background-color: #ffffff;
-  color: #d6001c;
-  border: none;
-  box-shadow: none;
+  background-color:#ffffff;
+  color:#d6001c;
+  border:none;
+  box-shadow:none;
   width:40px;
   height:40px;
   display:grid;
@@ -66,20 +106,10 @@ body{
   padding:0;
 }
 
-.brand-text h1{ font-size:18px; margin:0; }
-
-.tagline{
-  margin:2px 0 0 0;
-  font-size:13px;
-  opacity:0.85;
-}
-
-.header-actions{ display:flex; gap:10px; align-items:center; }
-
 .info-btn{
   background:none;
-  border: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
   width:40px;
   height:40px;
   border-radius:999px;
@@ -89,7 +119,10 @@ body{
   cursor:pointer;
 }
 
-/* ================= MAIN ================= */
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
 
 .app-main{
   padding:12px;
@@ -100,7 +133,18 @@ body{
   overflow:hidden;
 }
 
-/* ================= CONTROLS ================= */
+.content{
+  display:grid;
+  grid-template-columns:minmax(320px, 36%) 1fr;
+  gap:12px;
+  flex:1;
+  min-height:0;
+}
+
+
+/* =========================================================
+   CONTROLS (Filters + Buttons)
+   ========================================================= */
 
 .controls{
   display:flex;
@@ -129,37 +173,40 @@ body{
   white-space:nowrap;
 }
 
-/* SELECTS */
+/* Select Wrapper */
 
 .select{
   display:flex;
   align-items:center;
   gap:8px;
-  border: var(--border);
-  border-radius: var(--radius-small);
+  border:var(--border);
+  border-radius:var(--radius-small);
   padding:8px 10px;
   min-width:0;
 }
 
-.select span{ font-size:12px; opacity:0.85; }
+.select span{
+  font-size:12px;
+  opacity:0.85;
+}
 
 .select select{
   border:none;
   background:transparent;
-  font: inherit;
+  font:inherit;
   outline:none;
   min-width:0;
 }
 
-/* BUTTONS */
+/* Generic Buttons */
 
 .btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
   padding:6px 8px;
-  border-radius: var(--radius-small);
-  border: var(--border);
+  border-radius:var(--radius-small);
+  border:var(--border);
   text-decoration:none;
   cursor:pointer;
   user-select:none;
@@ -167,21 +214,14 @@ body{
   font-size:14px;
 }
 
-/* ================= LAYOUT ================= */
 
-.content{
-  display:grid;
-  grid-template-columns: minmax(320px, 36%) 1fr;
-  gap:12px;
-  flex:1;
-  min-height:0;
-}
-
-/* ================= PANEL ================= */
+/* =========================================================
+   PANEL (Results Container)
+   ========================================================= */
 
 .panel{
-  border: var(--border);
-  border-radius: var(--radius);
+  border:var(--border);
+  border-radius:var(--radius);
   overflow:hidden;
   display:flex;
   flex-direction:column;
@@ -200,31 +240,36 @@ body{
 
 .panel-note{
   font-size:13px;
-  border: var(--border);
-  border-radius: var(--radius-small);
+  border:var(--border);
+  border-radius:var(--radius-small);
   padding:10px;
   margin-bottom:10px;
 }
 
-/* ================= CARDS ================= */
+
+/* =========================================================
+   RESULT CARDS
+   ========================================================= */
 
 .results{
   display:flex;
   flex-direction:column;
-  gap:8px;               /* was 10px */
+  gap:8px;
 }
 
 .card{
-  border: var(--border);
-  border-radius: var(--radius);
-  padding:6px 6px;      /* reduced vertical padding */
-  box-shadow: var(--shadow);
+  border:var(--border);
+  border-radius:var(--radius);
+  padding:6px 6px;
+  box-shadow:var(--shadow);
 }
 
-.card.nearest{ border-width:2px; }
+.card.nearest{
+  border-width:2px;
+}
 
 .card h3{
-  margin:0 0 2px 0;      /* was 6px */
+  margin:0 0 2px 0;
   font-size:15px;
 }
 
@@ -237,26 +282,49 @@ body{
   display:flex;
   flex-wrap:wrap;
   align-items:center;
-  gap:6px 8px;           /* slightly tighter */
-  margin:2px 0 2px 0;    /* reduced */
+  gap:6px 8px;
+  margin:2px 0 2px 0;
 }
 
 .badge{
   display:inline-flex;
   align-items:center;
   gap:6px;
-  padding:2px 6px;       /* slightly tighter */
+  padding:2px 6px;
   border-radius:999px;
   font-size:12px;
   font-weight:700;
 }
 
-/* ================= STATUS COLOURS ================= */
+.small{
+  font-size:12px;
+  opacity:0.9;
+  margin-top:4px;
+}
+
+/* Card Actions */
+
+.card-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:2px;
+}
+
+.card-actions .btn{
+  padding:6px 9px;
+  font-size:13px;
+}
+
+
+/* =========================================================
+   STATUS COLOURS
+   ========================================================= */
 
 .status-Active{
-  background:#e0f8ec;        /* soft green tint */
-  color:#00a844;             /* darker readable green */
-  border:1px solid #00c853;  /* matches marker */
+  background:#e0f8ec;
+  color:#00a844;
+  border:1px solid #00c853;
 }
 
 .status-Out\ of\ Service{
@@ -266,49 +334,34 @@ body{
 }
 
 .status-Unknown{
-  background:#e3f2fd;        /* soft light blue */
-  color:#1e88e5;             /* readable blue */
-  border:1px solid #42a5f5;  /* matches marker */
+  background:#e3f2fd;
+  color:#1e88e5;
+  border:1px solid #42a5f5;
 }
 
 
-.card-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;               /* was 8px */
-  margin-top:2px;        /* was inline 10px */
-}
-
-.card-actions .btn{
-  padding:6px 9px;       /* slightly smaller */
-  font-size:13px;
-}
-
-.small{
-  font-size:12px;
-  opacity:0.9;
-  margin-top:4px;        /* was 6px */
-}
-
-
-/* ================= MAP ================= */
+/* =========================================================
+   MAP + LEGEND
+   ========================================================= */
 
 .map-wrap{
-  border: var(--border);
-  border-radius: var(--radius);
+  border:var(--border);
+  border-radius:var(--radius);
   overflow:hidden;
   flex:1;
   min-height:300px;
 }
 
-.map{ height:100%; }
+.map{
+  height:100%;
+}
 
-/* ================= LEGEND ================= */
+/* Legend */
 
 .map-legend{
   background:white;
-  padding: 6px 8px;
-  font-size: 0.8rem;
+  padding:6px 8px;
+  font-size:0.8rem;
   border-radius:12px;
   border:1px solid rgba(0,0,0,0.15);
   box-shadow:0 6px 18px rgba(0,0,0,0.15);
@@ -316,7 +369,6 @@ body{
   min-width:150px;
 }
 
-/* Header (Legend + toggle button) */
 .legend-header{
   display:flex;
   justify-content:space-between;
@@ -325,7 +377,6 @@ body{
   margin-bottom:6px;
 }
 
-/* Toggle button */
 .legend-toggle{
   background:none;
   border:none;
@@ -335,7 +386,6 @@ body{
   line-height:1;
 }
 
-/* When collapsed */
 .map-legend.collapsed .legend-body{
   display:none;
 }
@@ -344,7 +394,6 @@ body{
   margin-bottom:0;
 }
 
-/* Legend rows */
 .legend-item{
   display:flex;
   align-items:center;
@@ -352,7 +401,6 @@ body{
   margin-bottom:4px;
 }
 
-/* Icons */
 .legend-dot,
 .legend-pin-svg,
 .legend-nearest{
@@ -380,9 +428,169 @@ body{
   border:2px solid #b71c1c;
 }
 
-/* ================= MOBILE ================= */
 
-@media (max-width: 900px){
+/* =========================================================
+   IMAGE OVERLAY
+   ========================================================= */
+
+.image-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+}
+
+.image-overlay.active{
+  display:flex;
+}
+
+.image-overlay img{
+  max-width:95%;
+  max-height:95%;
+  border-radius:10px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.4);
+}
+
+.overlay-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.6);
+  color:white;
+  border:none;
+  font-size:32px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:5;
+  pointer-events:auto;
+}
+
+.overlay-prev{ left:16px; }
+.overlay-next{ right:16px; }
+
+.overlay-close-btn{
+  position:absolute;
+  top:16px;
+  right:16px;
+  background:rgba(0,0,0,0.6);
+  color:white;
+  border:none;
+  font-size:20px;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:3;
+  pointer-events:auto;
+}
+
+.overlay-close-btn:hover{
+  background:rgba(0,0,0,0.8);
+}
+
+.hidden{
+  display:none !important;
+}
+
+
+/* =========================================================
+   INFO MODAL
+   ========================================================= */
+
+.info-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:20000;
+}
+
+.info-modal.active{
+  display:flex;
+}
+
+.info-modal-content{
+  background:white;
+  width:min(90%, 420px);
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.25);
+  position:relative;
+}
+
+.info-modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+.info-modal-header h2{
+  margin:0;
+}
+
+.info-close-btn{
+  top:12px;
+  right:12px;
+  background:none;
+  border:none;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.build-info{
+  margin:6px 0 10px;
+  font-size:0.8rem;
+  opacity:0.85;
+}
+
+.build-info-row{
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+
+.build-info-row.feature-dev{
+  color:#664d03;
+}
+
+.build-info-row.main{
+  color:#084298;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY – FOCUS HANDLING
+   ========================================================= */
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+.leaflet-control a:focus:not(:focus-visible){
+  outline:none;
+  box-shadow:none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width:900px){
 
   .content{
     grid-template-columns:1fr;
@@ -416,14 +624,12 @@ body{
     flex:1 1 0;
   }
 
-  /* Hide Leaflet zoom buttons on mobile/tablet */
-  .leaflet-control-zoom {
-    display: none !important;
+  .leaflet-control-zoom{
+    display:none !important;
   }
-  
 }
 
-@media (max-width: 600px){
+@media (max-width:600px){
 
   .app-header{ padding:8px 12px; }
 
@@ -435,169 +641,8 @@ body{
 
   #geoNote{ display:none; }
 
-  .filters-row{
-    flex-wrap:wrap;
-  }
+  .filters-row{ flex-wrap:wrap; }
 
-  .buttons-row{
-    flex-wrap:wrap;
-  }
+  .buttons-row{ flex-wrap:wrap; }
 
-}
-
-/* ================= IMAGE OVERLAY ================= */
-
-.image-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.85);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:10000;
-}
-
-.image-overlay.active{ display:flex; }
-
-.image-overlay img{
-  max-width:95%;
-  max-height:95%;
-  border-radius:10px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.4);
-}
-
-.overlay-nav{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  background:rgba(0,0,0,0.6);
-  color:white;
-  border:none;
-  font-size:32px;
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:5;
-  pointer-events:auto;
-}
-
-.overlay-prev{ left:16px; }
-.overlay-next{ right:16px; }
-
-.hidden{ display:none !important; }
-
-.overlay-close-btn{
-  position:absolute;
-  top:16px;
-  right:16px;
-  background:rgba(0,0,0,0.6);
-  color:white;
-  border:none;
-  font-size:20px;
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index: 3;              /* 🔑 THIS IS THE FIX */
-  pointer-events: auto;    /* belt & braces */
-}
-
-.overlay-close-btn:hover{
-  background:rgba(0,0,0,0.8);
-}
-
-button{ white-space:nowrap; }
-
-.leaflet-container{ background:white !important; }
-
-/* ================= INFO MODAL ================= */
-
-.info-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-  display:none;              /* HIDDEN BY DEFAULT */
-  align-items:center;
-  justify-content:center;
-  z-index:20000;
-}
-
-.info-modal.active{
-  display:flex;              /* Visible only when JS adds .active */
-}
-
-.info-modal-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:8px;
-}
-
-.info-modal-header h2{
-  margin:0;
-}
-
-.info-modal-content{
-  background:white;
-  width:min(90%, 420px);
-  padding:20px;
-  border-radius:14px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.25);
-  position:relative;
-}
-
-.info-close-btn{
-  top:12px;
-  right:12px;
-  background:none;
-  border:none;
-  font-size:20px;
-  cursor:pointer;
-}
-
-.build-info{
-  margin: 6px 0 10px;
-  font-size: 0.8rem;
-  opacity: 0.85;
-}
-
-.build-info-row{
-  display:flex;
-  gap:6px;
-  align-items:center;
-}
-
-/* Colour hints */
-.build-info-row.feature-dev{
-  color:#664d03;
-}
-
-.build-info-row.main{
-  color:#084298;
-}
-
-/* =========================================
-   Focus Handling (Accessible + Clean UI)
-   ========================================= */
-
-/* Remove default focus outline when NOT keyboard focused */
-button:focus:not(:focus-visible),
-a:focus:not(:focus-visible),
-input:focus:not(:focus-visible),
-select:focus:not(:focus-visible),
-.leaflet-control a:focus:not(:focus-visible) {
-  outline: none;
-  box-shadow: none;
-}
-
-/* Remove tap highlight on mobile */
-* {
-  -webkit-tap-highlight-color: transparent;
 }
