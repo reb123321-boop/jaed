@@ -274,7 +274,7 @@ function renderMarkers(items){
     const encodedUrls = encodeUrlsForAttr(imageUrls);
 
     const popupHtml = `
-      <div style="min-width:220px">
+      <div class="popup-card">
 
         ${imageUrls.length ? `
           <div class="popup-image-wrapper"
@@ -320,21 +320,29 @@ function renderMarkers(items){
           </div>
         ` : ""}
 
-        <strong>${escapeHtml(aed.name || "Defibrillator")}</strong><br/>
-        <span>${escapeHtml(aed.address || "")}</span><br/>
-        <span style="opacity:.85">${escapeHtml(aed.parish || "")}</span><br/>
+         <div class="popup-title">
+           ${escapeHtml(aed.name || "Defibrillator")}
+         </div>
+         
+         <div class="popup-meta">
+           ${escapeHtml(aed.address || "")}
+         </div>
+         
+         <div class="popup-parish">
+           ${escapeHtml(aed.parish || "")}
+         </div>
 
-        <div style="margin-top:6px">
+        <div class="popup-row">
           <strong>Status:</strong> ${escapeHtml(aed.status || "Unknown")}
         </div>
 
         ${aed.access ? `
-          <div style="margin-top:6px">
+          <div class="popup-row">
             <strong>Access:</strong> ${escapeHtml(aed.access)}
           </div>
         ` : ""}
 
-        <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+        <div class="popup-actions">
           <a href="${buildGoogleNavLink(aed.lat, aed.lng)}"
              target="_blank"
              rel="noopener"
