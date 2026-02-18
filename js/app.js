@@ -157,6 +157,32 @@ function initMap(){
 
 }
 
+const street = L.tileLayer(
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  { attribution: "© OpenStreetMap contributors" }
+);
+
+const satellite = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  {
+    attribution:
+      'Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics'
+  }
+);
+
+street.addTo(map);
+
+L.control.layers(
+  {
+    "Street Map": street,
+    "Satellite": satellite
+  },
+  null,
+  {
+    position: "bottomleft"
+  }
+).addTo(map);
+
 function buildGoogleNavLink(lat, lng){
   // Opens directions in Google Maps
   const dest = `${lat},${lng}`;
