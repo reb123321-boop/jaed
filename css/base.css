@@ -251,9 +251,9 @@ body{
 /* ================= STATUS COLOURS ================= */
 
 .status-Active{
-  background:#e6f4ea;
-  color:#2e7d32;
-  border:1px solid #2e7d32;
+  background:#e0f8ec;        /* soft green tint */
+  color:#00a844;             /* darker readable green */
+  border:1px solid #00c853;  /* matches marker */
 }
 
 .status-Out\ of\ Service{
@@ -263,9 +263,9 @@ body{
 }
 
 .status-Unknown{
-  background:#e8edf7;
-  color:#0b2e6b;
-  border:1px solid #0b2e6b;
+  background:#e3f2fd;        /* soft light blue */
+  color:#1e88e5;             /* readable blue */
+  border:1px solid #42a5f5;  /* matches marker */
 }
 
 
