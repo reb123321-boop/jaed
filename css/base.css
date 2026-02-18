@@ -461,6 +461,14 @@ button{ white-space:nowrap; }
   flex-wrap:wrap;
 }
 
+.leaflet-popup-content{
+  margin:8px 12px;
+}
+
+.leaflet-popup-content-wrapper{
+  border-radius:14px;
+}
+
 
 /* =========================================================
    IMAGE OVERLAY
