@@ -217,11 +217,11 @@ body{
 .card{
   border: var(--border);
   border-radius: var(--radius);
-  padding:6px 10px;      /* reduced vertical padding */
+/*  padding:6px 10px;      /* reduced vertical padding */
   box-shadow: var(--shadow);
 }
 
-.card.nearest{ border-width:2px; }
+/*.card.nearest{ border-width:2px; }*/
 
 .card h3{
   margin:0 0 2px 0;      /* was 6px */
