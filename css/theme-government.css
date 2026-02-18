@@ -16,7 +16,7 @@ body.theme-government{
 body.theme-government .app-header{
   background:#c8102e;              /* gov.je red */
   color:#fff;
-  border-bottom:none;
+  border-bottom: 1px solid #c8102e;
 }
 
 body.theme-government .tagline{
