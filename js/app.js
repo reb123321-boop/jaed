@@ -108,7 +108,7 @@ function initMap(){
    
        <div class="legend-body">
          <div class="legend-item">
-           <span class="legend-dot" style="background:#2e7d32;"></span>
+           <span class="legend-dot" style="background:#00c853;"></span>
            Active
          </div>
    
@@ -118,7 +118,7 @@ function initMap(){
          </div>
    
          <div class="legend-item">
-           <span class="legend-dot" style="background:#0b2e6b;"></span>
+           <span class="legend-dot" style="background:#42a5f5;"></span>
            Unknown
          </div>
    
