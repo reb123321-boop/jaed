@@ -15,15 +15,64 @@ body.theme-civic .btn{
   background:white;
 }
 
+/* ================= Civic 3D Primary Buttons ================= */
+
 body.theme-civic .btn-primary{
-  border-color: rgba(0,0,0,0.12);
   background: #0b5cff;
-  color:white;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  font-weight: 600;
+
+  /* 3D effect */
+  box-shadow: 
+    0 4px 0 #dcdcdc,                /* bottom “depth” layer */
+    0 6px 12px rgba(0,0,0,0.12);     /* soft ambient shadow */
+
+  transition: 
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
 }
 
-body.theme-civic .btn-secondary{
-  background:white;
+/* Press effect */
+body.theme-civic .btn-primary:active {
+  transform: translateY(4px);
+  box-shadow: 
+    0 0 0 #dcdcdc,
+    0 2px 6px rgba(0,0,0,0.12);
+
+  color: #ffffff;
 }
+
+/* ================= Civic 3D Secondary Buttons ================= */
+
+body.theme-civic .btn-secondary {
+  background: #ffffff;
+  color: #0b5cff;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  font-weight: 600;
+
+  /* 3D depth */
+  box-shadow:
+    0 4px 0 #dcdcdc,                 /* solid base layer */
+    0 6px 12px rgba(0,0,0,0.12);     /* soft ambient shadow */
+
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
+}
+
+/* Press effect */
+body.theme-civic .btn-secondary:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 0 0 #dcdcdc,
+    0 2px 6px rgba(0,0,0,0.12);
+
+  color: #0b5cff;
+}
+
 
 body.theme-civic .card{
   background: rgba(255,255,255,0.05);
