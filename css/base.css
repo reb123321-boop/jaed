@@ -211,7 +211,7 @@ button{ white-space:nowrap; }
   cursor:pointer;
   user-select:none;
   font-weight:600;
-  font-size:14px;
+  font-size:13px;
 }
 
 
@@ -310,12 +310,12 @@ button{ white-space:nowrap; }
   gap:6px;
   margin-top:2px;
 }
-
+/*
 .card-actions .btn{
   padding:6px 9px;
   font-size:13px;
 }
-
+*/
 
 /* =========================================================
    STATUS COLOURS
@@ -636,9 +636,9 @@ select:focus:not(:focus-visible),
   .brand-text h1{ font-size:16px; }
 
   .tagline{ display:none; }
-
+/*
   .btn{ padding:8px 10px; font-size:13px; }
-
+*/
   #geoNote{ display:none; }
 
   .filters-row{ flex-wrap:wrap; }
