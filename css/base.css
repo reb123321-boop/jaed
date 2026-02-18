@@ -284,6 +284,7 @@ button{ white-space:nowrap; }
   align-items:center;
   gap:6px 8px;
   margin:2px 0 2px 0;
+  font-size:12px;
 }
 
 .badge{
@@ -310,12 +311,6 @@ button{ white-space:nowrap; }
   gap:6px;
   margin-top:2px;
 }
-/*
-.card-actions .btn{
-  padding:6px 9px;
-  font-size:13px;
-}
-*/
 
 /* =========================================================
    STATUS COLOURS
@@ -636,9 +631,7 @@ select:focus:not(:focus-visible),
   .brand-text h1{ font-size:16px; }
 
   .tagline{ display:none; }
-/*
-  .btn{ padding:8px 10px; font-size:13px; }
-*/
+
   #geoNote{ display:none; }
 
   .filters-row{ flex-wrap:wrap; }
