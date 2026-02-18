@@ -26,7 +26,7 @@ body.theme-civic .btn-primary{
 
   /* 3D effect */
   box-shadow: 
-    0 4px 0 #0846c4,                /* bottom “depth” layer */
+    0 4px 0 #dcdcdc,                /* bottom “depth” layer */
     0 6px 12px rgba(0,0,0,0.12);     /* soft ambient shadow */
 
   transition: 
@@ -38,7 +38,7 @@ body.theme-civic .btn-primary{
 body.theme-civic .btn-primary:active {
   transform: translateY(4px);
   box-shadow: 
-    0 0 0 #0846c4,
+    0 0 0 #dcdcdc,
     0 2px 6px rgba(0,0,0,0.12);
 
   color: #ffffff;
@@ -55,7 +55,7 @@ body.theme-civic .btn-secondary {
 
   /* 3D depth */
   box-shadow:
-    0 4px 0 #dcdcdc,                 /* solid base layer */
+    0 4px 0 ,                 /* solid base layer */
     0 6px 12px rgba(0,0,0,0.12);     /* soft ambient shadow */
 
   transition:
