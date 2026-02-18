@@ -100,8 +100,7 @@ function initMap(){
   const satellite = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     {
-      attribution:
-        "Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics"
+      attribution: "© Esri, Maxar, Earthstar Geographics"
     }
   );
 
