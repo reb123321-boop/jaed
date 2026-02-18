@@ -309,19 +309,18 @@ function renderMarkers(items){
     `;
 
     // Marker color by status
-    let markerColor;
-    switch(aed.status){
-      case "Active":
-        markerColor = "#2e7d32";
-        break;
-      case "Out of Service":
-        markerColor = "#888888";
-        break;
-      case "Unknown":
-      default:
-        markerColor = "#0b2e6b"; // navy to match legend/badges
-        break;
-    }
+      switch(aed.status){
+        case "Active":
+          markerColor = "#00c853";   // brighter green
+          break;
+        case "Out of Service":
+          markerColor = "#888888";
+          break;
+        case "Unknown":
+        default:
+          markerColor = "#42a5f5";   // light blue
+          break;
+      }
 
     const isNearest = aed.__nearestCandidate === true;
 
