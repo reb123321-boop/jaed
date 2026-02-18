@@ -20,7 +20,7 @@ body.theme-civic .btn{
 body.theme-civic .btn-primary{
   background: #0b5cff;
   color: #ffffff;
-  border: none;
+  border: #ffffff;
   border-radius: 10px;
   font-weight: 600;
 
@@ -55,7 +55,7 @@ body.theme-civic .btn-secondary {
 
   /* 3D depth */
   box-shadow:
-    0 4px 0 ,                 /* solid base layer */
+    0 4px 0 #dcdcdc,                 /* solid base layer */
     0 6px 12px rgba(0,0,0,0.12);     /* soft ambient shadow */
 
   transition:
