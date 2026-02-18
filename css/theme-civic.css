@@ -18,7 +18,6 @@ body.theme-civic .btn{
 /* ================= Civic 3D Primary Buttons ================= */
 
 body.theme-civic .btn-primary{
-  position: relative;
   background: #0b5cff;
   color: #ffffff;
   border: none;
