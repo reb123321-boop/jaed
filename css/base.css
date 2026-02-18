@@ -217,14 +217,14 @@ body{
 .card{
   border: var(--border);
   border-radius: var(--radius);
-  padding:8px 10px;      /* reduced vertical padding */
+  padding:6px 10px;      /* reduced vertical padding */
   box-shadow: var(--shadow);
 }
 
 .card.nearest{ border-width:2px; }
 
 .card h3{
-  margin:0 0 4px 0;      /* was 6px */
+  margin:0 0 2px 0;      /* was 6px */
   font-size:15px;
 }
 
@@ -238,14 +238,14 @@ body{
   flex-wrap:wrap;
   align-items:center;
   gap:6px 8px;           /* slightly tighter */
-  margin:4px 0 6px 0;    /* reduced */
+  margin:2px 0 4px 0;    /* reduced */
 }
 
 .badge{
   display:inline-flex;
   align-items:center;
   gap:6px;
-  padding:3px 7px;       /* slightly tighter */
+  padding:2px 6px;       /* slightly tighter */
   border-radius:999px;
   font-size:12px;
   font-weight:700;
@@ -276,7 +276,7 @@ body{
   display:flex;
   flex-wrap:wrap;
   gap:6px;               /* was 8px */
-  margin-top:6px;        /* was inline 10px */
+  margin-top:4px;        /* was inline 10px */
 }
 
 .card-actions .btn{
