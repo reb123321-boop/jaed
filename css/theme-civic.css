@@ -16,9 +16,30 @@ body.theme-civic .btn{
 }
 
 body.theme-civic .btn-primary{
-  border-color: rgba(0,0,0,0.12);
+  position: relative;
   background: #0b5cff;
-  color:white;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+
+  /* 3D effect */
+  box-shadow: 
+    0 4px 0 #145c2e,                /* bottom “depth” layer */
+    0 6px 12px rgba(0,0,0,0.15);     /* soft ambient shadow */
+
+  transition: 
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
+}
+
+/* Press effect */
+body.theme-civic .btn-primary:active {
+  transform: translateY(4px);
+  box-shadow: 
+    0 0 0 #145c2e,
+    0 2px 6px rgba(0,0,0,0.15);
 }
 
 body.theme-civic .btn-secondary{
