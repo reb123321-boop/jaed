@@ -238,7 +238,7 @@ body{
   flex-wrap:wrap;
   align-items:center;
   gap:6px 8px;           /* slightly tighter */
-  margin:2px 0 4px 0;    /* reduced */
+  margin:2px 0 2px 0;    /* reduced */
 }
 
 .badge{
@@ -276,11 +276,11 @@ body{
   display:flex;
   flex-wrap:wrap;
   gap:6px;               /* was 8px */
-  margin-top:4px;        /* was inline 10px */
+  margin-top:2px;        /* was inline 10px */
 }
 
 .card-actions .btn{
-  padding:7px 9px;       /* slightly smaller */
+  padding:6px 9px;       /* slightly smaller */
   font-size:13px;
 }
 
