@@ -221,7 +221,7 @@ body{
   box-shadow: var(--shadow);
 }
 
-.card.nearest{ border-width:20px; }
+.card.nearest{ border-width:2px; }
 
 .card h3{
   margin:0 0 2px 0;      /* was 6px */
@@ -230,7 +230,7 @@ body{
 
 .card.nearest h3{
   font-weight:800;
-  color:#1e7f3f;
+  color:#d6001c;
 }
 
 .meta-row{
