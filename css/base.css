@@ -157,7 +157,7 @@ body{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding:6px 8px;
+  padding:2px 2px;
   border-radius: var(--radius-small);
   border: var(--border);
   text-decoration:none;
