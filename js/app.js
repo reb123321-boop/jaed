@@ -88,6 +88,16 @@ function initMap(){
   map = L.map("map", { zoomControl: true })
           .setView(CONFIG.JERSEY_CENTER, startZoom);
 
+  // --- CREATE STATUS PANES ---
+  map.createPane("pane-out");
+  map.getPane("pane-out").style.zIndex = 400;
+
+  map.createPane("pane-unknown");
+  map.getPane("pane-unknown").style.zIndex = 450;
+
+  map.createPane("pane-active");
+  map.getPane("pane-active").style.zIndex = 500;
+
   // --- Base Layers ---
   const street = L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -370,6 +380,23 @@ function renderMarkers(items){
         break;
     }
 
+     let paneName;
+
+      switch(aed.status){
+        case "Active":
+          paneName = "pane-active";
+          break;
+      
+        case "Unknown":
+          paneName = "pane-unknown";
+          break;
+      
+        case "Out of Service":
+        default:
+          paneName = "pane-out";
+          break;
+      }
+
     const isNearest = aed.__nearestCandidate === true;
 
     const size = isNearest ? 24 : 18;
@@ -377,6 +404,7 @@ function renderMarkers(items){
     const ringWidth = isNearest ? 3 : 2;
 
     const marker = L.marker([aed.lat, aed.lng], {
+      pane: paneName,
       icon: L.divIcon({
         className: "aed-marker",
         html: `
