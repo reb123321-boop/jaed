@@ -365,7 +365,7 @@ button{ white-space:nowrap; }
   background:white;
   padding:6px 8px;
   font-size:0.8rem;
-  border-radius:12px;
+  border-radius:var(--radius);
   border:1px solid rgba(0,0,0,0.15);
   box-shadow:0 6px 18px rgba(0,0,0,0.15);
   line-height:1.3;
@@ -429,6 +429,19 @@ button{ white-space:nowrap; }
   border-radius:50%;
   background:white;
   border:2px solid #b71c1c;
+}
+
+
+/* =========================================================
+   Theme-aware Leaflet layer control
+   ========================================================= */
+
+.leaflet-control-layers{
+  border-radius:var(--radius);
+  overflow:hidden;
+  border:1px solid rgba(0,0,0,0.15);
+  box-shadow:var(--shadow);
+  background:#ffffff;
 }
 
 
