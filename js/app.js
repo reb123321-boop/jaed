@@ -143,12 +143,12 @@ function initMap(){
         </div>
 
         <div class="legend-item">
-          <span class="legend-dot" style="background:#42a5f5;"></span>
+          <span class="legend-dot" style="background:#f9a825;"></span>
           Unknown
         </div>
 
         <div class="legend-item">
-          <span class="legend-dot" style="background:#888888;"></span>
+          <span class="legend-dot" style="background:#757575;"></span>
           Out of Service
         </div>
 
