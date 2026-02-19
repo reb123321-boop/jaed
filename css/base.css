@@ -34,10 +34,6 @@ body{
   line-height:1.35;
   display:flex;
   flex-direction:column;
-
-  /* 🔑 Critical mobile fix */
-  height:100svh;        /* lock to smallest visible viewport */
-  overflow:hidden;      /* prevent page extending under nav bars */
 }
 
 button{ white-space:nowrap; }
