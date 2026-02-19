@@ -654,9 +654,28 @@ select:focus:not(:focus-visible),
 
 @media (max-width:900px){
 
+  /* =========================
+     Stack layout vertically
+     ========================= */
+
   .content{
-    grid-template-columns:1fr;
+    display:flex;              /* switch from grid to flex */
+    flex-direction:column;
+    min-height:0;              /* critical for proper height calc */
   }
+
+  .panel{
+    flex:0 0 auto;             /* results take natural height */
+  }
+
+  .map-wrap{
+    flex:1 1 auto;             /* map fills remaining space */
+    min-height:0;
+  }
+
+  /* =========================
+     Controls layout
+     ========================= */
 
   .controls{
     flex-direction:column;
@@ -686,6 +705,7 @@ select:focus:not(:focus-visible),
     flex:1 1 0;
   }
 
+  /* Hide zoom on smaller screens */
   .leaflet-control-zoom{
     display:none !important;
   }
