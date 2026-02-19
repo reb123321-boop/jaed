@@ -688,7 +688,26 @@ select:focus:not(:focus-visible),
 
   #geoNote{ display:none; }
 
-  .filters-row{ flex-wrap:wrap; }
+  .filters-row{
+    flex-wrap:wrap;
+    gap:8px;                 /* tighter spacing between dropdowns */
+  }
+
+  /* Compact mobile filter controls */
+  .select{
+    padding:5px 8px;         /* reduce internal vertical + horizontal space */
+    min-height:30px;         /* slightly tighter than buttons */
+    gap:6px;                 /* reduce space between label + value */
+  }
+
+  .select span{
+    font-size:11px;          /* smaller label text */
+  }
+
+  .select select{
+    font-size:12px;          /* smaller selected value */
+    line-height:1;
+  }
 
   .buttons-row{ flex-wrap:wrap; }
 
