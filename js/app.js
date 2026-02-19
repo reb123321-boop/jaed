@@ -362,11 +362,11 @@ function renderMarkers(items){
         markerColor = "#00c853";
         break;
       case "Out of Service":
-        markerColor = "#888888";
+        markerColor = "#757575";
         break;
       case "Unknown":
       default:
-        markerColor = "#42a5f5";
+        markerColor = "#f9a825";
         break;
     }
 
