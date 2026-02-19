@@ -655,21 +655,30 @@ select:focus:not(:focus-visible),
 @media (max-width:900px){
 
   /* =========================
-     Stack layout vertically
+     Vertical stack layout
      ========================= */
 
   .content{
-    display:flex;              /* switch from grid to flex */
+    display:flex;
     flex-direction:column;
-    min-height:0;              /* critical for proper height calc */
+    flex:1;
+    min-height:0;              /* critical */
   }
 
   .panel{
-    flex:0 0 auto;             /* results take natural height */
+    display:flex;
+    flex-direction:column;
+    max-height:50%;            /* optional safety cap */
+    min-height:0;
+  }
+
+  .panel-body{
+    overflow:auto;             /* results scroll */
+    min-height:0;
   }
 
   .map-wrap{
-    flex:1 1 auto;             /* map fills remaining space */
+    flex:1;
     min-height:0;
   }
 
@@ -705,7 +714,6 @@ select:focus:not(:focus-visible),
     flex:1 1 0;
   }
 
-  /* Hide zoom on smaller screens */
   .leaflet-control-zoom{
     display:none !important;
   }
