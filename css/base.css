@@ -200,14 +200,20 @@ button{ white-space:nowrap; }
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding:6px 8px;
+
+  padding:6px 10px;              /* slightly balanced horizontal spacing */
+  min-height:32px;               /* locks visual height consistency */
+
   border-radius:var(--radius-small);
   border:var(--border);
+
+  font-size:13px;
+  font-weight:600;
+  line-height:1;                 /* 🔥 removes font metric variance */
+
   text-decoration:none;
   cursor:pointer;
   user-select:none;
-  font-weight:600;
-  font-size:13px;
 }
 
 
