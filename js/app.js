@@ -355,125 +355,84 @@ function renderMarkers(items){
       </div>
     `;
 
-    // Marker color by status
-      switch(aed.status){
-        case "Active":
-          markerColor = "#00c853";   // brighter green
-          break;
-        case "Out of Service":
-          markerColor = "#888888";
-          break;
-        case "Unknown":
-        default:
-          markerColor = "#42a5f5";   // light blue
-          break;
-      }
+    // Marker colour
+    let markerColor;
+    switch(aed.status){
+      case "Active":
+        markerColor = "#00c853";
+        break;
+      case "Out of Service":
+        markerColor = "#888888";
+        break;
+      case "Unknown":
+      default:
+        markerColor = "#42a5f5";
+        break;
+    }
 
     const isNearest = aed.__nearestCandidate === true;
 
-   const size = isNearest ? 24 : 18;
-   const ringColor = isNearest ? "#b71c1c" : "#ffffff";
-   const ringWidth = isNearest ? 3 : 2;
-   
-   const marker = L.marker([aed.lat, aed.lng], {
-     icon: L.divIcon({
-       className: "aed-marker",
-       html: `
-         <div 
-           class="aed-dot"
-           style="
-             width:${size}px;
-             height:${size}px;
-             background:${markerColor};
-             border:${ringWidth}px solid ${ringColor};
-           ">
-         </div>
-       `,
-       iconSize: [size + ringWidth * 2, size + ringWidth * 2],
-       iconAnchor: [(size + ringWidth * 2) / 2, (size + ringWidth * 2) / 2]
-     })
-   }).bindPopup(popupHtml);
+    const size = isNearest ? 24 : 18;
+    const ringColor = isNearest ? "#b71c1c" : "#ffffff";
+    const ringWidth = isNearest ? 3 : 2;
 
-   // --- Image overlay open behaviour ---
-   popupEl.querySelectorAll(".popup-image").forEach(img => {
-   
-     if (img.dataset.bound === "1") return;
-     img.dataset.bound = "1";
-   
-     img.addEventListener("click", (e) => {
-       e.stopPropagation();
+    const marker = L.marker([aed.lat, aed.lng], {
+      icon: L.divIcon({
+        className: "aed-marker",
+        html: `
+          <div 
+            class="aed-dot"
+            style="
+              width:${size}px;
+              height:${size}px;
+              background:${markerColor};
+              border:${ringWidth}px solid ${ringColor};
+            ">
+          </div>
+        `,
+        iconSize: [size + ringWidth * 2, size + ringWidth * 2],
+        iconAnchor: [(size + ringWidth * 2) / 2, (size + ringWidth * 2) / 2]
+      })
+    }).bindPopup(popupHtml);
 
-       const wrapper = img.closest(".popup-image-wrapper");
-   
-       let imagesFromThisPopup = [];
-       let index = 0;
-   
-       if (wrapper && wrapper.dataset.images) {
-         imagesFromThisPopup = decodeUrlsFromAttr(wrapper.dataset.images);
-         index = parseInt(wrapper.dataset.index || "0", 10) || 0;
-       }
+    markerRegistry[aed.id] = marker;
 
-          // ✅ LOGS GO HERE (after variables exist)
-           console.log("WRAPPER:", wrapper);
-           console.log("DATA-IMAGES:", wrapper?.dataset.images);
-           console.log("DECODED:", imagesFromThisPopup);
-   
-       // 🔑 SAFETY NET: always open at least the clicked image
-       if (!Array.isArray(imagesFromThisPopup) || imagesFromThisPopup.length === 0) {
-         imagesFromThisPopup = [img.src];
-         index = 0;
-       }
-   
-       openImageOverlay(imagesFromThisPopup, index);
-     });
-   
-   });
+    // ---------- POPUP LOGIC ----------
+    marker.on("popupopen", () => {
 
-   // --- Image overlay close behaviour (global, bind once) ---
-   const overlay = document.getElementById("imageOverlay");
-   const overlayImg = document.getElementById("overlayImage");
-   const overlayClose = document.getElementById("overlayCloseBtn");
-   
-   if(overlay && overlayImg){
-   
-     // Click outside image closes
-     overlay.addEventListener("click", (e) => {
-       if(e.target === overlay){
-         overlay.classList.remove("active");
-         overlayImg.src = "";
-       }
-     });
-   
-     // Click on image closes (mobile friendly)
-     overlayImg.addEventListener("click", (e) => {
-       e.stopPropagation();
-       overlay.classList.remove("active");
-       overlayImg.src = "";
-     });
-   
-     // Close button
-     overlayClose?.addEventListener("click", (e) => {
-       e.stopPropagation();
-       overlay.classList.remove("active");
-       overlayImg.src = "";
-     });
-   
-     // Escape key closes
-     document.addEventListener("keydown", (e) => {
-       if(e.key === "Escape" && overlay.classList.contains("active")){
-         overlay.classList.remove("active");
-         overlayImg.src = "";
-       }
-     });
-   
-   }
-       
+      const popupEl = marker.getPopup()?.getElement();
+      if(!popupEl) return;
 
-      // --- Multi-image cycling ---
+      popupEl.querySelectorAll(".popup-image").forEach(img => {
+
+        if (img.dataset.bound === "1") return;
+        img.dataset.bound = "1";
+
+        img.addEventListener("click", (e) => {
+          e.stopPropagation();
+
+          const wrapper = img.closest(".popup-image-wrapper");
+
+          let imagesFromThisPopup = [];
+          let index = 0;
+
+          if (wrapper && wrapper.dataset.images) {
+            imagesFromThisPopup = decodeUrlsFromAttr(wrapper.dataset.images);
+            index = parseInt(wrapper.dataset.index || "0", 10) || 0;
+          }
+
+          if (!Array.isArray(imagesFromThisPopup) || imagesFromThisPopup.length === 0) {
+            imagesFromThisPopup = [img.src];
+            index = 0;
+          }
+
+          openImageOverlay(imagesFromThisPopup, index);
+        });
+      });
+
       const wrapper = popupEl.querySelector(".popup-image-wrapper");
       if(!wrapper) return;
 
-      // Avoid duplicate listeners if popup is reopened
       if(wrapper.dataset.bound === "1") return;
       wrapper.dataset.bound = "1";
 
@@ -501,13 +460,12 @@ function renderMarkers(items){
         e.stopPropagation();
         setIndex(index + 1);
       });
+
     });
 
-    // ✅ FIX: Only scroll results when the marker is clicked (and card exists)
     marker.on("click", () => {
       ensurePanelOpen();
 
-      // Find the matching card in the results pane
       const cardEl = document.querySelector(`.card[data-aed-id="${aed.id}"]`);
       if(cardEl){
         scrollResultsToCard(cardEl);
