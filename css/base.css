@@ -17,6 +17,7 @@
 
 html {
   color-scheme: light;
+  background-color: #fff;
 }
 
 *{
@@ -109,6 +110,17 @@ button{ white-space:nowrap; }
   cursor:pointer;
   user-select:none;
   padding:0;
+}
+
+.aed-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aed-dot {
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
 }
 
 .info-btn{
