@@ -123,6 +123,27 @@ button{ white-space:nowrap; }
   box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
 }
 
+.header-call-btn {
+  margin-left: 12px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.btn-emergency {
+  background: #c62828;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-emergency:hover {
+  background: #b71c1c;
+}
+
 .info-btn{
   background:none;
   border:none;
