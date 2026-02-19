@@ -177,9 +177,12 @@ button{ white-space:nowrap; }
   display:flex;
   align-items:center;
   gap:8px;
+
+  padding:6px 10px;        /* match button vertical padding */
+  min-height:32px;         /* match button height */
+
   border:var(--border);
   border-radius:var(--radius-small);
-  padding:8px 10px;
   min-width:0;
 }
 
@@ -194,6 +197,7 @@ button{ white-space:nowrap; }
   font:inherit;
   outline:none;
   min-width:0;
+  line-height:1;
 }
 
 /* Generic Buttons */
