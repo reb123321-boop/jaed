@@ -130,7 +130,7 @@ button{ white-space:nowrap; }
    ========================================================= */
 
 .app-main{
-  padding:8px 8px 0 8px;   /* remove bottom padding only */
+  padding:8px;
   display:flex;
   flex-direction:column;
   flex:1;
@@ -783,7 +783,7 @@ select:focus:not(:focus-visible),
      ========================= */
 
   .app-main{
-    padding:8px;   /* keep inset around filters + buttons */
+    padding:8px 8px 0 8px;   /* remove bottom padding only */
   }
 
   .content{
