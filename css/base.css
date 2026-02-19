@@ -350,7 +350,7 @@ button{ white-space:nowrap; }
 }
 
 .status-Out\ of\ Service{
-  background:#f5f5f5;
+  background:#757575;
   color:#555;
   border:1px solid #888;
 }
@@ -358,7 +358,7 @@ button{ white-space:nowrap; }
 .status-Unknown{
   background:#e3f2fd;
   color:#1e88e5;
-  border:1px solid #42a5f5;
+  border:1px solid #f9a825;
 }
 
 
