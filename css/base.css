@@ -121,7 +121,7 @@ button{ white-space:nowrap; }
    ========================================================= */
 
 .app-main{
-  padding:12px;
+  padding:8px;
   display:flex;
   flex-direction:column;
   flex:1;
@@ -132,7 +132,7 @@ button{ white-space:nowrap; }
 .content{
   display:grid;
   grid-template-columns:minmax(320px, 36%) 1fr;
-  gap:12px;
+  gap:8px;
   flex:1;
   min-height:0;
 }
@@ -145,8 +145,8 @@ button{ white-space:nowrap; }
 .controls{
   display:flex;
   flex-direction:column;
-  gap:12px;
-  margin-bottom:12px;
+  gap:8px;
+  margin-bottom:8px;
 }
 
 .filters-row{
