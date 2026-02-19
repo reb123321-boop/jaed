@@ -66,21 +66,22 @@ button{ white-space:nowrap; }
   display:block;
 }
 
-.brand-text h1{
+.brand h1{
   font-size:18px;
   margin:0;
 }
 
 .tagline{
-  margin:2px 0 0 0;
+  margin:0;
   font-size:13px;
-  opacity:0.85;
+  opacity:0.75;
+  white-space:nowrap;
 }
 
 .header-actions{
   display:flex;
-  gap:10px;
   align-items:center;
+  gap:16px;
 }
 
 /* Header Buttons */
@@ -121,7 +122,7 @@ button{ white-space:nowrap; }
    ========================================================= */
 
 .app-main{
-  padding:12px;
+  padding:8px;
   display:flex;
   flex-direction:column;
   flex:1;
@@ -132,7 +133,7 @@ button{ white-space:nowrap; }
 .content{
   display:grid;
   grid-template-columns:minmax(320px, 36%) 1fr;
-  gap:12px;
+  gap:8px;
   flex:1;
   min-height:0;
 }
@@ -145,8 +146,8 @@ button{ white-space:nowrap; }
 .controls{
   display:flex;
   flex-direction:column;
-  gap:12px;
-  margin-bottom:12px;
+  gap:8px;
+  margin-bottom:8px;
 }
 
 .filters-row{
@@ -676,7 +677,7 @@ select:focus:not(:focus-visible),
 
   .app-header{ padding:8px 12px; }
 
-  .brand-text h1{ font-size:16px; }
+  .brand h1{ font-size:16px; }
 
   .tagline{ display:none; }
 
