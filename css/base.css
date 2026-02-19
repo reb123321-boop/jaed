@@ -706,7 +706,7 @@ select:focus:not(:focus-visible),
 
   .filters-row{
     flex-wrap:wrap;
-    gap:8px;                 /* tighter spacing between dropdowns */
+    gap:8px;
   }
 
   .buttons-row{
@@ -716,7 +716,7 @@ select:focus:not(:focus-visible),
   /* Compact mobile filter controls */
 
   .select{
-    padding:5px 8px;         /* tighter internal spacing */
+    padding:5px 8px;
     min-height:30px;
     gap:6px;
   }
@@ -731,33 +731,35 @@ select:focus:not(:focus-visible),
   }
 
   /* =========================
-     Full-bleed results + map
+     Layout spacing
      ========================= */
 
   .app-main{
-    padding:8px;             /* keep spacing around controls */
+    padding:8px;   /* keep inset around filters + buttons */
   }
 
   .content{
-    gap:0;                   /* remove gap between panel + map */
+    gap:0;         /* remove gap between panel and map */
   }
+
+  /* =========================
+     Full-bleed results + map
+     ========================= */
 
   .panel,
   .map-wrap{
-    margin-left:-8px;        /* cancel app-main padding */
+    margin-left:-8px;      /* cancel app-main padding */
     margin-right:-8px;
-    border-radius:0;         /* remove rounded corners */
+    border-radius:0;
+    border-left:none;
+    border-right:none;
+    border-bottom:none;    /* remove edge border at viewport bottom */
   }
+
+  /* Subtle divider between controls and results */
 
   .panel{
-    border-left:none;
-    border-right:none;
-    border-top:1px solid rgba(0,0,0,0.06);  /* subtle structural divider */
-  }
-
-  .map-wrap{
-    border-left:none;
-    border-right:none;
+    border-top:1px solid rgba(0,0,0,0.06);
   }
 
 }
