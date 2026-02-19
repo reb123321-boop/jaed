@@ -711,4 +711,31 @@ select:focus:not(:focus-visible),
 
   .buttons-row{ flex-wrap:wrap; }
 
+  /* =========================
+     Full-bleed mobile layout
+     ========================= */
+
+  .app-main{
+    padding:0;                 /* remove inset side padding */
+  }
+
+  .content{
+    gap:0;                     /* remove gap between panel + map */
+  }
+
+  .panel,
+  .map-wrap{
+    border-radius:0;           /* remove rounded corners */
+  }
+
+  .panel{
+    border-left:none;
+    border-right:none;
+  }
+
+  .map-wrap{
+    border-left:none;
+    border-right:none;
+  }
+   
 }
