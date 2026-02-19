@@ -371,21 +371,28 @@ function renderMarkers(items){
 
     const isNearest = aed.__nearestCandidate === true;
 
-    const marker = L.circleMarker([aed.lat, aed.lng], {
-      radius: isNearest ? 12 : 8,
-      fillColor: markerColor,
-      color: isNearest ? "#b71c1c" : "#ffffff",  // red ring for nearest
-      weight: isNearest ? 3 : 2,
-      opacity: 1,
-      fillOpacity: 0.95
-    }).bindPopup(popupHtml);
-
-    markerRegistry[aed.id] = marker;
-
-    marker.on("popupopen", () => {
-      // IMPORTANT: scope everything to THIS popup element (not document-wide)
-      const popupEl = marker.getPopup()?.getElement();
-      if(!popupEl) return;
+   const size = isNearest ? 24 : 18;
+   const ringColor = isNearest ? "#b71c1c" : "#ffffff";
+   const ringWidth = isNearest ? 3 : 2;
+   
+   const marker = L.marker([aed.lat, aed.lng], {
+     icon: L.divIcon({
+       className: "aed-marker",
+       html: `
+         <div 
+           class="aed-dot"
+           style="
+             width:${size}px;
+             height:${size}px;
+             background:${markerColor};
+             border:${ringWidth}px solid ${ringColor};
+           ">
+         </div>
+       `,
+       iconSize: [size + ringWidth * 2, size + ringWidth * 2],
+       iconAnchor: [(size + ringWidth * 2) / 2, (size + ringWidth * 2) / 2]
+     })
+   }).bindPopup(popupHtml);
 
    // --- Image overlay open behaviour ---
    popupEl.querySelectorAll(".popup-image").forEach(img => {
