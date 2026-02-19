@@ -66,21 +66,22 @@ button{ white-space:nowrap; }
   display:block;
 }
 
-.brand-text h1{
+.brand h1{
   font-size:18px;
   margin:0;
 }
 
 .tagline{
-  margin:2px 0 0 0;
+  margin:0;
   font-size:13px;
-  opacity:0.85;
+  opacity:0.75;
+  white-space:nowrap;
 }
 
 .header-actions{
   display:flex;
-  gap:10px;
   align-items:center;
+  gap:16px;
 }
 
 /* Header Buttons */
@@ -676,7 +677,7 @@ select:focus:not(:focus-visible),
 
   .app-header{ padding:8px 12px; }
 
-  .brand-text h1{ font-size:16px; }
+  .brand h1{ font-size:16px; }
 
   .tagline{ display:none; }
 
