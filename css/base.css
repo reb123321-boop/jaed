@@ -680,35 +680,84 @@ select:focus:not(:focus-visible),
 
 @media (max-width:600px){
 
-  .app-header{ padding:6px 12px; }
+  /* =========================
+     Header
+     ========================= */
 
-  .brand h1{ font-size:16px; }
+  .app-header{
+    padding:6px 12px;
+  }
 
-  .tagline{ display:none; }
+  .brand h1{
+    font-size:16px;
+  }
 
-  #geoNote{ display:none; }
+  .tagline{
+    display:none;
+  }
+
+  /* =========================
+     Controls (filters + buttons)
+     ========================= */
+
+  #geoNote{
+    display:none;
+  }
 
   .filters-row{
     flex-wrap:wrap;
     gap:8px;                 /* tighter spacing between dropdowns */
   }
 
+  .buttons-row{
+    flex-wrap:wrap;
+  }
+
   /* Compact mobile filter controls */
+
   .select{
-    padding:5px 8px;         /* reduce internal vertical + horizontal space */
-    min-height:30px;         /* slightly tighter than buttons */
-    gap:6px;                 /* reduce space between label + value */
+    padding:5px 8px;         /* tighter internal spacing */
+    min-height:30px;
+    gap:6px;
   }
 
   .select span{
-    font-size:11px;          /* smaller label text */
+    font-size:11px;
   }
 
   .select select{
-    font-size:12px;          /* smaller selected value */
+    font-size:12px;
     line-height:1;
   }
 
-  .buttons-row{ flex-wrap:wrap; }
+  /* =========================
+     Full-bleed results + map
+     ========================= */
+
+  .app-main{
+    padding:8px;             /* keep spacing around controls */
+  }
+
+  .content{
+    gap:0;                   /* remove gap between panel + map */
+  }
+
+  .panel,
+  .map-wrap{
+    margin-left:-8px;        /* cancel app-main padding */
+    margin-right:-8px;
+    border-radius:0;         /* remove rounded corners */
+  }
+
+  .panel{
+    border-left:none;
+    border-right:none;
+    border-top:1px solid rgba(0,0,0,0.06);  /* subtle structural divider */
+  }
+
+  .map-wrap{
+    border-left:none;
+    border-right:none;
+  }
 
 }
