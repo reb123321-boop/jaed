@@ -546,20 +546,26 @@ function renderResults(items){
       }</h3>
 
       <div class="meta-row">
+      
+        <a class="btn btn-primary btn-inline"
+           href="${buildGoogleNavLink(aed.lat, aed.lng)}"
+           target="_blank"
+           rel="noopener">
+          Directions
+        </a>
+      
         <span class="badge ${badgeClass}" data-status="${escapeHtml(status)}" role="button" tabindex="0">
           ${escapeHtml(status)}
         </span>
-
+      
         ${aed.parish ? `<span class="meta-parish">${escapeHtml(aed.parish)}</span>` : ""}
         ${aed.address ? `<span class="meta-address">${escapeHtml(aed.address)}</span>` : ""}
+      
       </div>
-
+      
       ${aed.access ? `<div class="small"><strong>Access:</strong> ${escapeHtml(aed.access)}</div>` : ""}
       ${verifiedText ? `<div class="small">${escapeHtml(verifiedText)}</div>` : ""}
 
-      <div class="card-actions" style="margin-top:10px;">
-        <a class="btn btn-primary" href="${buildGoogleNavLink(aed.lat, aed.lng)}" target="_blank" rel="noopener">Directions</a>
-      </div>
     `;
 
     // Status badge click handler
