@@ -559,7 +559,6 @@ function renderResults(items){
 
       <div class="card-actions" style="margin-top:10px;">
         <a class="btn btn-primary" href="${buildGoogleNavLink(aed.lat, aed.lng)}" target="_blank" rel="noopener">Directions</a>
-        <a class="btn btn-secondary" href="tel:999">Call 999</a>
       </div>
     `;
 
