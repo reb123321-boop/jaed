@@ -34,6 +34,13 @@ body{
   line-height:1.35;
   display:flex;
   flex-direction:column;
+  min-height:100vh;     /* stable fallback */
+}
+
+@supports (height: 100dvh){
+  body{
+    min-height:100dvh;  /* dynamic viewport height */
+  }
 }
 
 button{ white-space:nowrap; }
@@ -654,9 +661,37 @@ select:focus:not(:focus-visible),
 
 @media (max-width:900px){
 
+  /* =========================
+     Vertical stack layout
+     ========================= */
+
   .content{
-    grid-template-columns:1fr;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+    min-height:0;              /* critical */
   }
+
+  .panel{
+    display:flex;
+    flex-direction:column;
+    max-height:50%;            /* optional safety cap */
+    min-height:0;
+  }
+
+  .panel-body{
+    overflow:auto;             /* results scroll */
+    min-height:0;
+  }
+
+  .map-wrap{
+    flex:1;
+    min-height:0;
+  }
+
+  /* =========================
+     Controls layout
+     ========================= */
 
   .controls{
     flex-direction:column;
@@ -748,7 +783,7 @@ select:focus:not(:focus-visible),
      ========================= */
 
   .app-main{
-    padding:8px;   /* keep inset around filters + buttons */
+    padding:8px 8px 0 8px;   /* remove bottom padding only */
   }
 
   .content{
