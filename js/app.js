@@ -1077,16 +1077,24 @@ async function main(){
         Check Airtable config in <code>js/app.js</code> (API key/base/table).<br/>
         ${escapeHtml(e.message)}
       </div>`;
-  } finally {
-    // 🔥 Always reveal the app
-    document.body.classList.remove("loading");
+  }
 
-    // 🔥 Critical for Leaflet when map was hidden
-    if(map){
-      setTimeout(() => {
-        map.invalidateSize(true);
-      }, 50);
-    }
+  // ✅ Wait until map has fully settled before revealing UI
+  if(map){
+    // Force final layout calculation
+    map.invalidateSize(true);
+
+    // Ensure correct starting view (no animation)
+    const isMobile = window.matchMedia("(max-width: 600px)").matches;
+    const targetZoom = isMobile ? (CONFIG.JERSEY_ZOOM - 1) : CONFIG.JERSEY_ZOOM;
+
+    map.setView(CONFIG.JERSEY_CENTER, targetZoom, { animate:false });
+
+    map.once("moveend", () => {
+      document.body.classList.remove("loading");
+    });
+  } else {
+    document.body.classList.remove("loading");
   }
 
   window.addEventListener("load", forceMapResize);
