@@ -286,16 +286,31 @@ function renderMarkers(items){
     const popupHtml = `
       <div class="popup-card">
     
-        ${imageUrls.length ? `
-          <div class="popup-image-wrapper"
-               data-images="${encodedUrls}"
-               data-index="0">
-            <img src="${imageUrls[0]}"
-                 alt="Defibrillator location"
-                 class="popup-image">
-          </div>
-        ` : ""}
-    
+         ${imageUrls.length ? `
+           <div class="popup-image-wrapper"
+                data-images="${encodedUrls}"
+                data-index="0">
+         
+             <button type="button"
+                     class="popup-img-prev"
+                     aria-label="Previous image"
+                     ${imageUrls.length === 1 ? 'style="display:none;"' : ""}>
+               ‹
+             </button>
+         
+             <img src="${imageUrls[0]}"
+                  alt="Defibrillator location"
+                  class="popup-image">
+         
+             <button type="button"
+                     class="popup-img-next"
+                     aria-label="Next image"
+                     ${imageUrls.length === 1 ? 'style="display:none;"' : ""}>
+               ›
+             </button>
+         
+           </div>
+         ` : ""}
         <div class="popup-title">
           ${escapeHtml(aed.name || "Defibrillator")}
           ${
