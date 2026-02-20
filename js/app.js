@@ -835,7 +835,8 @@ function findNearestFunctional(){
         alert("Could not get your location. Please try again.");
       }
     },
-    { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+//    { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+      { enableHighAccuracy: false, maximumAge: 60000, timeout: 7000 }
   );
 }
 
