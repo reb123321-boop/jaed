@@ -27,6 +27,13 @@ body.theme-government .tagline{
   opacity:0.95;
 }
 
+/* Government theme: make header primary button look like secondary */
+body.theme-government .app-header .btn-primary{
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-color);
+  border: var(--btn-secondary-border);
+  box-shadow: none;
+}
 
 /* =========================================================
    Buttons
