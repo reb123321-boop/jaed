@@ -285,85 +285,79 @@ function renderMarkers(items){
 
     const popupHtml = `
       <div class="popup-card">
-
-        ${imageUrls.length ? `
-          <div class="popup-image-wrapper"
-               data-images="${encodedUrls}"
-               data-index="0"
-               style="position:relative; margin-bottom:8px;">
-
-            <button type="button" class="popup-img-prev" aria-label="Previous image"
-              style="
-                position:absolute;
-                left:6px;
-                top:50%;
-                transform:translateY(-50%);
-                background:rgba(0,0,0,0.6);
-                color:white;
-                border:none;
-                padding:4px 8px;
-                border-radius:6px;
-                cursor:pointer;
-                ${imageUrls.length === 1 ? "display:none;" : ""}
-              ">◀</button>
-
-            <img src="${imageUrls[0]}"
-                 alt="Defibrillator location"
-                 class="popup-image"
-                 style="width:100%; border-radius:8px; max-height:160px; object-fit:cover; cursor:pointer;">
-
-            <button type="button" class="popup-img-next" aria-label="Next image"
-              style="
-                position:absolute;
-                right:6px;
-                top:50%;
-                transform:translateY(-50%);
-                background:rgba(0,0,0,0.6);
-                color:white;
-                border:none;
-                padding:4px 8px;
-                border-radius:6px;
-                cursor:pointer;
-                ${imageUrls.length === 1 ? "display:none;" : ""}
-              ">▶</button>
-
-          </div>
-        ` : ""}
-
-         <div class="popup-title">
-           ${escapeHtml(getDisplayName(aed))}
-         </div>
-         <div class="popup-meta">
-           ${escapeHtml(aed.address || "")}
-         </div>
+    
+         ${imageUrls.length ? `
+           <div class="popup-image-wrapper"
+                data-images="${encodedUrls}"
+                data-index="0">
          
-         <div class="popup-parish">
-           ${escapeHtml(aed.parish || "")}
-         </div>
-
-        <div class="popup-row">
-          <strong>Status:</strong> ${escapeHtml(aed.status || "Unknown")}
+             <button type="button"
+                     class="popup-img-prev"
+                     aria-label="Previous image"
+                     ${imageUrls.length === 1 ? 'style="display:none;"' : ""}>
+               ‹
+             </button>
+         
+             <img src="${imageUrls[0]}"
+                  alt="Defibrillator location"
+                  class="popup-image">
+         
+             <button type="button"
+                     class="popup-img-next"
+                     aria-label="Next image"
+                     ${imageUrls.length === 1 ? 'style="display:none;"' : ""}>
+               ›
+             </button>
+         
+           </div>
+         ` : ""}
+        <div class="popup-title">
+          ${escapeHtml(aed.name || "Defibrillator")}
+          ${
+            aed.padNumber
+              ? `<span class="popup-pad">(Pad ${escapeHtml(aed.padNumber)})</span>`
+              : ""
+          }
         </div>
-
-        ${aed.access ? `
-          <div class="popup-row">
-            <strong>Access:</strong> ${escapeHtml(aed.access)}
-          </div>
-        ` : ""}
-
+    
+        <div class="popup-location">
+          ${
+            [aed.address, aed.parish, aed.postcode]
+              .filter(Boolean)
+              .map(escapeHtml)
+              .join(", ")
+          }
+        </div>
+    
+        <div class="popup-status-row">
+          <span class="badge ${statusToClass(aed.status)}">
+            ${escapeHtml(aed.status || "Unknown")}
+          </span>
+          ${
+            aed.lastVerified
+              ? `<span class="popup-verified">Verified ${escapeHtml(aed.lastVerified)}</span>`
+              : ""
+          }
+        </div>
+    
+        ${
+          aed.access
+            ? `<div class="popup-access">${escapeHtml(aed.access)}</div>`
+            : ""
+        }
+    
         <div class="popup-actions">
           <a href="${buildGoogleNavLink(aed.lat, aed.lng)}"
              target="_blank"
              rel="noopener"
-             class="btn btn-primary"
-             style="text-decoration:none;">
+             class="btn btn-primary">
             Directions
           </a>
         </div>
-
+    
       </div>
     `;
-
+     
     // Marker colour
     let markerColor;
     switch(aed.status){

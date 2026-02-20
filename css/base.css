@@ -504,43 +504,108 @@ button{ white-space:nowrap; }
 
 
 /* =========================================================
-   MAP POPUP CARD (Styled like results cards)
+   MAP POPUP CARD – Tight Layout
    ========================================================= */
 
 .popup-card{
   min-width:220px;
   font-size:13px;
-  padding:6px;
+  padding:6px;                 /* match result cards */
 }
+
+/* Title */
 
 .popup-title{
   font-weight:700;
   font-size:14px;
   line-height:1.1;
-  margin:0;
-}
-
-.popup-meta{
-  font-size:12px;
   margin-bottom:2px;
 }
 
-.popup-parish{
+/* Address + Parish + Postcode */
+
+.popup-location{
   font-size:12px;
-  opacity:0.8;
+  opacity:0.9;
+  margin-bottom:4px;
+}
+
+/* Status + Verified */
+
+.popup-status-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:4px;
+}
+
+.popup-verified{
+  font-size:11px;
+  opacity:0.75;
+}
+
+/* Access */
+
+.popup-access{
+  font-size:12px;
   margin-bottom:6px;
 }
 
-.popup-row{
-  margin-top:4px;
-}
+/* Button */
 
 .popup-actions{
-  margin-top:8px;
+  margin-top:2px;              /* tighter than before */
   display:flex;
   gap:6px;
-  flex-wrap:wrap;
 }
+
+.popup-pad{
+  font-weight:600;
+  opacity:0.7;
+  margin-left:4px;
+}
+/* Images */
+
+.popup-image-wrapper{
+  position:relative;
+  margin-bottom:4px;
+}
+
+.popup-image{
+  display:block;       /* removes inline image baseline gap */
+  width:100%;
+  border-radius:8px;
+  max-height:160px;
+  object-fit:cover;
+}
+
+.popup-img-prev,
+.popup-img-next{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.6);
+  color:white;
+  border:none;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+}
+
+.popup-img-prev{ left:6px; }
+.popup-img-next{ right:6px; }
+
+.popup-img-prev:hover,
+.popup-img-next:hover{
+  background:rgba(0,0,0,0.75);
+}
+
+/* Leaflet overrides */
 
 .leaflet-popup-content{
   margin:0;
