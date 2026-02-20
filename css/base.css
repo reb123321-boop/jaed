@@ -404,25 +404,7 @@ body.loading::after{
   border-color: #757575;
   color: #ffffff;
 }
-/*
-.status-Active{
-  background:#e0f8ec;
-  color:#00a844;
-  border:1px solid #00c853;
-}
 
-.status-Out\ of\ Service{
-  background:#757575;
-  color:#555;
-  border:1px solid #888;
-}
-
-.status-Unknown{
-  background:#e3f2fd;
-  color:#1e88e5;
-  border:1px solid #f9a825;
-}
-*/
 
 /* =========================================================
    MAP + LEGEND
@@ -625,6 +607,22 @@ body.loading::after{
 .popup-img-prev:hover,
 .popup-img-next:hover{
   background:rgba(0,0,0,0.65);
+}
+
+/* ===== Popup access badge ===== */
+
+.badge-access {
+  margin-left:6px;
+}
+
+.badge-access-yes {
+  background:#0a7f3f;
+  color:#fff;
+}
+
+.badge-access-no {
+  background:#6b7280;
+  color:#fff;
 }
 
 /* Leaflet overrides */
