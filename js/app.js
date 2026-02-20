@@ -1072,38 +1072,25 @@ async function main(){
       </div>`;
   }
 
+  // Reveal AFTER map is ready
   if(map){
-    let revealed = false;
-
-    const reveal = () => {
-      if(revealed) return;
-      revealed = true;
-
+    map.whenReady(() => {
       document.body.classList.remove("loading");
 
-      // Only invalidate size — DO NOT setView again
-      requestAnimationFrame(() => {
-        map.invalidateSize(true);
-      });
-    };
-
-    // Wait for Leaflet initialisation only
-    map.whenReady(() => {
-      reveal();
+      // Invalidate ONCE after becoming visible
+      setTimeout(() => {
+        map.invalidateSize(false); // false avoids animated correction
+      }, 0);
     });
-
-    // Safety fallback
-    setTimeout(reveal, 1500);
-
   } else {
     document.body.classList.remove("loading");
   }
 
-  // Keep resize handling, but remove extra setView logic inside forceMapResize
+  // Only resize on actual window resize
   window.addEventListener("resize", () => {
     clearTimeout(window.__mapResizeTimer);
     window.__mapResizeTimer = setTimeout(() => {
-      map?.invalidateSize(true);
+      map?.invalidateSize(false);
     }, 150);
   });
 }
