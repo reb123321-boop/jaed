@@ -1069,6 +1069,7 @@ async function main(){
     forceMapResize();
   } catch (e){
     console.error(e);
+
     $("panelMeta").textContent = "Data load failed";
     $("resultsList").innerHTML = `
       <div class="panel-note">
@@ -1076,6 +1077,16 @@ async function main(){
         Check Airtable config in <code>js/app.js</code> (API key/base/table).<br/>
         ${escapeHtml(e.message)}
       </div>`;
+  } finally {
+    // 🔥 Always reveal the app
+    document.body.classList.remove("loading");
+
+    // 🔥 Critical for Leaflet when map was hidden
+    if(map){
+      setTimeout(() => {
+        map.invalidateSize(true);
+      }, 50);
+    }
   }
 
   window.addEventListener("load", forceMapResize);
