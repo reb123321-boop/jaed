@@ -350,7 +350,7 @@ function renderMarkers(items){
           <a href="${buildGoogleNavLink(aed.lat, aed.lng)}"
              target="_blank"
              rel="noopener"
-             class="btn btn-primary">
+             class="btn btn-secondary">
             Directions
           </a>
         </div>
@@ -539,7 +539,7 @@ function renderResults(items){
       }</h3>
       <div class="meta-row">
       
-        <a class="btn btn-primary btn-inline"
+        <a class="btn btn-secondary btn-inline"
            href="${buildGoogleNavLink(aed.lat, aed.lng)}"
            target="_blank"
            rel="noopener">
