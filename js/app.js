@@ -544,11 +544,9 @@ function renderResults(items){
           ${escapeHtml(status)}
         </span>
         
-        ${aed["Public Access"] !== undefined ? `
-          <span class="badge badge-access ${aed["Public Access"] ? "badge-access-yes" : "badge-access-no"}">
-            ${aed["Public Access"] ? "Public Access" : "Restricted Access"}
-          </span>
-        ` : ""}
+        <span class="badge badge-access ${aed.publicAccess ? "badge-access-yes" : "badge-access-no"}">
+          ${aed.publicAccess ? "Public Access" : "Restricted Access"}
+        </span>
       
         ${aed.parish ? `<span class="meta-parish">${escapeHtml(aed.parish)}</span>` : ""}
         ${aed.address ? `<span class="meta-address">${escapeHtml(aed.address)}</span>` : ""}
