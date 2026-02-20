@@ -297,7 +297,12 @@ function renderMarkers(items){
         ` : ""}
     
         <div class="popup-title">
-          ${escapeHtml(getDisplayName(aed))}
+          ${escapeHtml(aed.name || "Defibrillator")}
+          ${
+            aed.padNumber
+              ? `<span class="popup-pad">(Pad ${escapeHtml(aed.padNumber)})</span>`
+              : ""
+          }
         </div>
     
         <div class="popup-location">
