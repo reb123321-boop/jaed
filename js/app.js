@@ -327,6 +327,11 @@ function renderMarkers(items){
           <span class="badge ${statusToClass(aed.status)}">
             ${escapeHtml(aed.status || "Unknown")}
           </span>
+        
+          <span class="badge badge-access ${aed.publicAccess ? "badge-access-yes" : "badge-access-no"}">
+            ${aed.publicAccess ? "Public Access" : "Restricted"}
+          </span>
+        
           ${
             aed.lastVerified
               ? `<span class="popup-verified">Verified ${escapeHtml(aed.lastVerified)}</span>`
