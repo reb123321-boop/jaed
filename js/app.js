@@ -779,12 +779,23 @@ function findNearestFunctional(){
   ensurePanelOpen();
 
   const note = $("geoNote");
-  note.innerHTML = `Tip: Click <strong>Find Nearest</strong> to use your location. Your location is not stored.`;
+  note.innerHTML = `Tip: Click <strong>Nearest To Me</strong> to use your location. Your location is not stored.`;
+
+  const btn = $("btnFindNearest");
+  const originalBtnText = btn ? btn.textContent : "";
+  const setBtnState = (isLocating) => {
+    if(!btn) return;
+    btn.disabled = isLocating;
+    btn.textContent = isLocating ? "Locating…" : originalBtnText;
+    btn.setAttribute("aria-busy", isLocating ? "true" : "false");
+  };
 
   if(!navigator.geolocation){
     alert("Geolocation is not supported in this browser.");
     return;
   }
+
+  setBtnState(true);
 
   navigator.geolocation.getCurrentPosition(
     (pos) => {
@@ -798,7 +809,12 @@ function findNearestFunctional(){
       allAEDs.forEach(a => { a.__nearestCandidate = false; });
 
       const functionalPublic = visibleAEDs
-        .filter(a => (a.status || "Unknown") === "Active" && a.publicAccess === true && typeof a.lat === "number" && typeof a.lng === "number")
+        .filter(a =>
+          (a.status || "Unknown") === "Active" &&
+          a.publicAccess === true &&
+          typeof a.lat === "number" &&
+          typeof a.lng === "number"
+        )
         .map(a => ({ ...a, distanceKm: distanceKm(lat, lng, a.lat, a.lng) }))
         .sort((a,b) => a.distanceKm - b.distanceKm);
 
@@ -827,16 +843,23 @@ function findNearestFunctional(){
       }
 
       applyFiltersAndRender();
+      setBtnState(false);
     },
     (err) => {
       if(err.code === err.PERMISSION_DENIED){
         alert("Location permission was denied. You can still browse the map and use filters.");
+      } else if(err.code === err.TIMEOUT){
+        alert("Getting your location timed out. Please try again.");
       } else {
         alert("Could not get your location. Please try again.");
       }
+      setBtnState(false);
     },
-//    { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
-      { enableHighAccuracy: false, maximumAge: 60000, timeout: 7000 }
+    {//Old values   { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+      enableHighAccuracy: false,
+      timeout: 7000,
+      maximumAge: 60000
+    }
   );
 }
 
