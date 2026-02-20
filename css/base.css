@@ -559,6 +559,11 @@ button{ white-space:nowrap; }
   gap:6px;
 }
 
+.popup-pad{
+  font-weight:600;
+  opacity:0.7;
+  margin-left:4px;
+}
 /* Images */
 
 .popup-image-wrapper{
