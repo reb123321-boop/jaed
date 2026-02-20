@@ -1079,11 +1079,7 @@ async function main(){
       </div>`;
   }
 
-  // ✅ Controlled reveal after map settles (with safety fallback)
   if(map){
-
-    // Force layout recalculation while hidden
-    map.invalidateSize(true);
 
     const isMobile = window.matchMedia("(max-width: 600px)").matches;
     const targetZoom = isMobile ? (CONFIG.JERSEY_ZOOM - 1) : CONFIG.JERSEY_ZOOM;
@@ -1093,29 +1089,25 @@ async function main(){
     const reveal = () => {
       if(revealed) return;
       revealed = true;
-
       document.body.classList.remove("loading");
-
-      // Ensure Leaflet resizes correctly once visible
-      setTimeout(() => {
-        map.invalidateSize(true);
-      }, 50);
+      setTimeout(() => map.invalidateSize(true), 50);
     };
 
-    // Wait for map movement to complete
-    map.once("moveend", reveal);
+    // Wait until Leaflet reports ready
+    map.whenReady(() => {
 
-    // Set initial view (no animation)
-    map.setView(CONFIG.JERSEY_CENTER, targetZoom, { animate:false });
+      map.invalidateSize(true);
+      map.once("moveend", reveal);
 
-    // 🔥 Safety fallback so we NEVER hang
-    setTimeout(reveal, 300);
+      map.setView(CONFIG.JERSEY_CENTER, targetZoom, { animate:false });
+    });
 
+    // 🔥 Much safer fallback (never hang)
+    setTimeout(reveal, 1500);
   } else {
     document.body.classList.remove("loading");
   }
 
-  // --- Existing resize handling ---
   window.addEventListener("load", forceMapResize);
 
   window.addEventListener("resize", () => {
