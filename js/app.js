@@ -546,7 +546,7 @@ function renderResults(items){
         
         ${aed["Public Access"] !== undefined ? `
           <span class="badge badge-access ${aed["Public Access"] ? "badge-access-yes" : "badge-access-no"}">
-            ${aed["Public Access"] ? "Public Access" : "Private Site"}
+            ${aed["Public Access"] ? "Public Access" : "Restricted Access"}
           </span>
         ` : ""}
       
