@@ -328,8 +328,8 @@ function renderMarkers(items){
             ${escapeHtml(aed.status || "Unknown")}
           </span>
         
-          <span class="badge badge-access ${aed.publicAccess ? "badge-access-yes" : "badge-access-no"}">
-            ${aed.publicAccess ? "Public Access" : "Restricted"}
+          <span class="badge access-${aed.publicAccess ? "Public Access" : "Restricted Access"}">
+            ${aed.publicAccess ? "Public Access" : "Restricted Access"}
           </span>
         
           ${
@@ -529,7 +529,6 @@ function renderResults(items){
     card.className = `card ${isNearest ? "nearest" : ""}`;
     card.setAttribute("data-aed-id", aed.id);
 
-    // Public access badge temporarily disabled
     card.innerHTML = `
       <h3>${
          isNearest
@@ -548,17 +547,13 @@ function renderResults(items){
         <span class="badge ${badgeClass}" data-status="${escapeHtml(status)}" role="button" tabindex="0">
           ${escapeHtml(status)}
         </span>
-        
-        <span class="badge badge-access ${aed.publicAccess ? "badge-access-yes" : "badge-access-no"}">
-          ${aed.publicAccess ? "Public Access" : "Restricted Access"}
-        </span>
+
       
         ${aed.parish ? `<span class="meta-parish">${escapeHtml(aed.parish)}</span>` : ""}
         ${aed.address ? `<span class="meta-address">${escapeHtml(aed.address)}</span>` : ""}
       
       </div>
       
-      ${aed.access ? `<div class="small"><strong>Access:</strong> ${escapeHtml(aed.access)}</div>` : ""}
       ${verifiedText ? `<div class="small">${escapeHtml(verifiedText)}</div>` : ""}
 
     `;
