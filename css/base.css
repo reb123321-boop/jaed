@@ -405,6 +405,23 @@ body.loading::after{
   color: #ffffff;
 }
 
+/* =========================================================
+   ACCESS → STATUS STYLE MAPPING
+   ========================================================= */
+
+/* Public Access should look like Active */
+.badge.access-Public\ Access {
+  background: #00c853;
+  border-color: #00c853;
+  color: #ffffff;
+}
+
+/* Restricted Access should look like Out of Service */
+.badge.access-Restricted\ Access {
+  background: #757575;
+  border-color: #757575;
+  color: #ffffff;
+}
 
 /* =========================================================
    MAP + LEGEND
