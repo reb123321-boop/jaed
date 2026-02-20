@@ -55,13 +55,7 @@ function loadTheme(){
 
 function forceMapResize(){
   if(!map) return;
-
   map.invalidateSize(true);
-
-  // Only recenter on mobile
-  if(window.matchMedia("(max-width: 768px)").matches){
-    map.setView(CONFIG.JERSEY_CENTER, CONFIG.JERSEY_ZOOM - 1);
-  }
 }
 
 function fixMobileMapCenter(){
@@ -1066,7 +1060,6 @@ async function main(){
 
   try{
     await fetchAirtable();
-    forceMapResize();
   } catch (e){
     console.error(e);
 
@@ -1080,50 +1073,39 @@ async function main(){
   }
 
   if(map){
-
-    const isMobile = window.matchMedia("(max-width: 600px)").matches;
-    const targetZoom = isMobile ? (CONFIG.JERSEY_ZOOM - 1) : CONFIG.JERSEY_ZOOM;
-
     let revealed = false;
 
     const reveal = () => {
       if(revealed) return;
       revealed = true;
 
-      // Wait two paint frames so map visually settles
+      document.body.classList.remove("loading");
+
+      // Only invalidate size — DO NOT setView again
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          document.body.classList.remove("loading");
-          map.invalidateSize(true);
-        });
+        map.invalidateSize(true);
       });
     };
 
+    // Wait for Leaflet initialisation only
     map.whenReady(() => {
-      map.once("moveend", reveal);
-      map.setView(CONFIG.JERSEY_CENTER, targetZoom, { animate:false });
+      reveal();
     });
 
-    // Safety fallback (never hang)
+    // Safety fallback
     setTimeout(reveal, 1500);
 
   } else {
     document.body.classList.remove("loading");
   }
 
-  window.addEventListener("load", forceMapResize);
-
+  // Keep resize handling, but remove extra setView logic inside forceMapResize
   window.addEventListener("resize", () => {
     clearTimeout(window.__mapResizeTimer);
-    window.__mapResizeTimer = setTimeout(forceMapResize, 150);
+    window.__mapResizeTimer = setTimeout(() => {
+      map?.invalidateSize(true);
+    }, 150);
   });
-
-  if(window.visualViewport){
-    window.visualViewport.addEventListener("resize", () => {
-      clearTimeout(window.__vvTimer);
-      window.__vvTimer = setTimeout(forceMapResize, 120);
-    });
-  }
 }
 
 main();
