@@ -1089,21 +1089,24 @@ async function main(){
     const reveal = () => {
       if(revealed) return;
       revealed = true;
-      document.body.classList.remove("loading");
-      setTimeout(() => map.invalidateSize(true), 50);
+
+      // Wait two paint frames so map visually settles
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.body.classList.remove("loading");
+          map.invalidateSize(true);
+        });
+      });
     };
 
-    // Wait until Leaflet reports ready
     map.whenReady(() => {
-
-      map.invalidateSize(true);
       map.once("moveend", reveal);
-
       map.setView(CONFIG.JERSEY_CENTER, targetZoom, { animate:false });
     });
 
-    // 🔥 Much safer fallback (never hang)
+    // Safety fallback (never hang)
     setTimeout(reveal, 1500);
+
   } else {
     document.body.classList.remove("loading");
   }
