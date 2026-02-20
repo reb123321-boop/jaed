@@ -582,13 +582,12 @@ button{ white-space:nowrap; }
 .popup-img-prev,
 .popup-img-next{
   position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  background:rgba(0,0,0,0.6);
+  bottom:8px;                   /* anchor to bottom instead of centre */
+  background:rgba(0,0,0,0.45);  /* more transparent */
   color:white;
   border:none;
-  width:28px;
-  height:28px;
+  width:30px;                   /* match fullscreen */
+  height:30px;
   border-radius:50%;
   cursor:pointer;
   display:flex;
@@ -597,12 +596,12 @@ button{ white-space:nowrap; }
   font-size:16px;
 }
 
-.popup-img-prev{ left:6px; }
-.popup-img-next{ right:6px; }
+.popup-img-prev{ left:8px; }
+.popup-img-next{ right:8px; }
 
 .popup-img-prev:hover,
 .popup-img-next:hover{
-  background:rgba(0,0,0,0.75);
+  background:rgba(0,0,0,0.65);
 }
 
 /* Leaflet overrides */
@@ -617,48 +616,26 @@ button{ white-space:nowrap; }
 }
 
 
-/* =========================================================
-   IMAGE OVERLAY
-   ========================================================= */
-
-.image-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.85);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:10000;
-}
-
-.image-overlay.active{
-  display:flex;
-}
-
-.image-overlay img{
-  max-width:95%;
-  max-height:95%;
-  border-radius:10px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.4);
-}
+/* =========================================
+   FULLSCREEN IMAGE BUTTONS (match popup)
+   ========================================= */
 
 .overlay-nav{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.45);   /* 🔥 more transparent */
   color:white;
   border:none;
-  font-size:32px;
-  width:44px;
-  height:44px;
+  width:30px;                   /* match popup */
+  height:30px;
   border-radius:50%;
+  font-size:16px;
   cursor:pointer;
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:5;
-  pointer-events:auto;
 }
 
 .overlay-prev{ left:16px; }
@@ -668,23 +645,24 @@ button{ white-space:nowrap; }
   position:absolute;
   top:16px;
   right:16px;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.45);   /* 🔥 more transparent */
   color:white;
   border:none;
-  font-size:20px;
-  width:40px;
-  height:40px;
+  width:30px;                   /* match popup */
+  height:30px;
   border-radius:50%;
+  font-size:16px;
   cursor:pointer;
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:3;
-  pointer-events:auto;
+  z-index:6;
 }
 
+/* Hover slightly stronger */
+.overlay-nav:hover,
 .overlay-close-btn:hover{
-  background:rgba(0,0,0,0.8);
+  background:rgba(0,0,0,0.65);
 }
 
 .hidden{
