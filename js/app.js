@@ -1079,24 +1079,43 @@ async function main(){
       </div>`;
   }
 
-  // ✅ Wait until map has fully settled before revealing UI
+  // ✅ Controlled reveal after map settles (with safety fallback)
   if(map){
-    // Force final layout calculation
+
+    // Force layout recalculation while hidden
     map.invalidateSize(true);
 
-    // Ensure correct starting view (no animation)
     const isMobile = window.matchMedia("(max-width: 600px)").matches;
     const targetZoom = isMobile ? (CONFIG.JERSEY_ZOOM - 1) : CONFIG.JERSEY_ZOOM;
 
+    let revealed = false;
+
+    const reveal = () => {
+      if(revealed) return;
+      revealed = true;
+
+      document.body.classList.remove("loading");
+
+      // Ensure Leaflet resizes correctly once visible
+      setTimeout(() => {
+        map.invalidateSize(true);
+      }, 50);
+    };
+
+    // Wait for map movement to complete
+    map.once("moveend", reveal);
+
+    // Set initial view (no animation)
     map.setView(CONFIG.JERSEY_CENTER, targetZoom, { animate:false });
 
-    map.once("moveend", () => {
-      document.body.classList.remove("loading");
-    });
+    // 🔥 Safety fallback so we NEVER hang
+    setTimeout(reveal, 300);
+
   } else {
     document.body.classList.remove("loading");
   }
 
+  // --- Existing resize handling ---
   window.addEventListener("load", forceMapResize);
 
   window.addEventListener("resize", () => {
