@@ -540,8 +540,8 @@ function renderResults(items){
     card.innerHTML = `
       <h3>${
          isNearest
-           ? `Nearest (${distText}) – ${escapeHtml(getDisplayName(aed))}`
-           : `${distText ? distText + " – " : ""}${escapeHtml(getDisplayName(aed))}`
+           ? `Nearest (${distText}) – ${escapeHtml(aed.name || "Defibrillator")}`
+           : `${distText ? distText + " – " : ""}${escapeHtml(aed.name || "Defibrillator")}`
       }</h3>
       <div class="meta-row">
       
