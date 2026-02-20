@@ -620,16 +620,18 @@ button{ white-space:nowrap; }
    FULLSCREEN IMAGE OVERLAY
    ========================================================= */
 
+/* Hidden by default */
 .image-overlay{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.95);
-  display:flex;
+  display:none;
   align-items:center;
   justify-content:center;
   z-index:9999;
 }
 
+/* Only visible when active */
 .image-overlay.active{
   display:flex;
 }
@@ -643,16 +645,18 @@ button{ white-space:nowrap; }
   display:block;
 }
 
+/* Navigation buttons */
+
 .overlay-nav{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.7);
   color:white;
   border:none;
-  font-size:32px;
-  width:44px;
-  height:44px;
+  font-size:28px;
+  width:48px;
+  height:48px;
   border-radius:50%;
   cursor:pointer;
   display:flex;
@@ -665,28 +669,36 @@ button{ white-space:nowrap; }
 .overlay-prev{ left:16px; }
 .overlay-next{ right:16px; }
 
+.overlay-nav:hover{
+  background:rgba(0,0,0,0.85);
+}
+
+/* Close button */
+
 .overlay-close-btn{
   position:absolute;
   top:16px;
   right:16px;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.7);
   color:white;
   border:none;
-  font-size:20px;
-  width:40px;
-  height:40px;
+  font-size:18px;
+  width:44px;
+  height:44px;
   border-radius:50%;
   cursor:pointer;
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:3;
+  z-index:6;                 /* above nav */
   pointer-events:auto;
 }
 
 .overlay-close-btn:hover{
-  background:rgba(0,0,0,0.8);
+  background:rgba(0,0,0,0.85);
 }
+
+/* Utility */
 
 .hidden{
   display:none !important;
