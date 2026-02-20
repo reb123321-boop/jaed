@@ -567,10 +567,11 @@ button{ white-space:nowrap; }
 /* Images */
 
 .popup-image-wrapper{
-  margin-bottom:6px;
+  margin-bottom:4px;
 }
 
 .popup-image{
+  display:block;       /* removes inline image baseline gap */
   width:100%;
   border-radius:8px;
   max-height:160px;
