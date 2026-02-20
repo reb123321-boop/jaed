@@ -544,6 +544,12 @@ function renderResults(items){
           ${escapeHtml(status)}
         </span>
       
+        ${aed.public_access ? `
+          <span class="badge badge-access ${aed.public_access === "Yes" ? "badge-access-yes" : "badge-access-no"}">
+            ${escapeHtml(aed.public_access === "Yes" ? "Public Access" : "Restricted")}
+          </span>
+        ` : ""}
+      
         ${aed.parish ? `<span class="meta-parish">${escapeHtml(aed.parish)}</span>` : ""}
         ${aed.address ? `<span class="meta-address">${escapeHtml(aed.address)}</span>` : ""}
       
