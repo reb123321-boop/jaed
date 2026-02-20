@@ -63,6 +63,14 @@ body.theme-government .btn-secondary:hover{
   background:rgba(200,16,46,0.08);
 }
 
+/* Government theme: make header primary button look like secondary */
+body.theme-government .app-header .btn-primary{
+  background:#ffffff;
+  color:#c8102e;
+  border:1px solid #c8102e;
+  box-shadow: none;
+}
+
 
 /* =========================================================
    Surfaces (Cards + Panels)
