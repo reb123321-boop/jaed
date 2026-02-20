@@ -543,10 +543,10 @@ function renderResults(items){
         <span class="badge ${badgeClass}" data-status="${escapeHtml(status)}" role="button" tabindex="0">
           ${escapeHtml(status)}
         </span>
-      
-        ${aed.public_access ? `
-          <span class="badge badge-access ${aed.public_access === "Yes" ? "badge-access-yes" : "badge-access-no"}">
-            ${escapeHtml(aed.public_access === "Yes" ? "Public Access" : "Restricted")}
+        
+        ${aed["Public Access"] !== undefined ? `
+          <span class="badge badge-access ${aed["Public Access"] ? "badge-access-yes" : "badge-access-no"}">
+            ${aed["Public Access"] ? "Public Access" : "Private Site"}
           </span>
         ` : ""}
       
