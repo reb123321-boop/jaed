@@ -331,9 +331,8 @@ function renderMarkers(items){
         ` : ""}
 
          <div class="popup-title">
-           ${escapeHtml(aed.name || "Defibrillator")}
+           ${escapeHtml(getDisplayName(aed))}
          </div>
-         
          <div class="popup-meta">
            ${escapeHtml(aed.address || "")}
          </div>
@@ -540,11 +539,10 @@ function renderResults(items){
     // Public access badge temporarily disabled
     card.innerHTML = `
       <h3>${
-        isNearest
-          ? `Nearest (${distText}) – ${escapeHtml(aed.name || "Defibrillator")}`
-          : `${distText ? distText + " – " : ""}${escapeHtml(aed.name || "Defibrillator")}`
+         isNearest
+           ? `Nearest (${distText}) – ${escapeHtml(aed.name || "Defibrillator")}`
+           : `${distText ? distText + " – " : ""}${escapeHtml(aed.name || "Defibrillator")}`
       }</h3>
-
       <div class="meta-row">
       
         <a class="btn btn-primary btn-inline"
@@ -686,6 +684,8 @@ async function fetchAirtable(){
     return {
       id: r.id,
       name: f.Name || f.name || "",
+      padNumber: f["Pad Number"] || f.pad_number || "",
+      postcode: f.Postcode || f.postcode || "",
       address: f.Address || f.address || "",
       parish: f.Parish || f.parish || "",
       lat: toNumber(f.Latitude ?? f.lat),
@@ -859,6 +859,12 @@ function escapeHtml(str){
     .replaceAll(">","&gt;")
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
+}
+
+// Display name formatter (Name + optional Pad Number)
+function getDisplayName(aed){
+  const base = aed.name || "Defibrillator";
+  return aed.padNumber ? `${base} (Pad ${aed.padNumber})` : base;
 }
 
 function bindUI(){

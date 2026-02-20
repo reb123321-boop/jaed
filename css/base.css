@@ -510,12 +510,14 @@ button{ white-space:nowrap; }
 .popup-card{
   min-width:220px;
   font-size:13px;
+  padding:6px;
 }
 
 .popup-title{
   font-weight:700;
   font-size:14px;
-  margin-bottom:4px;
+  line-height:1.1;
+  margin:0;
 }
 
 .popup-meta{
@@ -541,11 +543,12 @@ button{ white-space:nowrap; }
 }
 
 .leaflet-popup-content{
-  margin:8px 12px;
+  margin:0;
 }
 
 .leaflet-popup-content-wrapper{
   border-radius:14px;
+  padding:0;
 }
 
 
