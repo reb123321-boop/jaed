@@ -65,9 +65,9 @@ body.theme-government .btn-secondary:hover{
 
 /* Government theme: make header primary button look like secondary */
 body.theme-government .app-header .btn-primary{
-  background: var(--btn-secondary-bg);
-  color: var(--btn-secondary-color);
-  border: var(--btn-secondary-border);
+  background:#ffffff;
+  color:#c8102e;
+  border:1px solid #c8102e;
   box-shadow: none;
 }
 
