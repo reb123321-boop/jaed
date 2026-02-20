@@ -55,13 +55,7 @@ function loadTheme(){
 
 function forceMapResize(){
   if(!map) return;
-
   map.invalidateSize(true);
-
-  // Only recenter on mobile
-  if(window.matchMedia("(max-width: 768px)").matches){
-    map.setView(CONFIG.JERSEY_CENTER, CONFIG.JERSEY_ZOOM - 1);
-  }
 }
 
 function fixMobileMapCenter(){
@@ -1066,9 +1060,9 @@ async function main(){
 
   try{
     await fetchAirtable();
-    forceMapResize();
   } catch (e){
     console.error(e);
+
     $("panelMeta").textContent = "Data load failed";
     $("resultsList").innerHTML = `
       <div class="panel-note">
@@ -1078,19 +1072,27 @@ async function main(){
       </div>`;
   }
 
-  window.addEventListener("load", forceMapResize);
+  // Reveal AFTER map is ready
+  if(map){
+    map.whenReady(() => {
+      document.body.classList.remove("loading");
 
+      // Invalidate ONCE after becoming visible
+      setTimeout(() => {
+        map.invalidateSize(false); // false avoids animated correction
+      }, 0);
+    });
+  } else {
+    document.body.classList.remove("loading");
+  }
+
+  // Only resize on actual window resize
   window.addEventListener("resize", () => {
     clearTimeout(window.__mapResizeTimer);
-    window.__mapResizeTimer = setTimeout(forceMapResize, 150);
+    window.__mapResizeTimer = setTimeout(() => {
+      map?.invalidateSize(false);
+    }, 150);
   });
-
-  if(window.visualViewport){
-    window.visualViewport.addEventListener("resize", () => {
-      clearTimeout(window.__vvTimer);
-      window.__vvTimer = setTimeout(forceMapResize, 120);
-    });
-  }
 }
 
 main();

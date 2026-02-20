@@ -159,6 +159,29 @@ button{ white-space:nowrap; }
 
 
 /* =========================================================
+   Loading State (Hide content below header until ready)
+   ========================================================= */
+
+body.loading .app-main,
+body.loading .app-footer{
+  display:none;
+}
+
+/* Loader displayed under header */
+body.loading::after{
+  content:"Loading defibrillator locations…";
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:calc(100svh - var(--header-height, 80px));
+  font-weight:600;
+  font-size:1rem;
+  text-align:center;
+  padding:20px;
+}
+
+
+/* =========================================================
    MAIN LAYOUT
    ========================================================= */
 
